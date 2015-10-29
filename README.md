@@ -1,2 +1,2 @@
-# ubiquitous-octocat
+# student-analytics
 OOP Java Project Repo
