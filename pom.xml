@@ -45,7 +45,7 @@
             <groupId>org.glassfish.main.core</groupId>
             <artifactId>glassfish</artifactId>
             <version>4.1</version>
-            </dependency>
+        </dependency>
     </dependencies>
 
 
