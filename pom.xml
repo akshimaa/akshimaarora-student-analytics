@@ -42,10 +42,10 @@
             <version>1.9.6</version>
         </dependency>
         <dependency>
-            <groupId>org.glassfish.main.distributions</groupId>
+            <groupId>org.glassfish.main.core</groupId>
             <artifactId>glassfish</artifactId>
             <version>4.1</version>
-        </dependency>
+            </dependency>
     </dependencies>
 
 
