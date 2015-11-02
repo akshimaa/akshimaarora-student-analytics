@@ -9,7 +9,7 @@ package com.csi.studentanalytics.model;
  *
  * @author Madan Parameswaran
  */
-class Score {
+public class Score {
     
     private enum Type {SAT, GRE, GMAT};
     private int score;

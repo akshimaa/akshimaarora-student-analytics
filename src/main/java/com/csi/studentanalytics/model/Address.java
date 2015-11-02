@@ -11,7 +11,7 @@ import java.util.Locale;
  *
  * @author Madan Parameswaran
  */
-class Address {
+public class Address {
     private String streetAddress;
     private String unitNumber;
     private String city;

@@ -9,6 +9,6 @@ package com.csi.studentanalytics.model;
  *
  * @author Madan Parameswaran
  */
-class EquityData {
+public class EquityData {
     
 }
