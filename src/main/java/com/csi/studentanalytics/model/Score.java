@@ -11,7 +11,7 @@ package com.csi.studentanalytics.model;
  */
 public class Score {
     
-    private enum Type {SAT, GRE, GMAT};
+    public enum Type {SAT, GRE, GMAT};
     private int score;
     private Type type;
 
