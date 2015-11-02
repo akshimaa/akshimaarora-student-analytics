@@ -7,7 +7,7 @@ package com.csi.studentanalytics.model;
 
 /**
  *
- * @author Madan Parameswaran
+ * @author Madan Parameswaran, Melissa Burns
  */
 public class CourseInformation {
     
