@@ -8,4 +8,12 @@
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>
     </welcome-file-list>
+    <servlet>
+    <servlet-name>CSVFileUploadServlet</servlet-name>
+    <servlet-class>com.csi.studentanalytics.service.CSVFileUploadServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CSVFileUploadServlet</servlet-name>
+        <url-pattern>/upload</url-pattern>
+    </servlet-mapping>
 </web-app>
