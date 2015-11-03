@@ -14,7 +14,7 @@
     <body>
         <div>
             <form action="upload" method="post" enctype="multipart/form-data">
-                <input type="file" name="file" />
+                <input type="file" name="file" accept=".csv" />
                 <input type="submit" value="upload" />
             </form> 
         </div>
