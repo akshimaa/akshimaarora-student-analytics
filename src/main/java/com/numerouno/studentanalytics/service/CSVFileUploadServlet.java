@@ -32,12 +32,11 @@ public class CSVFileUploadServlet extends HttpServlet {
     @Override
      protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
          
-         PrintWriter out = resp.getWriter();
-         if(req != null)
-         out.print("The file you uploaded is " + req.getPart("file").getSubmittedFileName());
-
-     
-    
-     
+        PrintWriter out = resp.getWriter();
+        if(req != null)
+        {
+            out.print("The file you uploaded is '" + req.getPart("file").getSubmittedFileName()+"'");
+        }
+             
     }
 }
