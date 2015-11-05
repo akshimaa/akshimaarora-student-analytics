@@ -15,7 +15,7 @@ import java.util.Locale;
 public class Student {
     
 
-    private Date dateOfBirth;
+    private int age;
     public enum Sex { MALE, FEMALE};
     private Sex gender;
     private Locale citizenship;
@@ -33,13 +33,7 @@ public class Student {
     private String highestEducation;
     private EquityData equityData;
     
-    public Date getDateOfBirth() {
-        return dateOfBirth;
-    }
 
-    public void setDateOfBirth(Date dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
-    }
 
     public Sex getGender() {
         return gender;
