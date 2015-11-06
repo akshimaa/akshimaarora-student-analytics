@@ -5,6 +5,7 @@
  */
 package com.numerouno.studentanalytics.service;
 
+import com.numerouno.studentanalytics.controller.CSVParser;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -37,6 +38,6 @@ public class CSVFileUploadServlet extends HttpServlet {
         {
             out.print("The file you uploaded is '" + req.getPart("file").getSubmittedFileName()+"'");
         }
-             
+         CSVParser.parseIntoPOJO(req.getPart("file").getInputStream());
     }
 }

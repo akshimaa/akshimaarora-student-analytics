@@ -5,8 +5,17 @@
  */
 package com.numerouno.studentanalytics.model;
 
-import java.util.Date;
+
+
 import java.util.Locale;
+import org.supercsv.cellprocessor.CellProcessorAdaptor;
+import org.supercsv.cellprocessor.ParseInt;
+import org.supercsv.cellprocessor.constraint.NotNull;
+import org.supercsv.cellprocessor.constraint.StrRegEx;
+import org.supercsv.cellprocessor.ift.CellProcessor;
+import org.supercsv.exception.SuperCsvCellProcessorException;
+import org.supercsv.util.CsvContext;
+
 
 /**
  * 
@@ -32,9 +41,15 @@ public class Student {
     private float earnedGPA;
     private String highestEducation;
     private EquityData equityData;
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
     
-
-
     public Sex getGender() {
         return gender;
     }
@@ -147,5 +162,53 @@ public class Student {
         this.equityData = equityData;
     }
     
+    public static CellProcessor[] getProcessors() {
+        
+        final String emailRegex = "[a-z0-9\\._]+@[a-z0-9\\.]+"; // just an example, not very robust!
+        StrRegEx.registerMessage(emailRegex, "must be a valid email address");
+        
+        final CellProcessor[] processors = new CellProcessor[] { 
+                
+                new NotNull(new ParseInt()), // age
+                new NotNull(new ParseSex())//gender
+        
+        };
+        
+        return processors;
+}
     
+    private static class ParseSex extends CellProcessorAdaptor
+    {
+        
+        public ParseSex()
+        {
+            super();
+        }
+        
+        public ParseSex(CellProcessor next)
+        {
+          super(next);   
+        }
+        @Override
+        public Object execute(Object value, CsvContext context) {
+        
+        validateInputNotNull(value, context);  // throws an Exception if the input is null
+                
+                for (Sex gender : Sex.values()){
+                        if (gender.name().equalsIgnoreCase(value.toString())){
+                                gender = Sex.valueOf(((String) value).toUpperCase());
+                                return next.execute(gender, context);
+                        }
+                        
+                }
+               
+                  throw new SuperCsvCellProcessorException(
+                        String.format("Could not parse '%s' as a gender", value), context, this);
+        }
+                
+
+        }
+        
+    
+
 }
