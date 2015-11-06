@@ -6,6 +6,7 @@
 package com.numerouno.studentanalytics.service;
 
 import com.numerouno.studentanalytics.controller.CSVParser;
+import com.sun.istack.internal.logging.Logger;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -36,8 +37,12 @@ public class CSVFileUploadServlet extends HttpServlet {
         PrintWriter out = resp.getWriter();
         if(req != null)
         {
-            out.print("The file you uploaded is '" + req.getPart("file").getSubmittedFileName()+"'");
+            CSVParser.parseIntoPOJO(req.getPart("file").getInputStream());
+            Logger log = Logger.getLogger(CSVFileUploadServlet.class);
+            log.info("CSV file parsed successfully!");
+            out.print("The file you uploaded is '" + req.getPart("file").getSubmittedFileName()+"' and it has been parsed successfully!");
+            
         }
-         CSVParser.parseIntoPOJO(req.getPart("file").getInputStream());
-    }
+       
+     }
 }
