@@ -2,7 +2,7 @@
 .DS_Store
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
-Temp/
+Temp/*.dat
 # Maven Target
 target/
 # Package Files #
