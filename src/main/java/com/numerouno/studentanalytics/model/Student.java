@@ -213,6 +213,15 @@ public class Student {
     private static class ParseCountry extends CellProcessorAdaptor
     {
 
+        public ParseCountry()
+        {
+            super();
+        }
+        
+        public ParseCountry(CellProcessor next)
+        {
+            super(next);
+        }
         @Override
         public Object execute(Object value, CsvContext context) {
             validateInputNotNull(value, context);
