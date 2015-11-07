@@ -5,7 +5,13 @@
  */
 package com.numerouno.studentanalytics.service;
 
+import com.amazonaws.auth.AWSCredentials;
+import com.amazonaws.auth.profile.ProfileCredentialsProvider;
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.numerouno.studentanalytics.controller.CSVParser;
+import java.io.File;
 import java.util.logging.Logger;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -43,6 +49,9 @@ public class CSVFileUploadServlet extends HttpServlet {
             out.print("The file you uploaded is '" + req.getPart("file").getSubmittedFileName()+"' and it has been parsed successfully!");
             
         }
-       
+        AWSCredentials credentials = new ProfileCredentialsProvider().getCredentials();
+        AmazonS3 s3client = new AmazonS3Client(credentials);
+        s3client.putObject(new PutObjectRequest("student-alpha", "student.csv", 
+		new File("/Users/madan/Documents/student.csv")));
      }
 }
