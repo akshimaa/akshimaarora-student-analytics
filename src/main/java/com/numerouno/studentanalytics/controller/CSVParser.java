@@ -10,6 +10,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.supercsv.cellprocessor.ift.CellProcessor;
@@ -31,13 +33,15 @@ public class CSVParser  {
                 // the header elements are used to map the values to the bean (names must match)
                 final String[] header = beanReader.getHeader(true);
                 final CellProcessor[] processors = Student.getProcessors();
-                
+                List<Student> studentList = new ArrayList();
                 Student student;
                 while( (student = beanReader.read(Student.class, header, processors)) != null ) {
                         
                         Logger log = Logger.getLogger(CSVParser.class.getName());
                         log.info(String.format("lineNo=%s, rowNo=%s, student=%s", beanReader.getLineNumber(),
                                 beanReader.getRowNumber(), student));
+                        studentList.add(student);
+                                
                 }
                 
         }
