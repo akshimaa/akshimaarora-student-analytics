@@ -44,3 +44,4 @@ nbactions.xml
 nb-configuration.xml
 .nb-gradle/
 /StudentAnalytics/nbproject/private/
+~/.aws/credentials
