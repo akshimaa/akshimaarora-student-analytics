@@ -33,7 +33,7 @@ public class Student {
     private Address permanentHomeResidence;
     public enum Attendance {FULL_TIME, PART_TIME};
     private Attendance attendanceType;
-    private String countryOfBirth;
+    private Locale countryOfBirth;
     private String languageSpokenAtHome;
     private String yearOfArrivalInUSA;
     private Score score;
@@ -98,11 +98,11 @@ public class Student {
         this.attendanceType = attendanceType;
     }
 
-    public String getCountryOfBirth() {
+    public Locale getCountryOfBirth() {
         return countryOfBirth;
     }
 
-    public void setCountryOfBirth(String countryOfBirth) {
+    public void setCountryOfBirth(Locale countryOfBirth) {
         this.countryOfBirth = countryOfBirth;
     }
 
@@ -170,7 +170,8 @@ public class Student {
         final CellProcessor[] processors = new CellProcessor[] { 
                 
                 new NotNull(new ParseInt()), // age
-                new NotNull(new ParseSex())//gender
+                new NotNull(new ParseSex()), //gender
+                new NotNull(new ParseCountry()) //country
         
         };
         
@@ -209,6 +210,26 @@ public class Student {
 
         }
         
-    
+    private static class ParseCountry extends CellProcessorAdaptor
+    {
+
+        @Override
+        public Object execute(Object value, CsvContext context) {
+            validateInputNotNull(value, context);
+            Locale.setDefault(Locale.US);
+            for(Locale country : Locale.getAvailableLocales())
+            {
+                if(country.getDisplayCountry().equals(value.toString()))
+                {
+                    return next.execute(country, context);
+                }
+            }
+            
+            throw new SuperCsvCellProcessorException(
+                        String.format("Could not parse '%s' as a locale", value), context, this);
+     
+        }
+        
+    }
 
 }
