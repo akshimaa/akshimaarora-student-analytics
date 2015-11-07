@@ -27,14 +27,14 @@ public class Student {
     private int age;
     public enum Sex { MALE, FEMALE};
     private Sex gender;
-    private Locale citizenship;
+    private String citizenship;
     private CourseInformation courseInformation;
     private Address termResidence;
     private Address permanentHomeResidence;
     public enum Attendance {FULL_TIME, PART_TIME};
     private Attendance attendanceType;
     private Locale countryOfBirth;
-    private String languageSpokenAtHome;
+    private Locale languageSpokenAtHome;
     private String yearOfArrivalInUSA;
     private Score score;
     private String courseCompletionYear;
@@ -58,11 +58,11 @@ public class Student {
         this.gender = gender;
     }
 
-    public Locale getCitizenship() {
+    public String getCitizenship() {
         return citizenship;
     }
 
-    public void setCitizenship(Locale citizenship) {
+    public void setCitizenship(String citizenship) {
         this.citizenship = citizenship;
     }
 
@@ -106,11 +106,11 @@ public class Student {
         this.countryOfBirth = countryOfBirth;
     }
 
-    public String getLanguageSpokenAtHome() {
+    public Locale getLanguageSpokenAtHome() {
         return languageSpokenAtHome;
     }
 
-    public void setLanguageSpokenAtHome(String languageSpokenAtHome) {
+    public void setLanguageSpokenAtHome(Locale languageSpokenAtHome) {
         this.languageSpokenAtHome = languageSpokenAtHome;
     }
 
@@ -171,7 +171,9 @@ public class Student {
                 
                 new NotNull(new ParseInt()), // age
                 new NotNull(new ParseSex()), //gender
-                new NotNull(new ParseCountry()) //country
+                new NotNull(new ParseCountry()), //country
+                new NotNull(new ParseLanguage()), //language
+                new NotNull() //citizenship
         
         };
         
@@ -235,7 +237,39 @@ public class Student {
             }
             
             throw new SuperCsvCellProcessorException(
-                        String.format("Could not parse '%s' as a locale", value), context, this);
+                        String.format("Could not parse '%s' as a locale-language", value), context, this);
+     
+        }
+        
+    }
+    
+    private static class ParseLanguage extends CellProcessorAdaptor
+    {
+
+        public ParseLanguage()
+        {
+            super();
+        }
+        
+        public ParseLanguage(CellProcessor next)
+        {
+            super(next);
+        }
+        @Override
+        public Object execute(Object value, CsvContext context) {
+            validateInputNotNull(value, context);
+            Locale.setDefault(Locale.US);
+            for(Locale language : Locale.getAvailableLocales())
+            {
+                
+                if(language.getDisplayLanguage().equals(value.toString().trim()))
+                {
+                    return next.execute(language, context);
+                }
+            }
+            
+            throw new SuperCsvCellProcessorException(
+                        String.format("Could not parse '%s' as a locale-language", value), context, this);
      
         }
         
