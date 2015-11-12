@@ -14,7 +14,7 @@ import org.ujmp.core.filematrix.FileFormat;
 
 /**
  *
- * @author Dell
+ * @author Teck Jan Low
  */
 public class ParseCSV {
     
