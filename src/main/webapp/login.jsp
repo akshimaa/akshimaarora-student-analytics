@@ -79,6 +79,7 @@ function redirect(elem){
     alert("redirecting");
     window.location="index.jsp";
 }
+ 
 </script>
 <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
 </fb:login-button>
