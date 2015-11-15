@@ -33,15 +33,11 @@
             <version>1.0.13</version>
         </dependency>
         <dependency>
-            <groupId>org.jdmp</groupId>
-            <artifactId>jdmp-core</artifactId>
-            <version>0.3.0</version>
+            <groupId>nz.ac.waikato.cms.weka</groupId>
+            <artifactId>weka-stable</artifactId>
+            <version>3.6.13</version>
         </dependency>
-        <dependency>
-            <groupId>org.jdmp</groupId>
-            <artifactId>jdmp-gui</artifactId>
-            <version>0.3.0</version>
-        </dependency>
+
         <dependency>
 	<groupId>com.amazonaws</groupId>
 	<artifactId>aws-java-sdk</artifactId>

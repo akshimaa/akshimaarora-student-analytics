@@ -10,6 +10,7 @@ package com.numerouno.studentanalytics.model;
 import java.util.Locale;
 import org.supercsv.cellprocessor.CellProcessorAdaptor;
 import org.supercsv.cellprocessor.ParseInt;
+import org.supercsv.cellprocessor.ParseLong;
 import org.supercsv.cellprocessor.constraint.NotNull;
 import org.supercsv.cellprocessor.constraint.StrRegEx;
 import org.supercsv.cellprocessor.ift.CellProcessor;
@@ -35,7 +36,7 @@ public class Student {
     private String permanentHomeResidence;
     private String city;
     private String state;
-    private String zipCode;
+    private int zipCode;
     private Locale country;
     public enum BasisEnrollment {TESTSCORE,GENDER,SOCIECONOMICAL,PARENTAL,RESIDENTIAL};
     private BasisEnrollment basisEnroll;
@@ -45,7 +46,7 @@ public class Student {
     private ModeAttendance mode;
     private Locale countryOfBirth;
     private Locale language;
-    private String yearOfArrivalInUSA;   
+    private int yearOfArrivalInUSA;   
     private int enrollmentYear;  
     public enum Type {SAT, GRE, GMAT};
     private Type entranceExam;
@@ -145,11 +146,11 @@ public class Student {
         this.state = state;
     }
 
-    public String getZipCode() {
+    public int getZipCode() {
         return zipCode;
     }
 
-    public void setZipCode(String zipCode) {
+    public void setZipCode(int zipCode) {
         this.zipCode = zipCode;
     }
 
@@ -159,6 +160,14 @@ public class Student {
 
     public void setCountry(Locale country) {
         this.country = country;
+    }
+
+    public BasisEnrollment getBasisEnrollment() {
+        return basisEnroll;
+    }
+
+    public void setBasisEnrollment(BasisEnrollment basisEnroll) {
+        this.basisEnroll = basisEnroll;
     }
 
     public BasisEnrollment getBasisEnroll() {
@@ -192,20 +201,22 @@ public class Student {
         this.countryOfBirth = countryOfBirth;
     }
 
-    public String getYearOfArrivalInUSA() {
+    public int getYearOfArrivalInUSA() {
         return yearOfArrivalInUSA;
     }
 
-    public void setYearOfArrivalInUSA(String yearOfArrivalInUSA) {
+    public void setYearOfArrivalInUSA(int yearOfArrivalInUSA) {
         this.yearOfArrivalInUSA = yearOfArrivalInUSA;
     }
+
     public Locale getLanguage() {
         return language;
     }
 
-    public void setLanguageSpokenAtHome(Locale language) {
+    public void setLanguage(Locale language) {
         this.language = language;
     }
+
     public int getEnrollmentYear() {
         return enrollmentYear;
     }
@@ -264,24 +275,89 @@ public class Student {
  
     public static CellProcessor[] getProcessors() {
         
-        final String emailRegex = "[a-z0-9\\._]+@[a-z0-9\\.]+"; // just an example, not very robust!
-        StrRegEx.registerMessage(emailRegex, "must be a valid email address");
+
         
         final CellProcessor[] processors = new CellProcessor[] { 
                 
-                //new NotNull(new ParseInt()), // student ID
+                new NotNull(new ParseInt()), // student ID
+                new NotNull(new ParseCourse()), //course information
+                new NotNull(new ParseDegree()), //degree level             
+                new NotNull(), // field of study
                 new NotNull(new ParseInt()), // age
                 new NotNull(new ParseSex()), //gender
+                new NotNull(), //citizenship
+                new NotNull(), //term residence
+                new NotNull(), //permanant residence
+                new NotNull(), //city
+                new NotNull(), //state
+                new NotNull(new ParseInt()), //zip
                 new NotNull(new ParseCountry()), //country
+                new NotNull(new ParseBasisEnroll()), //admission basis
+                new NotNull(new ParseAttendance()), //type attendance
+                new NotNull(new ParseMode()), //type of mode attendance
+                new NotNull(new ParseCountryOfBirth()), //birth country
                 new NotNull(new ParseLanguage()), //language
-                //new NotNull(new Parese) //citizenship
-        
-        };
-        
+                new NotNull(new ParseInt()), //year of arrival in USA
+                new NotNull() // Enrollment year    
+        };      
         return processors;
 }
-    
- 
+
+    private static class ParseCourse extends CellProcessorAdaptor
+    {
+        public ParseCourse()
+        {
+            super();
+        }
+        
+        public ParseCourse(CellProcessor next)
+        {
+            super(next);
+        }  
+        
+        @Override
+        public Object execute(Object value, CsvContext context) {
+        
+        validateInputNotNull(value, context); // throws an Exception if the input is null
+            
+            for (Course courseInformation : Course.values()) {
+                if (courseInformation.name().equalsIgnoreCase(value.toString())){
+                    courseInformation = Course.valueOf(((String) value).toUpperCase());
+                        return next.execute(courseInformation, context);
+                }
+            }   
+                throw new SuperCsvCellProcessorException(
+                        String.format("Could not parse '%s' as a course information", value), context, this);
+        }
+        
+        }
+    private static class ParseDegree extends CellProcessorAdaptor{
+        public ParseDegree()
+        {
+            super();
+        }
+        
+        public ParseDegree(CellProcessor next)
+        {
+            super(next);
+        }  
+        
+        @Override
+        public Object execute(Object value, CsvContext context) {
+        
+        validateInputNotNull(value, context); // throws an Exception if the input is null
+            
+            for(Degree degreeLevel : Degree.values()) {
+                if (degreeLevel.name().equalsIgnoreCase(value.toString())){
+                    degreeLevel = Degree.valueOf(((String) value).toUpperCase());
+                        return next.execute(degreeLevel, context);
+                }
+            }   
+                throw new SuperCsvCellProcessorException(
+                        String.format("Could not parse '%s' as a course information", value), context, this);
+        }
+        
+        }  
     private static class ParseSex extends CellProcessorAdaptor
     {
        
@@ -303,17 +379,12 @@ public class Student {
                         if (gender.name().equalsIgnoreCase(value.toString())){
                                 gender = Sex.valueOf(((String) value).toUpperCase());
                                 return next.execute(gender, context);
-                        }
-                        
-                }
-               
+                        }      
+                }           
                   throw new SuperCsvCellProcessorException(
                         String.format("Could not parse '%s' as a gender", value), context, this);
         }
-                
-
-        }
-        
+        }  
     private static class ParseCountry extends CellProcessorAdaptor
     {
 
@@ -336,15 +407,121 @@ public class Student {
                 {
                     return next.execute(country, context);
                 }
-            }
-            
+            }           
             throw new SuperCsvCellProcessorException(
-                        String.format("Could not parse '%s' as a locale-country", value), context, this);
-     
+                        String.format("Could not parse '%s' as a locale-country", value), context, this);   
+        }     
+    }
+    private static class ParseBasisEnroll extends CellProcessorAdaptor
+    {
+       
+        public ParseBasisEnroll()
+        {
+            super();
         }
         
-    }
-    
+        public ParseBasisEnroll(CellProcessor next)
+        {
+          super(next);   
+        }
+        @Override
+        public Object execute(Object value, CsvContext context) {
+        
+        validateInputNotNull(value, context);  // throws an Exception if the input is null
+                
+                for (BasisEnrollment basisEnroll : BasisEnrollment.values()){
+                        if (basisEnroll.name().equalsIgnoreCase(value.toString())){
+                                basisEnroll = BasisEnrollment.valueOf(((String) value).toUpperCase());
+                                return next.execute(basisEnroll, context);
+                        }      
+                }           
+                  throw new SuperCsvCellProcessorException(
+                        String.format("Could not parse '%s' as an acceptable Basis for admission", value), context, this);
+        }
+        }      
+    private static class ParseAttendance extends CellProcessorAdaptor
+    {
+       
+        public ParseAttendance()
+        {
+            super();
+        }
+        
+        public ParseAttendance(CellProcessor next)
+        {
+          super(next);   
+        }
+        @Override
+        public Object execute(Object value, CsvContext context) {
+        
+        validateInputNotNull(value, context);  // throws an Exception if the input is null
+           
+
+                for (Attendance attendance : Attendance.values()){
+                        if (attendance.name().equalsIgnoreCase(value.toString())){
+                                attendance = Attendance.valueOf(((String) value).toUpperCase());
+                                return next.execute(attendance, context);
+                        }      
+                }           
+                  throw new SuperCsvCellProcessorException(
+                        String.format("Could not parse '%s' for admission", value), context, this);
+        }
+        }    
+    private static class ParseMode extends CellProcessorAdaptor
+    {
+       
+        public ParseMode()
+        {
+            super();
+        }
+                
+        public ParseMode(CellProcessor next)
+        {
+          super(next);   
+        }
+        @Override
+        public Object execute(Object value, CsvContext context) {
+        
+        validateInputNotNull(value, context);  // throws an Exception if the input is null
+           
+
+                for (ModeAttendance mode : ModeAttendance.values()){
+                        if (mode.name().equalsIgnoreCase(value.toString())){
+                                mode = ModeAttendance.valueOf(((String) value).toUpperCase());
+                                return next.execute(mode, context);
+                        }      
+                }           
+                  throw new SuperCsvCellProcessorException(
+                        String.format("Could not parse '%s' as an acceptable Basis for admission", value), context, this);
+        }
+        } 
+     private static class ParseCountryOfBirth extends CellProcessorAdaptor
+    {
+
+        public ParseCountryOfBirth()
+        {
+            super();
+        }
+        
+        public ParseCountryOfBirth(CellProcessor next)
+        {
+            super(next);
+        }
+        @Override
+        public Object execute(Object value, CsvContext context) {
+            validateInputNotNull(value, context);
+            Locale.setDefault(Locale.US);
+            for(Locale countryOfBirth : Locale.getAvailableLocales())
+            {
+                if(countryOfBirth.getDisplayCountry().equals(value.toString()))
+                {
+                    return next.execute(countryOfBirth, context);
+                }
+            }           
+            throw new SuperCsvCellProcessorException(
+                        String.format("Could not parse '%s' as a locale-country", value), context, this);   
+        }     
+    }  
     private static class ParseLanguage extends CellProcessorAdaptor
     {
 
