@@ -15,32 +15,70 @@ import org.supercsv.cellprocessor.constraint.StrRegEx;
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.exception.SuperCsvCellProcessorException;
 import org.supercsv.util.CsvContext;
-
-
 /**
  * 
  * @author Madan Parameswaran
  */
 public class Student {
     
-
-    private int age;
-    public enum Sex { MALE, FEMALE};
+    public int studentID;
+    public enum Course {CS, ENG, GES, LANG, BIO, ENGLISH, IT, MBA, MISM, PPM, MSIT, MCS, MS, MENG};
+    private Course courseInformation;
+    public enum Degree {UNDERGRAD, POSTGRAD};
+    private Degree degreeLevel;
+    public int age;
+    public enum Sex {MALE, FEMALE};
     private Sex gender;
     private String citizenship;
-    private CourseInformation courseInformation;
-    private Address termResidence;
-    private Address permanentHomeResidence;
+    private String termResidence;
+    private String permanentHomeResidence;
+    private String city;
+    private String state;
+    private String zipCode;
+    private Locale country;
+    public enum BasisEnrollment {TESTSCORE,GENDER,SOCIECONOMICAL,PARENTAL,RESIDENTIAL};
+    private BasisEnrollment basisEnroll;
     public enum Attendance {FULL_TIME, PART_TIME};
     private Attendance attendanceType;
+    private enum ModeAttendance {INTERNAL, EXTERNAL, MULTIMODAL};
+    private ModeAttendance mode;
     private Locale countryOfBirth;
     private Locale languageSpokenAtHome;
-    private String yearOfArrivalInUSA;
-    private Score score;
+    private String yearOfArrivalInUSA;   
+    private int enrollmentYear;  
+    public enum Type {SAT, GRE, GMAT};
+    private Type entranceExam;
+    private int score;
+    public enum Equity {D, LI, WNT, RR, NONE};
+    private Equity equityData;
+    public enum HighestEducationLevel {HS,AS,BS,MA};
+    private HighestEducationLevel highestEduLevel;
     private String courseCompletionYear;
     private float earnedGPA;
-    private String highestEducation;
-    private EquityData equityData;
+
+    public int getStudentID() {
+        return studentID;
+    }
+
+    public void setStudentID(int studentID) {
+        this.studentID = studentID;
+    }
+
+    public Course getCourseInformation() {
+        return courseInformation;
+    }
+
+    public void setCourseInformation(Course courseInformation) {
+        this.courseInformation = courseInformation;
+    }
+
+    public Degree getDegreeLevel() {
+        return degreeLevel;
+    }
+
+    public void setDegreeLevel(Degree degreeLevel) {
+        this.degreeLevel = degreeLevel;
+    }
 
     public int getAge() {
         return age;
@@ -49,7 +87,7 @@ public class Student {
     public void setAge(int age) {
         this.age = age;
     }
-    
+  
     public Sex getGender() {
         return gender;
     }
@@ -62,32 +100,60 @@ public class Student {
         return citizenship;
     }
 
-    public void setCitizenship(String citizenship) {
-        this.citizenship = citizenship;
-    }
-
-    public CourseInformation getCourseInformation() {
-        return courseInformation;
-    }
-
-    public void setCourseInformation(CourseInformation courseInformation) {
-        this.courseInformation = courseInformation;
-    }
-
-    public Address getTermResidence() {
+    public String getTermResidence() {
         return termResidence;
     }
 
-    public void setTermResidence(Address termResidence) {
+    public void setTermResidence(String termResidence) {
         this.termResidence = termResidence;
     }
 
-    public Address getPermanentHomeResidence() {
+    public String getPermanentHomeResidence() {
         return permanentHomeResidence;
     }
 
-    public void setPermanentHomeResidence(Address permanentHomeResidence) {
+    public void setPermanentHomeResidence(String permanentHomeResidence) {
         this.permanentHomeResidence = permanentHomeResidence;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public String getZipCode() {
+        return zipCode;
+    }
+
+    public void setZipCode(String zipCode) {
+        this.zipCode = zipCode;
+    }
+
+    public Locale getCountry() {
+        return country;
+    }
+
+    public void setCountry(Locale country) {
+        this.country = country;
+    }
+
+    public BasisEnrollment getBasisEnroll() {
+        return basisEnroll;
+    }
+
+    public void setBasisEnroll(BasisEnrollment basisEnroll) {
+        this.basisEnroll = basisEnroll;
     }
 
     public Attendance getAttendanceType() {
@@ -98,20 +164,19 @@ public class Student {
         this.attendanceType = attendanceType;
     }
 
+    public ModeAttendance getMode() {
+        return mode;
+    }
+
+    public void setMode(ModeAttendance mode) {
+        this.mode = mode;
+    }
     public Locale getCountryOfBirth() {
         return countryOfBirth;
     }
 
     public void setCountryOfBirth(Locale countryOfBirth) {
         this.countryOfBirth = countryOfBirth;
-    }
-
-    public Locale getLanguageSpokenAtHome() {
-        return languageSpokenAtHome;
-    }
-
-    public void setLanguageSpokenAtHome(Locale languageSpokenAtHome) {
-        this.languageSpokenAtHome = languageSpokenAtHome;
     }
 
     public String getYearOfArrivalInUSA() {
@@ -121,13 +186,51 @@ public class Student {
     public void setYearOfArrivalInUSA(String yearOfArrivalInUSA) {
         this.yearOfArrivalInUSA = yearOfArrivalInUSA;
     }
+    public Locale getLanguageSpokenAtHome() {
+        return languageSpokenAtHome;
+    }
 
-    public Score getScore() {
+    public void setLanguageSpokenAtHome(Locale languageSpokenAtHome) {
+        this.languageSpokenAtHome = languageSpokenAtHome;
+    }
+    public int getEnrollmentYear() {
+        return enrollmentYear;
+    }
+
+    public void setEnrollmentYear(int enrollmentYear) {
+        this.enrollmentYear = enrollmentYear;
+    }
+
+    public Type getEntranceExam() {
+        return entranceExam;
+    }
+
+    public void setEntranceExam(Type entranceExam) {
+        this.entranceExam = entranceExam;
+    }
+
+    public int getScore() {
         return score;
     }
 
-    public void setScore(Score score) {
+    public void setScore(int score) {
         this.score = score;
+    }
+
+    public Equity getEquityData() {
+        return equityData;
+    }
+
+    public void setEquityData(Equity equityData) {
+        this.equityData = equityData;
+    }
+
+    public HighestEducationLevel getHighestEduLevel() {
+        return highestEduLevel;
+    }
+
+    public void setHighestEduLevel(HighestEducationLevel highestEduLevel) {
+        this.highestEduLevel = highestEduLevel;
     }
 
     public String getCourseCompletionYear() {
@@ -145,23 +248,7 @@ public class Student {
     public void setEarnedGPA(float earnedGPA) {
         this.earnedGPA = earnedGPA;
     }
-
-    public String getHighestEducation() {
-        return highestEducation;
-    }
-
-    public void setHighestEducation(String highestEducation) {
-        this.highestEducation = highestEducation;
-    }
-
-    public EquityData getEquityData() {
-        return equityData;
-    }
-
-    public void setEquityData(EquityData equityData) {
-        this.equityData = equityData;
-    }
-    
+ 
     public static CellProcessor[] getProcessors() {
         
         final String emailRegex = "[a-z0-9\\._]+@[a-z0-9\\.]+"; // just an example, not very robust!
