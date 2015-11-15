@@ -9,6 +9,7 @@ package com.numerouno.studentanalytics.model;
 
 import java.util.Locale;
 import org.supercsv.cellprocessor.CellProcessorAdaptor;
+import org.supercsv.cellprocessor.ParseDouble;
 import org.supercsv.cellprocessor.ParseInt;
 import org.supercsv.cellprocessor.ParseLong;
 import org.supercsv.cellprocessor.constraint.NotNull;
@@ -38,14 +39,14 @@ public class Student {
     private String state;
     private int zipCode;
     private Locale country;
-    public enum BasisEnrollment {TESTSCORE,GENDER,SOCIECONOMICAL,PARENTAL,RESIDENTIAL};
-    private BasisEnrollment basisEnroll;
-    public enum Attendance {FULL_TIME, PART_TIME};
-    private Attendance attendanceType;
+    public enum BasisAdmission {TESTSCORE,GENDER,SOCIECONOMICAL,PARENTAL,RESIDENTIAL};
+    private BasisAdmission basisAdmission;
+    public enum AttendanceType {FULLTIME, PARTTIME};
+    private AttendanceType attendanceType;
     private enum ModeAttendance {INTERNAL, EXTERNAL, MULTIMODAL};
-    private ModeAttendance mode;
+    private ModeAttendance modeOfAttendance;
     private Locale countryOfBirth;
-    private Locale language;
+    private Locale LanguageSpokenAtHome;
     private int yearOfArrivalInUSA;   
     private int enrollmentYear;  
     public enum Type {SAT, GRE, GMAT};
@@ -53,10 +54,10 @@ public class Student {
     private int score;
     public enum Equity {D, LI, WNT, RR, NONE};
     private Equity equityData;
-    public enum HighestEducationLevel {HS,AS,BS,MA};
-    private HighestEducationLevel highestEduLevel;
-    private String courseCompletionYear;
-    private float earnedGPA;
+    public enum HighestEducationLevel {HS,AS,BS,BA,MA};
+    private HighestEducationLevel highestEducationLevel;
+    private int courseCompletionYear;
+    private double earnedGPA;
 
     public int getStudentID() {
         return studentID;
@@ -162,37 +163,30 @@ public class Student {
         this.country = country;
     }
 
-    public BasisEnrollment getBasisEnrollment() {
-        return basisEnroll;
+    public BasisAdmission getBasisAdmission() {
+        return basisAdmission;
     }
 
-    public void setBasisEnrollment(BasisEnrollment basisEnroll) {
-        this.basisEnroll = basisEnroll;
+    public void setBasisAdmission(BasisAdmission basisAdmission) {
+        this.basisAdmission = basisAdmission;
     }
 
-    public BasisEnrollment getBasisEnroll() {
-        return basisEnroll;
-    }
-
-    public void setBasisEnroll(BasisEnrollment basisEnroll) {
-        this.basisEnroll = basisEnroll;
-    }
-
-    public Attendance getAttendanceType() {
+    public AttendanceType getAttendanceType() {
         return attendanceType;
     }
 
-    public void setAttendanceType(Attendance attendanceType) {
+    public void setAttendanceType(AttendanceType attendanceType) {
         this.attendanceType = attendanceType;
     }
 
-    public ModeAttendance getMode() {
-        return mode;
+    public ModeAttendance getModeOfAttendance() {
+        return modeOfAttendance;
     }
 
-    public void setMode(ModeAttendance mode) {
-        this.mode = mode;
+    public void setModeOfAttendance(ModeAttendance modeOfAttendance) {
+        this.modeOfAttendance = modeOfAttendance;
     }
+
     public Locale getCountryOfBirth() {
         return countryOfBirth;
     }
@@ -209,13 +203,14 @@ public class Student {
         this.yearOfArrivalInUSA = yearOfArrivalInUSA;
     }
 
-    public Locale getLanguage() {
-        return language;
+    public Locale getLanguageSpokenAtHome() {
+        return LanguageSpokenAtHome;
     }
 
-    public void setLanguage(Locale language) {
-        this.language = language;
+    public void setLanguageSpokenAtHome(Locale LanguageSpokenAtHome) {
+        this.LanguageSpokenAtHome = LanguageSpokenAtHome;
     }
+
 
     public int getEnrollmentYear() {
         return enrollmentYear;
@@ -249,27 +244,28 @@ public class Student {
         this.equityData = equityData;
     }
 
-    public HighestEducationLevel getHighestEduLevel() {
-        return highestEduLevel;
+    public HighestEducationLevel getHighestEducationLevel() {
+        return highestEducationLevel;
     }
 
-    public void setHighestEduLevel(HighestEducationLevel highestEduLevel) {
-        this.highestEduLevel = highestEduLevel;
+    public void setHighestEducationLevel(HighestEducationLevel highestEducationLevel) {
+        this.highestEducationLevel = highestEducationLevel;
     }
 
-    public String getCourseCompletionYear() {
+    public int setCourseCompletionYear() {
         return courseCompletionYear;
     }
 
-    public void setCourseCompletionYear(String courseCompletionYear) {
+    public void setCourseCompletionYear(int courseCompletionYear) {
         this.courseCompletionYear = courseCompletionYear;
+
     }
 
-    public float getEarnedGPA() {
+    public double getEarnedGPA() {
         return earnedGPA;
     }
 
-    public void setEarnedGPA(float earnedGPA) {
+    public void setEarnedGPA(double earnedGPA) {
         this.earnedGPA = earnedGPA;
     }
  
@@ -292,13 +288,20 @@ public class Student {
                 new NotNull(), //state
                 new NotNull(new ParseInt()), //zip
                 new NotNull(new ParseCountry()), //country
-                new NotNull(new ParseBasisEnroll()), //admission basis
-                new NotNull(new ParseAttendance()), //type attendance
+                new NotNull(new ParseBasisAdmission()), //admission basis
+                new NotNull(new ParseAttendanceType()), //type attendance
                 new NotNull(new ParseMode()), //type of mode attendance
                 new NotNull(new ParseCountryOfBirth()), //birth country
                 new NotNull(new ParseLanguage()), //language
                 new NotNull(new ParseInt()), //year of arrival in USA
-                new NotNull() // Enrollment year    
+                new NotNull(new ParseInt()), // Enrollment year
+                new NotNull(new ParseExam()),// exam type
+                new NotNull(new ParseInt()),
+                new NotNull(new ParseEquity()),
+                new NotNull(new ParseHighestEducationLevel()),
+                new NotNull(new ParseInt()), //
+                new NotNull(new ParseDouble())
+          
         };      
         return processors;
 }
@@ -358,6 +361,7 @@ public class Student {
         }
         
         }  
+    
     private static class ParseSex extends CellProcessorAdaptor
     {
        
@@ -412,15 +416,15 @@ public class Student {
                         String.format("Could not parse '%s' as a locale-country", value), context, this);   
         }     
     }
-    private static class ParseBasisEnroll extends CellProcessorAdaptor
+    private static class ParseBasisAdmission extends CellProcessorAdaptor
     {
        
-        public ParseBasisEnroll()
+        public ParseBasisAdmission()
         {
             super();
         }
         
-        public ParseBasisEnroll(CellProcessor next)
+        public ParseBasisAdmission(CellProcessor next)
         {
           super(next);   
         }
@@ -429,25 +433,25 @@ public class Student {
         
         validateInputNotNull(value, context);  // throws an Exception if the input is null
                 
-                for (BasisEnrollment basisEnroll : BasisEnrollment.values()){
-                        if (basisEnroll.name().equalsIgnoreCase(value.toString())){
-                                basisEnroll = BasisEnrollment.valueOf(((String) value).toUpperCase());
-                                return next.execute(basisEnroll, context);
+                for (BasisAdmission basisAdmission : BasisAdmission.values()){
+                        if (basisAdmission.name().equalsIgnoreCase(value.toString())){
+                                basisAdmission = BasisAdmission.valueOf(((String) value).toUpperCase());
+                                return next.execute(basisAdmission, context);
                         }      
                 }           
                   throw new SuperCsvCellProcessorException(
                         String.format("Could not parse '%s' as an acceptable Basis for admission", value), context, this);
         }
         }      
-    private static class ParseAttendance extends CellProcessorAdaptor
+    private static class ParseAttendanceType extends CellProcessorAdaptor
     {
        
-        public ParseAttendance()
+        public ParseAttendanceType()
         {
             super();
         }
         
-        public ParseAttendance(CellProcessor next)
+        public ParseAttendanceType(CellProcessor next)
         {
           super(next);   
         }
@@ -457,14 +461,14 @@ public class Student {
         validateInputNotNull(value, context);  // throws an Exception if the input is null
            
 
-                for (Attendance attendance : Attendance.values()){
-                        if (attendance.name().equalsIgnoreCase(value.toString())){
-                                attendance = Attendance.valueOf(((String) value).toUpperCase());
-                                return next.execute(attendance, context);
+                for (AttendanceType attendanceType : AttendanceType.values()){
+                        if (attendanceType.name().equalsIgnoreCase(value.toString())){
+                                attendanceType = AttendanceType.valueOf(((String) value).toUpperCase());
+                                return next.execute(attendanceType, context);
                         }      
                 }           
                   throw new SuperCsvCellProcessorException(
-                        String.format("Could not parse '%s' for admission", value), context, this);
+                        String.format("Could not parse '%s' for attendanceType", value), context, this);
         }
         }    
     private static class ParseMode extends CellProcessorAdaptor
@@ -485,10 +489,10 @@ public class Student {
         validateInputNotNull(value, context);  // throws an Exception if the input is null
            
 
-                for (ModeAttendance mode : ModeAttendance.values()){
-                        if (mode.name().equalsIgnoreCase(value.toString())){
-                                mode = ModeAttendance.valueOf(((String) value).toUpperCase());
-                                return next.execute(mode, context);
+                for (ModeAttendance modeOfAttendance : ModeAttendance.values()){
+                        if (modeOfAttendance.name().equalsIgnoreCase(value.toString())){
+                                modeOfAttendance = ModeAttendance.valueOf(((String) value).toUpperCase());
+                                return next.execute(modeOfAttendance, context);
                         }      
                 }           
                   throw new SuperCsvCellProcessorException(
@@ -538,12 +542,12 @@ public class Student {
         public Object execute(Object value, CsvContext context) {
             validateInputNotNull(value, context);
             Locale.setDefault(Locale.US);
-            for(Locale language : Locale.getAvailableLocales())
+            for(Locale languageSpokenAtHome : Locale.getAvailableLocales())
             {
                 
-                if(language.getDisplayLanguage().equals(value.toString().trim()))
+                if(languageSpokenAtHome.getDisplayLanguage().equals(value.toString().trim()))
                 {
-                    return next.execute(language, context);
+                    return next.execute(languageSpokenAtHome, context);
                 }
             }
             
@@ -553,5 +557,90 @@ public class Student {
         }
         
     }
+       private static class ParseExam extends CellProcessorAdaptor
+    {
+       
+        public ParseExam()
+        {
+            super();
+        }
+                
+        public ParseExam(CellProcessor next)
+        {
+          super(next);   
+        }
+        @Override
+        public Object execute(Object value, CsvContext context) {
+        
+        validateInputNotNull(value, context);  // throws an Exception if the input is null
+       
 
+                for (Type entranceExam : Type.values()){
+                        if (entranceExam.name().equalsIgnoreCase(value.toString())){
+                                entranceExam = Type.valueOf(((String) value).toUpperCase());
+                                return next.execute(entranceExam, context);
+                        }      
+                }           
+                  throw new SuperCsvCellProcessorException(
+                        String.format("Could not parse '%s' as an acceptable exam", value), context, this);
+        }
+        } 
+       private static class ParseEquity extends CellProcessorAdaptor
+    {
+       
+        public ParseEquity()
+        {
+            super();
+        }
+                
+        public ParseEquity(CellProcessor next)
+        {
+          super(next);   
+        }
+        @Override
+        public Object execute(Object value, CsvContext context) {
+        
+        validateInputNotNull(value, context);  // throws an Exception if the input is null
+           
+
+                for (Equity equityData : Equity.values()){
+                        if (equityData.name().equalsIgnoreCase(value.toString())){
+                                equityData = Equity.valueOf(((String) value).toUpperCase());
+                                return next.execute(equityData, context);
+                        }      
+                }           
+                  throw new SuperCsvCellProcessorException(
+                        String.format("Could not parse '%s' as an acceptable Basis for admission", value), context, this);
+        }
+        } 
+       private static class ParseHighestEducationLevel extends CellProcessorAdaptor
+    {
+       
+        public ParseHighestEducationLevel()
+        {
+            super();
+        }
+                
+        public ParseHighestEducationLevel(CellProcessor next)
+        {
+          super(next);   
+        }
+        @Override
+        public Object execute(Object value, CsvContext context) {
+        
+        validateInputNotNull(value, context);  // throws an Exception if the input is null
+           
+
+                for (HighestEducationLevel highestEducationLevel : HighestEducationLevel.values()){
+                        if (highestEducationLevel.name().equalsIgnoreCase(value.toString())){
+                                highestEducationLevel = HighestEducationLevel.valueOf(((String) value).toUpperCase());
+                                return next.execute(highestEducationLevel, context);
+                        }      
+                }           
+                  throw new SuperCsvCellProcessorException(
+                        String.format("Could not parse '%s' as an acceptable level of education", value), context, this);
+        }
+        } 
+        
+    
 }
