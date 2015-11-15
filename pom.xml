@@ -44,9 +44,17 @@
         </dependency>
 
         <dependency>
+<<<<<<< HEAD
             <groupId>com.amazonaws</groupId>
             <artifactId>aws-java-sdk</artifactId>
             <version>1.10.33</version>
+=======
+
+            <groupId>com.amazonaws</groupId>
+            <artifactId>aws-java-sdk</artifactId>
+            <version>1.10.33</version>
+
+>>>>>>> 7b1665ed7f631ed7aac5feeefa0e9af87a74fec9
         </dependency>
 
         <dependency>
