@@ -6,8 +6,17 @@
         </session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>index.jsp</welcome-file>
+        <welcome-file>login.jsp</welcome-file>     
     </welcome-file-list>
+    <servlet>
+        <servlet-name> index</servlet-name>
+        <jsp-file> index.jsp </jsp-file>
+        
+    </servlet>
+    <servlet-mapping>
+        <servlet-name> index </servlet-name>
+        <url-pattern>/index</url-pattern>
+    </servlet-mapping>
     <servlet>
         <servlet-name>CSVFileUploadServlet</servlet-name>
         <servlet-class>com.numerouno.studentanalytics.service.CSVFileUploadServlet</servlet-class>
