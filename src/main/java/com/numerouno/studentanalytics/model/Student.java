@@ -26,8 +26,9 @@ public class Student {
     private Course courseInformation;
     public enum Degree {UNDERGRAD, POSTGRAD};
     private Degree degreeLevel;
+    private String fieldEducation; 
     public int age;
-    public enum Sex {MALE, FEMALE};
+    public enum Sex {M, F};
     private Sex gender;
     private String citizenship;
     private String termResidence;
@@ -43,7 +44,7 @@ public class Student {
     private enum ModeAttendance {INTERNAL, EXTERNAL, MULTIMODAL};
     private ModeAttendance mode;
     private Locale countryOfBirth;
-    private Locale languageSpokenAtHome;
+    private Locale language;
     private String yearOfArrivalInUSA;   
     private int enrollmentYear;  
     public enum Type {SAT, GRE, GMAT};
@@ -80,6 +81,14 @@ public class Student {
         this.degreeLevel = degreeLevel;
     }
 
+    public String getFieldEducation() {
+        return fieldEducation;
+    }
+
+    public void setFieldEducation(String fieldEducation) {
+        this.fieldEducation = fieldEducation;
+    }
+
     public int getAge() {
         return age;
     }
@@ -94,6 +103,10 @@ public class Student {
 
     public void setGender(Sex gender) {
         this.gender = gender;
+    }
+
+    public void setCitizenship(String citizenship) {
+        this.citizenship = citizenship;
     }
 
     public String getCitizenship() {
@@ -186,12 +199,12 @@ public class Student {
     public void setYearOfArrivalInUSA(String yearOfArrivalInUSA) {
         this.yearOfArrivalInUSA = yearOfArrivalInUSA;
     }
-    public Locale getLanguageSpokenAtHome() {
-        return languageSpokenAtHome;
+    public Locale getLanguage() {
+        return language;
     }
 
-    public void setLanguageSpokenAtHome(Locale languageSpokenAtHome) {
-        this.languageSpokenAtHome = languageSpokenAtHome;
+    public void setLanguageSpokenAtHome(Locale language) {
+        this.language = language;
     }
     public int getEnrollmentYear() {
         return enrollmentYear;
@@ -256,20 +269,22 @@ public class Student {
         
         final CellProcessor[] processors = new CellProcessor[] { 
                 
+                //new NotNull(new ParseInt()), // student ID
                 new NotNull(new ParseInt()), // age
                 new NotNull(new ParseSex()), //gender
                 new NotNull(new ParseCountry()), //country
                 new NotNull(new ParseLanguage()), //language
-                new NotNull() //citizenship
+                //new NotNull(new Parese) //citizenship
         
         };
         
         return processors;
 }
     
+ 
     private static class ParseSex extends CellProcessorAdaptor
     {
-        
+       
         public ParseSex()
         {
             super();
@@ -324,7 +339,7 @@ public class Student {
             }
             
             throw new SuperCsvCellProcessorException(
-                        String.format("Could not parse '%s' as a locale-language", value), context, this);
+                        String.format("Could not parse '%s' as a locale-country", value), context, this);
      
         }
         

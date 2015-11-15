@@ -47,12 +47,12 @@ public class CSVFileUploadServlet extends HttpServlet {
         {
             // New ParseCSV class
             ParseCSV parseCSV = new ParseCSV();
-            parseCSV.testMethod();;
-//            CSVParser.parseIntoPOJO(req.getPart("file").getInputStream());
-//            Logger log = Logger.getLogger(CSVFileUploadServlet.class.getName());
-//            log.info("CSV file parsed successfully!");
-//            
-//            out.print("The file you uploaded is '" + req.getPart("file").getSubmittedFileName()+"' and it has been parsed successfully!");
+            //parseCSV.testMethod();;
+            CSVParser.parseIntoPOJO(req.getPart("file").getInputStream());
+            Logger log = Logger.getLogger(CSVFileUploadServlet.class.getName());
+            log.info("CSV file parsed successfully!");
+            
+            out.print("The file you uploaded is '" + req.getPart("file").getSubmittedFileName()+"' and it has been parsed successfully!");
 
              }
 //        AWSCredentials credentials = new ProfileCredentialsProvider().getCredentials();
