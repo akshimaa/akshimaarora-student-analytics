@@ -7,7 +7,6 @@ package com.numerouno.studentanalytics.controller;
 
 import java.io.File;
 import java.io.IOException;
-import org.jdmp.core.dataset.MatrixDataSet;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.calculation.Calculation;
 import org.ujmp.core.filematrix.FileFormat;
@@ -60,14 +59,14 @@ public class ParseCSV {
             System.out.println("Number of columns: " + size3[1]);
             
             // Convert to MatrixDataSet for JDMP
-            MatrixDataSet m4 = new MatrixDataSet(m3);
+//            MatrixDataSet m4 = new MatrixDataSet(m3);
             
             // NOTE: I'm not entirely sure why getsize returns a column value of 
             // one for the MatrixDataSet. I'm still trying to figure that one out.
-            long[] size2 = m4.getSize();
-            System.out.println("MatrixDataSet SIZE:");
-            System.out.println("Number of rows: " + size2[0]);
-            System.out.println("Number of columns: " + size2[1]);
+//            long[] size2 = m4.getSize();
+//            System.out.println("MatrixDataSet SIZE:");
+//            System.out.println("Number of rows: " + size2[0]);
+//            System.out.println("Number of columns: " + size2[1]);
             
             // EXAMPLE CODE FOR MATRIX MERGING
             Matrix m5 = m1.appendVertically(Calculation.Ret.NEW, m1);
