@@ -1,4 +1,5 @@
 <%-- 
+<<<<<<< HEAD
     Document   : login
     Created on : 14/11/2015, 12:30:21 AM
     Author     : Akshima
@@ -14,8 +15,7 @@
 <script>
 
 function statusChangeCallback(response) {
-    alert('statusChangeCallback');
-    alert(response);
+    
     // The response object is returned with a status field that lets the
     // app know the current login status of the person.
     // Full docs on the response object can be found in the documentation
@@ -71,12 +71,12 @@ function statusChangeCallback(response) {
   }(document, 'script', 'facebook-jssdk'));
 
 function testAPI() {
-    alert('Welcome!  Fetching your information.... ');
+   
     redirect(this);
   }
 
 function redirect(elem){
-    alert("redirecting");
+    //alert("redirecting");
     window.location="index.jsp";
 }
  
@@ -89,3 +89,26 @@ function redirect(elem){
 
 </body>
 </html>
+=======
+    Document   : index
+    Created on : Nov 3, 2015, 5:23:33 PM
+    Author     : madan
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>JSP Page</title>
+    </head>
+    <body>
+        <div>
+            <form action="upload" method="post" enctype="multipart/form-data">
+                <input type="file" name="file" accept=".csv" />
+                <input type="submit" value="upload" />
+            </form> 
+        </div>
+    </body>
+</html>
+>>>>>>> origin/master

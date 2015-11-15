@@ -5,14 +5,9 @@
  */
 package com.numerouno.studentanalytics.service;
 
-import com.amazonaws.auth.AWSCredentials;
-import com.amazonaws.auth.profile.ProfileCredentialsProvider;
-import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.AmazonS3Client;
-import com.amazonaws.services.s3.model.GetObjectRequest;
-import com.amazonaws.services.s3.model.PutObjectRequest;
-import com.numerouno.studentanalytics.controller.ParseCSV;
-import java.io.File;
+
+import com.numerouno.studentanalytics.controller.CSVParser;
+
 import java.util.logging.Logger;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -45,14 +40,12 @@ public class CSVFileUploadServlet extends HttpServlet {
         PrintWriter out = resp.getWriter();
         if(req != null)
         {
-            // New ParseCSV class
-            ParseCSV parseCSV = new ParseCSV();
-            parseCSV.testMethod();;
-//            CSVParser.parseIntoPOJO(req.getPart("file").getInputStream());
-//            Logger log = Logger.getLogger(CSVFileUploadServlet.class.getName());
-//            log.info("CSV file parsed successfully!");
-//            
-//            out.print("The file you uploaded is '" + req.getPart("file").getSubmittedFileName()+"' and it has been parsed successfully!");
+
+            CSVParser.parseIntoPOJO(req.getPart("file").getInputStream());
+            Logger log = Logger.getLogger(CSVFileUploadServlet.class.getName());
+            log.info("CSV file parsed successfully!");
+            
+            out.print("The file you uploaded is '" + req.getPart("file").getSubmittedFileName()+"' and it has been parsed successfully!");
 
              }
 //        AWSCredentials credentials = new ProfileCredentialsProvider().getCredentials();
