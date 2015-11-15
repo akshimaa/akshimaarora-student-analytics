@@ -2,7 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.csi</groupId>
+    <groupId>com.numerouno</groupId>
     <artifactId>StudentAnalytics</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
@@ -16,6 +16,12 @@
     
     <dependencies>
         <dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>aws-java-sdk-core</artifactId>
+            <version>1.9.6</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-web-api</artifactId>
             <version>7.0</version>
@@ -27,20 +33,19 @@
             <version>1.0.13</version>
         </dependency>
         <dependency>
-            <groupId>org.jdmp</groupId>
-            <artifactId>jdmp-core</artifactId>
-            <version>0.3.0</version>
+            <groupId>nz.ac.waikato.cms.weka</groupId>
+            <artifactId>weka-stable</artifactId>
+            <version>3.6.13</version>
         </dependency>
+
         <dependency>
-            <groupId>org.jdmp</groupId>
-            <artifactId>jdmp-gui</artifactId>
-            <version>0.3.0</version>
-        </dependency>
-        <dependency>
+
             <groupId>com.amazonaws</groupId>
             <artifactId>aws-java-sdk</artifactId>
             <version>1.10.33</version>
+
         </dependency>
+
         <dependency>
             <groupId>org.glassfish.main.core</groupId>
             <artifactId>glassfish</artifactId>
