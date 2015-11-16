@@ -33,6 +33,7 @@
     // for FB.getLoginStatus().
     if (response.status === 'connected') {
       // Logged into your app and Facebook.
+     
 
     } else if (response.status === 'not_authorized') {
       // The person is logged into Facebook, but not your app.
@@ -130,6 +131,7 @@
                 user_email = response.email; //get user email
           // you can store this data into your database    
           console.log('Hello, '+response.name+" !");
+          location.href = 'index';
             });
             
 
