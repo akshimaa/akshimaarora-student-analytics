@@ -1,28 +1,39 @@
 <%-- 
-<<<<<<< HEAD
-    Document   : login
-    Created on : 14/11/2015, 12:30:21 AM
-    Author     : Akshima
+    Document   : login2
+    Created on : Nov 16, 2015, 4:24:08 AM
+    Author     : madan
 --%>
 
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <title>Facebook Login JavaScript Example</title>
 <meta charset="UTF-8">
+    
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css" media="screen">
+ 
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-social.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="css/font-awesome.css" media="screen">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="js/jquery-2.1.4.js" type="text/js"></script>
+    <script src="js/bootstrap.js" type="text/js"></script>
+    
 </head>
 <body>
 <script>
-
-function statusChangeCallback(response) {
-    
+  // This is called with the results from from FB.getLoginStatus().
+  function statusChangeCallback(response) {
+    console.log('statusChangeCallback');
+    console.log(response);
     // The response object is returned with a status field that lets the
     // app know the current login status of the person.
     // Full docs on the response object can be found in the documentation
     // for FB.getLoginStatus().
     if (response.status === 'connected') {
       // Logged into your app and Facebook.
-      testAPI();
+
     } else if (response.status === 'not_authorized') {
       // The person is logged into Facebook, but not your app.
       document.getElementById('status').innerHTML = 'Please log ' +
@@ -34,9 +45,8 @@ function statusChangeCallback(response) {
         'into Facebook.';
     }
   }
-  
-  
-   // This function is called when someone finishes with the Login
+
+  // This function is called when someone finishes with the Login
   // Button.  See the onlogin handler attached to it in the sample
   // code below.
   function checkLoginState() {
@@ -53,62 +63,84 @@ function statusChangeCallback(response) {
     xfbml      : true,  // parse social plugins on this page
     version    : 'v2.5' // use version 2.2
   });
-  
+
+  // Now that we've initialized the JavaScript SDK, we call 
+  // FB.getLoginStatus().  This function gets the state of the
+  // person visiting this page and can return one of three states to
+  // the callback you provide.  They can be:
+  //
+  // 1. Logged into your app ('connected')
+  // 2. Logged into Facebook, but not your app ('not_authorized')
+  // 3. Not logged into Facebook and can't tell if they are logged into
+  //    your app or not.
+  //
+  // These three cases are handled in the callback function.
+
   FB.getLoginStatus(function(response) {
     statusChangeCallback(response);
   });
 
   };
 
-
+  // Load the SDK asynchronously
   (function(d, s, id) {
     var js, fjs = d.getElementsByTagName(s)[0];
     if (d.getElementById(id)) return;
     js = d.createElement(s); js.id = id;
     js.src = "//connect.facebook.net/en_US/sdk.js";
     fjs.parentNode.insertBefore(js, fjs);
-    
   }(document, 'script', 'facebook-jssdk'));
 
-function testAPI() {
-   
-    redirect(this);
-  }
+  // Here we run a very simple test of the Graph API after login is
+  // successful.  See statusChangeCallback() for when this call is made.
 
-function redirect(elem){
-    //alert("redirecting");
-    window.location="index.jsp";
-}
- 
+
 </script>
-<fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
-</fb:login-button>
 
-<div id="status">
+<!--
+  Below we include the Login Button social plugin. This button uses
+  the JavaScript SDK to present a graphical Login button that triggers
+  the FB.login() function when clicked.
+-->
+
+<img src="images/cmulogo.jpg" height="30%" width="30%" style="margin-left: 5%;margin-top: 5%;min-height:78px;min-width:309px; "/>
+<div  class="container" style="margin: auto; display: block;margin-top: 15%;width: 22%;min-width: 300px">
+    <a id="fb_login" class="btn btn-block btn-social btn-lg btn-facebook" style="text-align: center;" >
+    <span class="fa fa-facebook"></span>Sign in with Facebook
+</a>
+
 </div>
 
-</body>
-</html>
-=======
-    Document   : index
-    Created on : Nov 3, 2015, 5:23:33 PM
-    Author     : madan
---%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
-    </head>
-    <body>
-        <div>
-            <form action="upload" method="post" enctype="multipart/form-data">
-                <input type="file" name="file" accept=".csv" />
-                <input type="submit" value="upload" />
-            </form> 
-        </div>
-    </body>
+
+</body>
+<script>
+    
+  $('#fb_login').click(function(){
+      console.log("click");
+    FB.login(function(response) {
+
+        if (response.authResponse) {
+            console.log('Welcome!  Fetching your information.... ');
+            //console.log(response); // dump complete info
+            access_token = response.authResponse.accessToken; //get access token
+            user_id = response.authResponse.userID; //get FB UID
+
+            FB.api('/me', function(response) {
+                user_email = response.email; //get user email
+          // you can store this data into your database    
+          console.log('Hello, '+response.name+" !");
+            });
+            
+
+        } else {
+            //user hit cancel button
+            console.log('User cancelled login or did not fully authorize.');
+
+        }
+    }, {
+        scope: 'public_profile,email'
+    });});
+
+</script>
 </html>
->>>>>>> origin/master
