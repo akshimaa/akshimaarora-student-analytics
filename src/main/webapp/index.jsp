@@ -384,6 +384,12 @@
             <div class="row">
                 <div class="col-lg-12">
                     <h1 class="page-header">Dashboard</h1>
+                            <div>
+            <form action="upload" method="post" enctype="multipart/form-data">
+                <input type="file" name="file" accept=".csv" />
+                <input type="submit" value="upload" />
+            </form> 
+        </div>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
