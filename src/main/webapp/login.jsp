@@ -1,5 +1,5 @@
 <%-- 
-    Document   : login2
+    Document   : login
     Created on : Nov 16, 2015, 4:24:08 AM
     Author     : madan
 --%>
@@ -112,7 +112,10 @@
 
 </div>
 
-
+<form id="index" action="dashboard" name="login" method="POST" style="display:none;">
+  <input type="hidden" name="fbToken" id="fbToken" />
+<input type="hidden" name="fbUser" id="fbUser" />
+</form>
 
 </body>
 <script>
@@ -123,15 +126,18 @@
 
         if (response.authResponse) {
             console.log('Welcome!  Fetching your information.... ');
-            //console.log(response); // dump complete info
+            console.log(response); // dump complete info
             access_token = response.authResponse.accessToken; //get access token
             user_id = response.authResponse.userID; //get FB UID
-
+            $('#fbToken').attr('value',access_token);
+            $('#fbUser').attr('value',user_id);
+            console.log("calling submit action");
+            $('#index').submit();
             FB.api('/me', function(response) {
                 user_email = response.email; //get user email
           // you can store this data into your database    
           console.log('Hello, '+response.name+" !");
-          location.href = 'index';
+          
             });
             
 

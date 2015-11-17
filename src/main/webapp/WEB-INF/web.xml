@@ -6,16 +6,23 @@
         </session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>login.jsp</welcome-file>     
+        <welcome-file>login.jsp</welcome-file>
     </welcome-file-list>
     <servlet>
         <servlet-name> index</servlet-name>
         <jsp-file> index.jsp </jsp-file>
-        
     </servlet>
     <servlet-mapping>
         <servlet-name> index </servlet-name>
         <url-pattern>/index</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>LoginServlet</servlet-name>
+        <servlet-class>com.numerouno.studentanalytics.service.LoginServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name> LoginServlet </servlet-name>
+        <url-pattern>/dashboard</url-pattern>
     </servlet-mapping>
     <servlet>
         <servlet-name>CSVFileUploadServlet</servlet-name>

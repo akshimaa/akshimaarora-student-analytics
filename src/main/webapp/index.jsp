@@ -50,7 +50,7 @@
     <div id="wrapper">
 
         <!-- Navigation -->
-        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0;min-height: 101px">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="sr-only">Toggle navigation</span>
@@ -58,7 +58,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index">SB Admin v2.0</a>
+                <a class="navbar-brand" href="index"><img src="images/cmulogo.jpg"  width="30%"/></a>
             </div>
             <!-- /.navbar-header -->
 
@@ -271,18 +271,22 @@
                 <!-- /.dropdown -->
             </ul>
             <!-- /.navbar-top-links -->
-
-            <div class="navbar-default sidebar" role="navigation">
+           
+            <div class="navbar-default sidebar" style="margin-top: 101px" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
                         <li class="sidebar-search">
                             <div class="input-group custom-search-form">
-                                <input type="text" class="form-control" placeholder="Search...">
-                                <span class="input-group-btn">
-                                <button class="btn btn-default" type="button">
-                                    <i class="fa fa-search"></i>
+                                                         
+                    <form action="upload" method="post" enctype="multipart/form-data">
+                <input id="upload-input" class="form-control" type="file" name="file" accept=".csv" style="width: 181px"/>
+                 <span class="input-group-btn">
+                <button class="btn btn-default" type="submit" value="upload">
+                                    <i class="fa fa-upload"></i>
                                 </button>
-                            </span>
+                 </span>
+                </form> 
+              
                             </div>
                             <!-- /input-group -->
                         </li>
@@ -384,12 +388,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <h1 class="page-header">Dashboard</h1>
-                            <div>
-            <form action="upload" method="post" enctype="multipart/form-data">
-                <input type="file" name="file" accept=".csv" />
-                <input type="submit" value="upload" />
-            </form> 
-        </div>
+
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
@@ -933,8 +932,9 @@
     <!-- /#wrapper -->
 
     <!-- jQuery -->
-    <script src="js/jquery.min.js"></script>
-
+    <script src="js/jquery-2.1.4.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+  
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
 
@@ -948,7 +948,9 @@
 
     <!-- Custom Theme JavaScript -->
     <script src="js/sb-admin-2.js"></script>
-
+    <script>
+       
+    </script>
 </body>
 
 </html>
