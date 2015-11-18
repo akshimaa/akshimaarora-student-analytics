@@ -5,7 +5,6 @@
  */
 package com.numerouno.studentanalytics.processor;
 
-import java.io.File;
 import java.io.IOException;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.calculation.Calculation;
@@ -16,6 +15,9 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.GetObjectRequest;
 import java.io.File;
+import java.io.InputStream;
+import java.util.logging.Logger;
+import org.apache.commons.io.FileUtils;
 import weka.core.Instances;
 import weka.core.converters.ArffSaver;
 import weka.core.converters.CSVLoader;
@@ -25,7 +27,7 @@ import weka.core.converters.CSVLoader;
  * @author Teck Jan Low
  * @version 1.0
  */
-public class DataMiner {
+public class CSVFileProcessor {
 
     /**
      * Reads from the Amazon AWS S3 bucket and saves the file as a temp file.
@@ -35,7 +37,7 @@ public class DataMiner {
         AWSCredentials credentials = new ProfileCredentialsProvider().getCredentials();
         AmazonS3 s3client = new AmazonS3Client(credentials);
         s3client.getObject(new GetObjectRequest("student-alpha", "student.csv"),
-                new File("temp/tempRemote.csv"));
+                new File("Temp/tempRemote.csv"));
         
     }
 
@@ -43,17 +45,18 @@ public class DataMiner {
      * Merges the remote and local .csv files and saves it as a temp file.
      * @param filePath The file path of the local .csv file
      */
-    public static void mergeCSV(String filePath) {
+    public static void mergeCSV(InputStream inputStream) {
 
         // Specify import file format
         FileFormat csv = FileFormat.CSV;
         // create new File objects
-        File localFile = new File(filePath);
-        File remoteFile = new File("temp/tempRemote.csv");
-        File exportFile = new File("temp/tempMerged.csv");
+        File localFile = new File("Temp/tempLocal.csv");
+        File remoteFile = new File("Temp/tempRemote.csv");
+        File exportFile = new File("Temp/tempMerged.csv");
+        
 
         try {
-            
+            FileUtils.copyInputStreamToFile(inputStream, localFile);
             // Import .csv as matrices
             Matrix local = Matrix.Factory.importFrom().file(localFile).asDenseCSV();
             Matrix remote = Matrix.Factory.importFrom().file(remoteFile).asDenseCSV();
@@ -63,7 +66,8 @@ public class DataMiner {
             merged.exportTo().file(exportFile).asDenseCSV(',');
 
         } catch (IOException i) {
-
+            Logger log = Logger.getLogger(CSVFileProcessor.class.getName());
+            log.severe(i.toString());
         }
 
     }
@@ -84,7 +88,7 @@ public class DataMiner {
             // save ARFF
             ArffSaver saver = new ArffSaver();
             saver.setInstances(data);
-            saver.setFile(new File("temp/temp.arff"));
+            saver.setFile(new File("Temp/temp.arff"));
             saver.writeBatch();
             
         } catch (IOException i) {

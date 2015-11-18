@@ -6,17 +6,27 @@
 package com.numerouno.studentanalytics.service;
 
 
-import com.numerouno.studentanalytics.controller.CSVParser;
+import com.amazonaws.auth.AWSCredentials;
+import com.amazonaws.auth.profile.ProfileCredentialsProvider;
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.model.GetObjectRequest;
+import com.numerouno.studentanalytics.processor.CSVParser;
+import com.numerouno.studentanalytics.processor.CSVFileProcessor;
+import java.io.File;
 
 import java.util.logging.Logger;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
+import java.util.logging.Level;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.fileupload.disk.DiskFileItem;
+import org.apache.commons.io.FileUtils;
 
 
 
@@ -36,23 +46,26 @@ public class CSVFileUploadServlet extends HttpServlet {
 
     @Override
      protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-         
-        PrintWriter out = resp.getWriter();
+        
         if(req != null)
         {
-
-            CSVParser.parseIntoPOJO(req.getPart("file").getInputStream());
-            Logger log = Logger.getLogger(CSVFileUploadServlet.class.getName());
-            log.info("CSV file parsed successfully!");
             
-            out.print("The file you uploaded is '" + req.getPart("file").getSubmittedFileName()+"' and it has been parsed successfully!");
-
-             }
-//        AWSCredentials credentials = new ProfileCredentialsProvider().getCredentials();
-//            AmazonS3 s3client = new AmazonS3Client(credentials);
-//            //s3client.putObject(new PutObjectRequest("student-alpha", "test.csv", new File("/Users/madan/Documents/student.csv")));
-//            s3client.getObject(new GetObjectRequest("student-alpha","student.csv"), new File("/Users/madan/Desktop/student.csv"));
-//                
-//        
+            Logger log = Logger.getLogger(CSVFileUploadServlet.class.getName());
+            log.info(req.getPart("file").getSubmittedFileName().concat(" file uploaded successfully!"));
+            CSVFileProcessor.mergeCSV(req.getPart("file").getInputStream());
+  
+            try {
+                CSVParser.parseIntoPOJO(req.getPart("file").getInputStream());
+                log.info(req.getPart("file").getSubmittedFileName().concat(" file parsed successfully!"));
+           
+            } catch (Exception ex) {
+                Logger.getLogger(CSVFileUploadServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+        }
+            
+               
+ 
+          
      }
 }

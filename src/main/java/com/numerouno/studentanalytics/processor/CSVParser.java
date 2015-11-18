@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.numerouno.studentanalytics.controller;
+package com.numerouno.studentanalytics.processor;
 
 import com.numerouno.studentanalytics.model.Student;
+import com.numerouno.studentanalytics.model.StudentList;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -25,7 +25,7 @@ import org.supercsv.prefs.CsvPreference;
  */
 public class CSVParser  {
 
-    public static void parseIntoPOJO(InputStream fileStream) throws IOException
+    public static void parseIntoPOJO(InputStream fileStream) throws Exception
     {
             
             try (ICsvBeanReader beanReader = new CsvBeanReader(new InputStreamReader(fileStream, "UTF8"), CsvPreference.STANDARD_PREFERENCE)) {
@@ -43,7 +43,7 @@ public class CSVParser  {
                         studentList.add(student);
                                 
                 }
-                
+                StudentList.setList(studentList);
         }
         catch (FileNotFoundException ex) {
             Logger.getLogger(CSVParser.class.getName()).log(Level.SEVERE, null, ex);
