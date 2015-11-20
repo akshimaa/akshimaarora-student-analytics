@@ -14,10 +14,13 @@ import com.amazonaws.auth.profile.ProfileCredentialsProvider;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.GetObjectRequest;
+import com.amazonaws.services.s3.model.PutObjectRequest;
 import java.io.File;
 import java.io.InputStream;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.commons.io.FileUtils;
+import org.ujmp.core.util.io.FileUtil;
 import weka.core.Instances;
 import weka.core.converters.ArffSaver;
 import weka.core.converters.CSVLoader;
@@ -38,6 +41,21 @@ public class CSVFileProcessor {
         AmazonS3 s3client = new AmazonS3Client(credentials);
         s3client.getObject(new GetObjectRequest("student-alpha", "student.csv"),
                 new File("Temp/tempRemote.csv"));
+        
+    }
+    
+       public static void writeIntosS3(InputStream stream) {
+        
+        AWSCredentials credentials = new ProfileCredentialsProvider().getCredentials();
+        AmazonS3 s3client = new AmazonS3Client(credentials);
+        File tempFile = new File("Temp/tempFile.csv");
+        try {
+            FileUtils.copyInputStreamToFile(stream, tempFile);
+            s3client.putObject(new PutObjectRequest("student-beta","student-upload.csv",tempFile));
+        } catch (IOException ex) {
+            Logger.getLogger(CSVFileProcessor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+      
         
     }
 

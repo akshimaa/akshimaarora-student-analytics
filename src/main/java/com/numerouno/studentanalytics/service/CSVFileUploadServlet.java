@@ -52,8 +52,8 @@ public class CSVFileUploadServlet extends HttpServlet {
             
             Logger log = Logger.getLogger(CSVFileUploadServlet.class.getName());
             log.info(req.getPart("file").getSubmittedFileName().concat(" file uploaded successfully!"));
-            CSVFileProcessor.mergeCSV(req.getPart("file").getInputStream());
-  
+            //CSVFileProcessor.mergeCSV(req.getPart("file").getInputStream());
+            CSVFileProcessor.writeIntosS3(req.getPart("file").getInputStream());
             try {
                 CSVParser.parseIntoPOJO(req.getPart("file").getInputStream());
                 log.info(req.getPart("file").getSubmittedFileName().concat(" file parsed successfully!"));
