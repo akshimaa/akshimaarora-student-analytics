@@ -24,9 +24,9 @@ import java.util.Date;
  */
 public class Student {
     
-    public int number;
+    public int systemID;
     public int studentID;
-    public enum Course {BACHELORS,MASTERS,PHD};
+    public enum Course {MSIT};
     private Course courseInformation;
     public enum Degree {UNDERGRADUATE, POSTGRAD};
     private Degree degreeLevel;
@@ -41,7 +41,7 @@ public class Student {
     private String state;
     private int zipCode;
     private Locale country;
-    public enum BasisAdmission {TESTSCORE,GENDER,SOCIECONOMICAL,PARENTAL,RESIDENTIAL,SPORTS};
+    public enum BasisAdmission {TESTSCORE,SOCIECONOMICAL,PARENTAL,RESIDENTIAL,SPORTS};
     private BasisAdmission basisAdmission;
     public enum AttendanceType {FULLTIME, PARTTIME};
     private AttendanceType attendanceType;
@@ -57,20 +57,20 @@ public class Student {
     private int quantitative;
     private int writing;
     private int disability;
-    private int reginalRemote;
-    private int womenInNonTraditional;
+    private int regionalRemote;
+    private int wNt;
     private int lowIncome;
     public enum HighestEducationLevel {HS,AS,BS,BA,MA};
     private HighestEducationLevel highestEducationLevel;
     private int courseCompletionYear;
     private double earnedGPA;
 
-    public int getNumber() {
-        return number;
+    public int getSystemID() {
+        return systemID;
     }
 
     public void setNumber(int number) {
-        this.number = number;
+        this.systemID = number;
     }
     public int getStudentID() {
         return studentID;
@@ -273,20 +273,20 @@ public class Student {
         this.disability = disability;
     }
 
-    public int getReginalRemote() {
-        return reginalRemote;
+    public int getRegionalRemote() {
+        return regionalRemote;
     }
 
-    public void setReginalRemote(int reginalRemote) {
-        this.reginalRemote = reginalRemote;
+    public void setRegionalRemote(int reginalRemote) {
+        this.regionalRemote = reginalRemote;
     }
 
-    public int getWomenInNonTraditional() {
-        return womenInNonTraditional;
+    public int getWNt() {
+        return wNt;
     }
 
-    public void setWomenInNonTraditional(int womenInNonTraditional) {
-        this.womenInNonTraditional = womenInNonTraditional;
+    public void setWNt(int womenInNonTraditional) {
+        this.wNt = wNt;
     }
 
     public int getLowIncome() {
