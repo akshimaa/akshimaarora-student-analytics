@@ -17,6 +17,7 @@ import org.supercsv.cellprocessor.constraint.StrRegEx;
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.exception.SuperCsvCellProcessorException;
 import org.supercsv.util.CsvContext;
+import java.util.Date;
 /**
  * 
  * @author Madan Parameswaran
@@ -30,7 +31,7 @@ public class Student {
     public enum Degree {UNDERGRADUATE, POSTGRAD};
     private Degree degreeLevel;
     private String fieldEducation; 
-    public int age;
+    private Date dOb;
     public enum Sex {M, F};
     private Sex gender;
     private String citizenship;
@@ -103,14 +104,14 @@ public class Student {
         this.fieldEducation = fieldEducation;
     }
 
-    public int getAge() {
-        return age;
+    public Date getdOb() {
+        return dOb;
     }
 
-    public void setAge(int age) {
-        this.age = age;
+    public void setdOb(Date dOb) {
+        this.dOb = dOb;
     }
-  
+
     public Sex getGender() {
         return gender;
     }
@@ -323,15 +324,14 @@ public class Student {
  
     public static CellProcessor[] getProcessors() {
         
-
-        
+     
         final CellProcessor[] processors = new CellProcessor[] { 
                 
                 new NotNull(new ParseInt()), // student ID
                 new NotNull(new ParseCourse()), //course information
                 new NotNull(new ParseDegree()), //degree level             
                 new NotNull(), // field of study
-                new NotNull(new ParseInt()), // age
+                new NotNull(), // date of birth
                 new NotNull(new ParseSex()), //gender
                 new NotNull(), //citizenship
                 new NotNull(), //term residence
