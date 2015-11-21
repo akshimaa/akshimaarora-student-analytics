@@ -357,6 +357,7 @@ public class Student {
                 new NotNull(new ParseHighestEducationLevel()), //highest level of degree prior to commencement
                 new NotNull(new ParseInt()), //year of course completion year
                 new NotNull(new ParseDouble())//over gpa score
+                //we are finished
           
         };      
         return processors;
