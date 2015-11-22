@@ -11,9 +11,7 @@ import java.util.Locale;
 import org.supercsv.cellprocessor.CellProcessorAdaptor;
 import org.supercsv.cellprocessor.ParseDouble;
 import org.supercsv.cellprocessor.ParseInt;
-import org.supercsv.cellprocessor.ParseLong;
 import org.supercsv.cellprocessor.constraint.NotNull;
-import org.supercsv.cellprocessor.constraint.StrRegEx;
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.exception.SuperCsvCellProcessorException;
 import org.supercsv.util.CsvContext;
@@ -24,8 +22,8 @@ import java.util.Date;
  */
 public class Student {
     
-    public int systemID;
-    public int studentID;
+    private int systemID;
+    private int studentID;
     public enum Course {MSIT};
     private Course courseInformation;
     public enum Degree {UNDERGRADUATE, POSTGRAD};
@@ -672,5 +670,19 @@ public class Student {
         }
         } 
         
-    
+    @SuppressWarnings("UnnecessaryBoxing")
+    public <T> T getParameter(String parameter)
+    {
+        switch(parameter.toLowerCase())
+        {
+            case "gpa":
+                return (T)Double.valueOf(this.getEarnedGPA());
+            case "gender":
+                return (T)this.getGender();
+            case "country":
+                return (T)this.getCountry().getDisplayCountry();
+            default:
+                return null;
+        }
+    }
 }
