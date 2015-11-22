@@ -27,7 +27,7 @@ public class Student {
     
     public int systemID;
     public int studentID;
-    public enum Course {MSIT}; //awaiting final 
+    public enum Course {MSIT,}; //awaiting final 
     private Course courseInformation;
     public enum Degree {UNDERGRADUATE, POSTGRAD};
     private Degree degreeLevel;
