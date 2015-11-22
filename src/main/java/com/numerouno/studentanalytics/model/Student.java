@@ -17,19 +17,21 @@ import org.supercsv.cellprocessor.constraint.StrRegEx;
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.exception.SuperCsvCellProcessorException;
 import org.supercsv.util.CsvContext;
+import java.util.Date;
 /**
  * 
  * @author Madan Parameswaran
  */
 public class Student {
     
+    public int systemID;
     public int studentID;
-    public enum Course {CS, ENG, GES, LANG, BIO, ENGLISH, IT, MBA, MISM, PPM, MSIT, MCS, MS, MENG};
+    public enum Course {MSIT};
     private Course courseInformation;
-    public enum Degree {UNDERGRAD, POSTGRAD};
+    public enum Degree {UNDERGRADUATE, POSTGRAD};
     private Degree degreeLevel;
     private String fieldEducation; 
-    public int age;
+    private Date dOb;
     public enum Sex {M, F};
     private Sex gender;
     private String citizenship;
@@ -39,7 +41,7 @@ public class Student {
     private String state;
     private int zipCode;
     private Locale country;
-    public enum BasisAdmission {TESTSCORE,GENDER,SOCIECONOMICAL,PARENTAL,RESIDENTIAL};
+    public enum BasisAdmission {TESTSCORE,SOCIECONOMICAL,PARENTAL,RESIDENTIAL,SPORTS};
     private BasisAdmission basisAdmission;
     public enum AttendanceType {FULLTIME, PARTTIME};
     private AttendanceType attendanceType;
@@ -51,14 +53,25 @@ public class Student {
     private int enrollmentYear;  
     public enum Type {SAT, GRE, GMAT};
     private Type entranceExam;
-    private int score;
-    public enum Equity {D, LI, WNT, RR, NONE};
-    private Equity equityData;
+    private int verbal;
+    private int quantitative;
+    private int writing;
+    private int disability;
+    private int regionalRemote;
+    private int wNt;
+    private int lowIncome;
     public enum HighestEducationLevel {HS,AS,BS,BA,MA};
     private HighestEducationLevel highestEducationLevel;
     private int courseCompletionYear;
     private double earnedGPA;
 
+    public int getSystemID() {
+        return systemID;
+    }
+
+    public void setNumber(int number) {
+        this.systemID = number;
+    }
     public int getStudentID() {
         return studentID;
     }
@@ -91,14 +104,14 @@ public class Student {
         this.fieldEducation = fieldEducation;
     }
 
-    public int getAge() {
-        return age;
+    public Date getdOb() {
+        return dOb;
     }
 
-    public void setAge(int age) {
-        this.age = age;
+    public void setdOb(Date dOb) {
+        this.dOb = dOb;
     }
-  
+
     public Sex getGender() {
         return gender;
     }
@@ -228,20 +241,60 @@ public class Student {
         this.entranceExam = entranceExam;
     }
 
-    public int getScore() {
-        return score;
+    public int getVerbal() {
+        return verbal;
     }
 
-    public void setScore(int score) {
-        this.score = score;
+    public void setVerbal(int verbal) {
+        this.verbal = verbal;
     }
 
-    public Equity getEquityData() {
-        return equityData;
+    public int getQuantitative() {
+        return quantitative;
     }
 
-    public void setEquityData(Equity equityData) {
-        this.equityData = equityData;
+    public void setQuantitative(int quantitative) {
+        this.quantitative = quantitative;
+    }
+
+    public int getWriting() {
+        return writing;
+    }
+
+    public void setWriting(int writing) {
+        this.writing = writing;
+    }
+
+    public int getDisability() {
+        return disability;
+    }
+
+    public void setDisability(int disability) {
+        this.disability = disability;
+    }
+
+    public int getRegionalRemote() {
+        return regionalRemote;
+    }
+
+    public void setRegionalRemote(int reginalRemote) {
+        this.regionalRemote = reginalRemote;
+    }
+
+    public int getWNt() {
+        return wNt;
+    }
+
+    public void setWNt(int womenInNonTraditional) {
+        this.wNt = wNt;
+    }
+
+    public int getLowIncome() {
+        return lowIncome;
+    }
+
+    public void setLowIncome(int lowIncome) {
+        this.lowIncome = lowIncome;
     }
 
     public HighestEducationLevel getHighestEducationLevel() {
@@ -271,15 +324,14 @@ public class Student {
  
     public static CellProcessor[] getProcessors() {
         
-
-        
+     
         final CellProcessor[] processors = new CellProcessor[] { 
                 
                 new NotNull(new ParseInt()), // student ID
                 new NotNull(new ParseCourse()), //course information
                 new NotNull(new ParseDegree()), //degree level             
                 new NotNull(), // field of study
-                new NotNull(new ParseInt()), // age
+                new NotNull(), // date of birth
                 new NotNull(new ParseSex()), //gender
                 new NotNull(), //citizenship
                 new NotNull(), //term residence
@@ -296,11 +348,16 @@ public class Student {
                 new NotNull(new ParseInt()), //year of arrival in USA
                 new NotNull(new ParseInt()), // Enrollment year
                 new NotNull(new ParseExam()),// exam type
-                new NotNull(new ParseInt()),
-                new NotNull(new ParseEquity()),
-                new NotNull(new ParseHighestEducationLevel()),
-                new NotNull(new ParseInt()), //
-                new NotNull(new ParseDouble())
+                new NotNull(new ParseInt()), //verbal score
+                new NotNull(new ParseInt()), //quantitatvie score
+                new NotNull(new ParseInt()), //disability
+                new NotNull(new ParseInt()), //rural/remote
+                new NotNull(new ParseInt()), //women in non-traditional role
+                new NotNull(new ParseInt()), //low-income
+                new NotNull(new ParseHighestEducationLevel()), //highest level of degree prior to commencement
+                new NotNull(new ParseInt()), //year of course completion year
+                new NotNull(new ParseDouble())//over gpa score
+                //we are finished
           
         };      
         return processors;
@@ -585,34 +642,7 @@ public class Student {
                         String.format("Could not parse '%s' as an acceptable exam", value), context, this);
         }
         } 
-       private static class ParseEquity extends CellProcessorAdaptor
-    {
-       
-        public ParseEquity()
-        {
-            super();
-        }
-                
-        public ParseEquity(CellProcessor next)
-        {
-          super(next);   
-        }
-        @Override
-        public Object execute(Object value, CsvContext context) {
-        
-        validateInputNotNull(value, context);  // throws an Exception if the input is null
-           
-
-                for (Equity equityData : Equity.values()){
-                        if (equityData.name().equalsIgnoreCase(value.toString())){
-                                equityData = Equity.valueOf(((String) value).toUpperCase());
-                                return next.execute(equityData, context);
-                        }      
-                }           
-                  throw new SuperCsvCellProcessorException(
-                        String.format("Could not parse '%s' as an acceptable Basis for admission", value), context, this);
-        }
-        } 
+      
        private static class ParseHighestEducationLevel extends CellProcessorAdaptor
     {
        
