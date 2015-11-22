@@ -18,6 +18,7 @@ import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.exception.SuperCsvCellProcessorException;
 import org.supercsv.util.CsvContext;
 import java.util.Date;
+import org.supercsv.cellprocessor.ParseDate;
 /**
  * 
  * @author Madan Parameswaran
@@ -26,7 +27,7 @@ public class Student {
     
     public int systemID;
     public int studentID;
-    public enum Course {MSIT};
+    public enum Course {MSIT}; //awaiting final 
     private Course courseInformation;
     public enum Degree {UNDERGRADUATE, POSTGRAD};
     private Degree degreeLevel;
@@ -58,7 +59,7 @@ public class Student {
     private int writing;
     private int disability;
     private int regionalRemote;
-    private int wNt;
+    private int womenNontraditionalRole;
     private int lowIncome;
     public enum HighestEducationLevel {HS,AS,BS,BA,MA};
     private HighestEducationLevel highestEducationLevel;
@@ -282,11 +283,11 @@ public class Student {
     }
 
     public int getWNt() {
-        return wNt;
+        return womenNontraditionalRole;
     }
 
-    public void setWNt(int womenInNonTraditional) {
-        this.wNt = wNt;
+    public void setwWomentNontraditionalRole(int womenInNontraditional) {
+        this.womenNontraditionalRole = womenNontraditionalRole;
     }
 
     public int getLowIncome() {
@@ -331,7 +332,7 @@ public class Student {
                 new NotNull(new ParseCourse()), //course information
                 new NotNull(new ParseDegree()), //degree level             
                 new NotNull(), // field of study
-                new NotNull(), // date of birth
+                new NotNull(new ParseDate ("MM/dd/yyyy")), // date of birth US Format
                 new NotNull(new ParseSex()), //gender
                 new NotNull(), //citizenship
                 new NotNull(), //term residence
@@ -357,8 +358,7 @@ public class Student {
                 new NotNull(new ParseHighestEducationLevel()), //highest level of degree prior to commencement
                 new NotNull(new ParseInt()), //year of course completion year
                 new NotNull(new ParseDouble())//over gpa score
-                //we are finished
-          
+               
         };      
         return processors;
 }
