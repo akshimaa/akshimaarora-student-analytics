@@ -115,18 +115,4 @@ public class CSVFileProcessor {
 
     }
 
-    /**
-     * Creates a prediction of a dataset based on a trained classifier.
-     */
-    public static void predict() {
-
-    }
-
-    /**
-     * Trains a new classifier from existing data.
-     */
-    public static void train() {
-
-    }
-
 }
