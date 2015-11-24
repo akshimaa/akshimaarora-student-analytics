@@ -117,24 +117,6 @@ public class CSVFileProcessor {
 
     }
     
-    public static Instances readARFF() {
-
-        Instances data = null;
-
-        try {
-            BufferedReader reader = new BufferedReader(
-                    new FileReader(new File("Temp/temp.arff")));
-            data = new Instances(reader);
-            reader.close();
-            // setting class attribute
-            data.setClassIndex(data.numAttributes() - 1);
-
-        } catch (IOException i) {
-            System.out.println(i);
-        }
-
-        return data;
-
-    }
+    
 
 }
