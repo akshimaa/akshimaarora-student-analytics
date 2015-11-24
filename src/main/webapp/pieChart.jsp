@@ -6,19 +6,12 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-
-
-            <div class="row">
-                <div class="col-lg-12">
-                    <h1 class="page-header">Pie Chart</h1>
-
-                </div>
-                <!-- /.col-lg-12 -->
-            </div>
-<div class="row">
-    <img src="PieChart" width="300" height="300">
-</div>
-            <!-- /.row -->
-           
-    
-
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>JSP Page</title>
+    </head>
+    <body>
+        <h1>Pie Chart</h1>
+    </body>
+</html>
