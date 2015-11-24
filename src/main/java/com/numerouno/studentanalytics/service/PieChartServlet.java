@@ -5,28 +5,21 @@
  */
 package com.numerouno.studentanalytics.service;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.image.RenderedImage;
+
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.awt.GradientPaint;import java.awt.Point;
-;
+import java.io.File;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartFrame;
 import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.plot.PiePlot;
-import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.plot.PiePlot3D;
 import org.jfree.data.general.DefaultPieDataset;
-import org.jfree.data.xy.XYDataset;
-import org.jfree.data.xy.XYSeries;
-import org.jfree.data.xy.XYSeriesCollection;
 
 /**
  *
@@ -92,27 +85,31 @@ public class PieChartServlet extends HttpServlet {
     }// </editor-fold>
 
     private JFreeChart getChart(HttpServletRequest request) {
-      DefaultPieDataset dataset = new DefaultPieDataset( );
-      dataset.setValue( "IPhone 5s" , new Double( 20 ) );  
-      dataset.setValue( "SamSung Grand" , new Double( 20 ) );   
-      dataset.setValue( "MotoG" , new Double( 40 ) );    
-      dataset.setValue( "Nokia Lumia" , new Double( 10 ) );
-        JFreeChart chart = ChartFactory.createPieChart(      
-         "Mobile Sales",  // chart title 
-         dataset,        // data    
-         true,           // include legend   
+      DefaultPieDataset dataset = new DefaultPieDataset( );             
+      dataset.setValue( "IPhone 5s" , new Double( 20 ) );             
+      dataset.setValue( "SamSung Grand" , new Double( 20 ) );             
+      dataset.setValue( "MotoG" , new Double( 40 ) );             
+      dataset.setValue( "Nokia Lumia" , new Double( 10 ) ); 
+
+      JFreeChart chart = ChartFactory.createPieChart3D( 
+         "Mobile Sales" ,  // chart title                   
+         dataset ,         // data 
+         true ,            // include legend                   
          true, 
          false);
-        PiePlot plot = (PiePlot) chart.getPlot();
-        plot.setBackgroundPaint(null);
-        plot.setInteriorGap(0.04);
-        plot.setOutlineVisible(false);
-        
-        // use gradients and white borders for the section colours
-    
-        plot.setBaseSectionOutlinePaint(Color.WHITE);
-        plot.setSectionOutlinesVisible(true);
-        plot.setBaseSectionOutlineStroke(new BasicStroke(2.0f));
+
+      final PiePlot3D plot = ( PiePlot3D ) chart.getPlot( );             
+      plot.setStartAngle( 270 );             
+      plot.setForegroundAlpha( 0.60f );             
+      plot.setInteriorGap( 0.02 );             
+      int width = 640; /* Width of the image */             
+      int height = 480; /* Height of the image */                             
+      File pieChart3D = new File( getServletContext().getRealPath("/Temp/")+"pie_Chart3D.png" );                           
+        try { 
+            ChartUtilities.saveChartAsPNG( pieChart3D , chart , width , height );
+        } catch (IOException ex) {
+            Logger.getLogger(PieChartServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
       return chart;
 
     }
