@@ -104,7 +104,7 @@ public class PieChartServlet extends HttpServlet {
       plot.setInteriorGap( 0.02 );             
       int width = 640; /* Width of the image */             
       int height = 480; /* Height of the image */                             
-      File pieChart3D = new File( getServletContext().getRealPath("/Temp/")+"pie_Chart3D.png" );                           
+      File pieChart3D = new File( getServletContext().getRealPath("/Temp")+"/pie_Chart3D.png" );                           
         try { 
             ChartUtilities.saveChartAsPNG( pieChart3D , chart , width , height );
         } catch (IOException ex) {
