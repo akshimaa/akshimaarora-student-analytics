@@ -91,7 +91,7 @@ File saveFile = null;
 		//File pdfFile = new File(contextPath + pdfFileName);
 
 		response.setContentType("application/pdf");
-		response.addHeader("Content-Disposition", "attachment; filename=" + pdfFileName);
+		//response.addHeader("Content-Disposition", "attachment; filename=" + "report.pdf");
 		response.setContentLength((int) saveFile.length());
 
 		FileInputStream fileInputStream = new FileInputStream(saveFile);
