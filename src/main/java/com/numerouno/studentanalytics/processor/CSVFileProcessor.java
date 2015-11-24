@@ -15,7 +15,9 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.GetObjectRequest;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -114,18 +116,24 @@ public class CSVFileProcessor {
         }
 
     }
+    
+    public static Instances readARFF() {
 
-    /**
-     * Creates a prediction of a dataset based on a trained classifier.
-     */
-    public static void predict() {
+        Instances data = null;
 
-    }
+        try {
+            BufferedReader reader = new BufferedReader(
+                    new FileReader(new File("Temp/temp.arff")));
+            data = new Instances(reader);
+            reader.close();
+            // setting class attribute
+            data.setClassIndex(data.numAttributes() - 1);
 
-    /**
-     * Trains a new classifier from existing data.
-     */
-    public static void train() {
+        } catch (IOException i) {
+            System.out.println(i);
+        }
+
+        return data;
 
     }
 
