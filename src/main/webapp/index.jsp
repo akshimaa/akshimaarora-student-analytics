@@ -118,10 +118,10 @@
                             <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Charts<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="flot.html">Flot Charts</a>
+                                    <a href="javascript:;" onClick="bar(this);">Bar Charts</a>
                                 </li>
                                 <li>
-                                    <a href="javascript:;" onClick="like(this);">Pie Chart</a>
+                                    <a href="javascript:;" onClick="pie(this);">Pie Charts</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
@@ -176,8 +176,11 @@
     <!-- Custom Theme JavaScript -->
     <script src="js/sb-admin-2.js"></script>
     <script>
-        function like(placeholder) {
+        function pie(placeholder) {
             $('#page-wrapper').load('pieChart.jsp');
+        }
+        function bar(placeholder) {
+            $('#page-wrapper').load('barChart.jsp');
         }
         
     </script>
