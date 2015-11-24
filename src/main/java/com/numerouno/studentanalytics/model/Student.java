@@ -27,11 +27,12 @@ public class Student {
     
     public int systemID;
     public int studentID;
-    public enum Course {MSIT,}; //awaiting final 
+    public enum Course {ARCHITECTURE,ART,BIOLOGY,BUSINESS,CHEMICAL_ENGINEERING,CHEMISTRY,DESIGN,DRAMA,ELECTRICAL_ENGINEERING,ENGLISH,HISTORY,INFORMATION_SYSTEMS_MANAGEMENT,INFORMATION_TECHNOLOGY,LANGUGAE,MATHEMATHICS,MECHANICAL_ENGINEERING,MUSIC,PHILOSOPHY,PHYSICS,PSYCHOLOGY,PUBLIC_POLICY,PUBLIC_POLICY_MANAGEMENT,STATISTICS}; //awaiting final  
     private Course courseInformation;
     public enum Degree {UNDERGRADUATE, POSTGRAD};
     private Degree degreeLevel;
-    private String fieldEducation; 
+    public enum Field {ARCHITECTURE,ART,BUSINESS,DESIGN,DRAMA,ENGINEERING,ENGLISH,HISTORY,INFORMATION_SYSTEMS_MANAGEMENT,INFORMATION_TECHNOLOGY,LANGUGAE,MATHEMATHICS,MUSIC,PHILOSOPHY,PSYCHOLOGY,PUBLIC_POLICY,PUBLIC_POLICY_MANAGEMENT,SCIENCE,STATISTICS};
+    private Field fieldEducation; 
     private Date dOb;
     public enum Sex {M, F};
     private Sex gender;
@@ -42,7 +43,7 @@ public class Student {
     private String state;
     private int zipCode;
     private Locale country;
-    public enum BasisAdmission {TESTSCORE,SOCIECONOMICAL,PARENTAL,RESIDENTIAL,SPORTS};
+    public enum BasisAdmission {ACADEMICS,AUDITION,EQUITY,PRENTAL,PORTFOLIO,SPORTS};
     private BasisAdmission basisAdmission;
     public enum AttendanceType {FULLTIME, PARTTIME};
     private AttendanceType attendanceType;
@@ -61,7 +62,7 @@ public class Student {
     private int regionalRemote;
     private int womenNontraditionalRole;
     private int lowIncome;
-    public enum HighestEducationLevel {HS,AS,BS,BA,MA};
+    public enum HighestEducationLevel {HS_DIPLOMA,UNDERGRADUATE,POSTGRADUATE};
     private HighestEducationLevel highestEducationLevel;
     private int courseCompletionYear;
     private double earnedGPA;
@@ -97,12 +98,20 @@ public class Student {
         this.degreeLevel = degreeLevel;
     }
 
-    public String getFieldEducation() {
+    public Field getFieldEducation() {
         return fieldEducation;
     }
 
-    public void setFieldEducation(String fieldEducation) {
+    public void setFieldEducation(Field fieldEducation) {
         this.fieldEducation = fieldEducation;
+    }
+
+    public int getWomenNontraditionalRole() {
+        return womenNontraditionalRole;
+    }
+
+    public void setWomenNontraditionalRole(int womenNontraditionalRole) {
+        this.womenNontraditionalRole = womenNontraditionalRole;
     }
 
     public Date getdOb() {
@@ -282,14 +291,6 @@ public class Student {
         this.regionalRemote = reginalRemote;
     }
 
-    public int getWNt() {
-        return womenNontraditionalRole;
-    }
-
-    public void setwWomentNontraditionalRole(int womenInNontraditional) {
-        this.womenNontraditionalRole = womenNontraditionalRole;
-    }
-
     public int getLowIncome() {
         return lowIncome;
     }
@@ -331,7 +332,7 @@ public class Student {
                 new NotNull(new ParseInt()), // student ID
                 new NotNull(new ParseCourse()), //course information
                 new NotNull(new ParseDegree()), //degree level             
-                new NotNull(), // field of study
+                new NotNull(new ParseField()), // field of study
                 new NotNull(new ParseDate ("MM/dd/yyyy")), // date of birth US Format
                 new NotNull(new ParseSex()), //gender
                 new NotNull(), //citizenship
@@ -418,7 +419,33 @@ public class Student {
         }
         
         }  
-    
+        private static class ParseField extends CellProcessorAdaptor{
+        public ParseField()
+        {
+            super();
+        }
+        
+        public ParseField(CellProcessor next)
+        {
+            super(next);
+        }  
+        
+        @Override
+        public Object execute(Object value, CsvContext context) {
+        
+        validateInputNotNull(value, context); // throws an Exception if the input is null
+            
+            for(Field fieldEducation : Field.values()) {
+                if (fieldEducation.name().equalsIgnoreCase(value.toString())){
+                    fieldEducation = Field.valueOf(((String) value).toUpperCase());
+                        return next.execute(fieldEducation, context);
+                }
+            }   
+                throw new SuperCsvCellProcessorException(
+                        String.format("Could not parse '%s' as a field education", value), context, this);
+        }
+        
+        }  
     private static class ParseSex extends CellProcessorAdaptor
     {
        
@@ -525,7 +552,7 @@ public class Student {
                         }      
                 }           
                   throw new SuperCsvCellProcessorException(
-                        String.format("Could not parse '%s' for attendanceType", value), context, this);
+                        String.format("Could not parse '%s' for attendance Type", value), context, this);
         }
         }    
     private static class ParseMode extends CellProcessorAdaptor
@@ -553,7 +580,7 @@ public class Student {
                         }      
                 }           
                   throw new SuperCsvCellProcessorException(
-                        String.format("Could not parse '%s' as an acceptable Basis for admission", value), context, this);
+                        String.format("Could not parse '%s' as an acceptable attendance mode", value), context, this);
         }
         } 
      private static class ParseCountryOfBirth extends CellProcessorAdaptor
