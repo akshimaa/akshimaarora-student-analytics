@@ -11,9 +11,7 @@ import java.util.Locale;
 import org.supercsv.cellprocessor.CellProcessorAdaptor;
 import org.supercsv.cellprocessor.ParseDouble;
 import org.supercsv.cellprocessor.ParseInt;
-import org.supercsv.cellprocessor.ParseLong;
 import org.supercsv.cellprocessor.constraint.NotNull;
-import org.supercsv.cellprocessor.constraint.StrRegEx;
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.exception.SuperCsvCellProcessorException;
 import org.supercsv.util.CsvContext;
@@ -24,10 +22,12 @@ import org.supercsv.cellprocessor.ParseDate;
  * @author Madan Parameswaran
  */
 public class Student {
+
     
     public int systemID;
     public int studentID;
     public enum Course {ARCHITECTURE,ART,BIOLOGY,BUSINESS,CHEMICAL_ENGINEERING,CHEMISTRY,DESIGN,DRAMA,ELECTRICAL_ENGINEERING,ENGLISH,HISTORY,INFORMATION_SYSTEMS_MANAGEMENT,INFORMATION_TECHNOLOGY,LANGUGAE,MATHEMATHICS,MECHANICAL_ENGINEERING,MUSIC,PHILOSOPHY,PHYSICS,PSYCHOLOGY,PUBLIC_POLICY,PUBLIC_POLICY_MANAGEMENT,STATISTICS}; //awaiting final  
+
     private Course courseInformation;
     public enum Degree {UNDERGRADUATE, POSTGRAD};
     private Degree degreeLevel;
@@ -699,5 +699,19 @@ public class Student {
         }
         } 
         
-    
+    @SuppressWarnings("UnnecessaryBoxing")
+    public <T> T getParameter(String parameter)
+    {
+        switch(parameter.toLowerCase())
+        {
+            case "gpa":
+                return (T)Double.valueOf(this.getEarnedGPA());
+            case "gender":
+                return (T)this.getGender();
+            case "country":
+                return (T)this.getCountry().getDisplayCountry();
+            default:
+                return null;
+        }
+    }
 }

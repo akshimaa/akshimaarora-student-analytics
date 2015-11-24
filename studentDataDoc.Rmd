@@ -1,0 +1,444 @@
+---
+title: "studentDataDoc"
+author: "Teck Jan Low"
+date: "20 November 2015"
+output: html_document
+---
+
+This is a diagnostics document for generated student data.
+
+```{r, echo = FALSE}
+library(knitr)
+studentdata <- read.csv("C:/Users/Dell/Desktop/finaldata.csv", header = TRUE)
+```
+
+Processing:
+
+```{r}
+
+```
+
+
+
+Field of Education data:
+
+```{r, echo = FALSE}
+#========================
+#==== DATA GENERATOR ====
+#========================
+
+studentdata$courseInformation <- as.character(studentdata$courseInformation)
+studentdata$fieldEducation <- as.character(studentdata$fieldEducation)
+studentdata$basisAdmission <- as.character(studentdata$basisAdmission)
+set.seed(1337)
+
+# SAT TEST SCORE Generator:
+#---------------------------
+
+for (i in 1:nrow(studentdata)) {
+  
+  # COURSEINFORMATION GENERATOR
+  #=============================
+  
+  studentdata$courseInformation[i] <- studentdata$fieldEducation[i]
+  
+  if (studentdata$fieldEducation[i]=="ENGINEERING") {
+    RNG <- runif(1,0,1)
+    if (RNG<0.2) {
+      studentdata$courseInformation[i] <- "CHEMICAL_ENGINEERING"
+    } else if (RNG < 0.6) {
+      studentdata$courseInformation[i] <- "MECHANICAL_ENGINEERING"
+    } else {
+      studentdata$courseInformation[i] <- "ELECTRICAL_ENGINEERING"
+    }
+    
+  } else if (studentdata$fieldEducation[i]=="SCIENCE") {
+    RNG <- runif(1,0,1)
+    if (RNG < 0.2) {
+      studentdata$courseInformation[i] <- "BIOLOGY"
+    } else if (RNG < 0.5) {
+      studentdata$courseInformation[i] <- "CHEMISTRY"
+    } else {
+      studentdata$courseInformation[i] <- "PHYSICS"
+    }
+    
+  } 
+  
+  # TEST SCORE GENERATOR
+  #======================
+  
+  if (studentdata$degreeLevel[i]=="UNDERGRADUATE") {
+    studentdata$entranceExam[i] <- "SAT"
+  } else if (studentdata$degreeLevel[i]=="POSTGRADUATE" && studentdata$fieldEducation[i]=="BUSINESS") {
+    studentdata$entranceExam[i] <- "GMAT"
+  } else {
+    studentdata$entranceExam[i] <- "GRE"
+  }
+  
+  # SAT SCORE GENERATOR
+  #---------------------
+  
+  if (studentdata$entranceExam[i]=="SAT") {
+    
+    if (studentdata$languageSpokenAtHome[i]!="English") {
+      
+      studentdata$verbal[i] <- floor(rnorm(1, 74, 3)) * 10
+      studentdata$quantitative[i] <- floor(rnorm(1, 76, 3)) * 10
+      studentdata$writing[i] <- studentdata$verbal[i] - floor(rnorm(1,2.5,0.8)) * 10
+      if (studentdata$fieldEducation[i]=="INFORMATION_SYSTEMS_MANAGEMENT") {
+        studentdata$verbal[i] <- floor(rnorm(1, 76, 3)) * 10
+        studentdata$quantitative[i] <- floor(rnorm(1, 78.5, 3)) * 10
+        studentdata$writing[i] <- studentdata$verbal[i] - floor(rnorm(1,2,0.8)) * 10
+      } else if (studentdata$fieldEducation[i]=="INFORMATON_TECHNOLOGY") {
+        studentdata$verbal[i] <- floor(rnorm(1, 77, 4)) * 10
+        studentdata$quantitative[i] <- floor(rnorm(1, 79.5, 4)) * 10
+        studentdata$writing[i] <- studentdata$verbal[i] - floor(rnorm(1,2,0.8)) * 10
+      } else if (studentdata$fieldEducation[i]=="ENGINEERING") {
+        studentdata$verbal[i] <- floor(rnorm(1, 75.5, 3)) * 10
+        studentdata$quantitative[i] <- floor(rnorm(1, 78, 3)) * 10
+        studentdata$writing[i] <- studentdata$verbal[i] - floor(rnorm(1,2,0.8)) * 10
+      } else if (studentdata$fieldEducation[i]=="SCIENCE") {
+        studentdata$verbal[i] <- floor(rnorm(1, 74.5, 3)) * 10
+        studentdata$quantitative[i] <- floor(rnorm(1, 77, 3)) * 10
+        studentdata$writing[i] <- studentdata$verbal[i] - floor(rnorm(1,2.5,0.8)) * 10
+      }
+      
+    } else {
+      
+      if (studentdata$fieldEducation[i]!="DRAMA"||studentdata$fieldEducation[i]!="MUSIC"
+          ||studentdata$fieldEducation[i]!="ART") {
+        studentdata$verbal[i] <- floor(rnorm(1, 75, 4)) * 10
+        studentdata$quantitative[i] <- floor(rnorm(1, 75.5, 4)) * 10
+        studentdata$writing[i] <- studentdata$verbal[i] - floor(rnorm(1,1.5,1)) * 10
+      } else if (studentdata$fieldEducation[i]=="INFORMATION_SYSTEMS_MANAGEMENT") {
+        studentdata$verbal[i] <- floor(rnorm(1, 77, 4)) * 10
+        studentdata$quantitative[i] <- floor(rnorm(1, 77.5, 4)) * 10
+        studentdata$writing[i] <- studentdata$verbal[i] - floor(rnorm(1,1,1)) * 10
+      } else if (studentdata$fieldEducation[i]=="INFORMATON_TECHNOLOGY") {
+        studentdata$verbal[i] <- floor(rnorm(1, 77.5, 5)) * 10
+        studentdata$quantitative[i] <- floor(rnorm(1, 79, 4)) * 10
+        studentdata$writing[i] <- studentdata$verbal[i] - floor(rnorm(1,1,1)) * 10
+      } else if (studentdata$fieldEducation[i]=="ENGINEERING") {
+        studentdata$verbal[i] <- floor(rnorm(1, 76, 4)) * 10
+        studentdata$quantitative[i] <- floor(rnorm(1, 77, 4)) * 10
+        studentdata$writing[i] <- studentdata$verbal[i] - floor(rnorm(1,1.5,1)) * 10
+      } else if (studentdata$fieldEducation[i]=="SCIENCE") {
+        studentdata$verbal[i] <- floor(rnorm(1, 75.5, 4)) * 10
+        studentdata$quantitative[i] <- floor(rnorm(1, 77, 4)) * 10
+        studentdata$writing[i] <- studentdata$verbal[i] - floor(rnorm(1,1.5,1)) * 10
+      }
+      
+    }
+    
+    # GRE SCORE GENERATOR
+    #---------------------
+    
+  } else if (studentdata$entranceExam[i]=="GRE") {
+    
+    if (studentdata$languageSpokenAtHome[i]!="English") {
+      
+      if (studentdata$fieldEducation[i]!="DRAMA"||
+          studentdata$fieldEducation[i]!="MUSIC"||
+          studentdata$fieldEducation[i]!="ART") {
+        studentdata$verbal[i] <- (floor(rnorm(1, 164, 4)) - 130) * 15 + 200
+        studentdata$quantitative[i] <- (floor(rnorm(1, 164.5, 4)) - 130) * 15 + 200
+        studentdata$writing[i] <- (floor(rnorm(1,10.5,0.5)) / 2) * 100 + 200
+      } else if (studentdata$fieldEducation[i]=="INFORMATION_SYSTEMS_MANAGEMENT") {
+        studentdata$verbal[i] <- (floor(rnorm(1, 165, 4)) - 130) * 15 + 200
+        studentdata$quantitative[i] <- (floor(rnorm(1, 166, 4)) - 130) * 15 + 200
+        studentdata$writing[i] <- (floor(rnorm(1,11,0.5)) / 2) * 100 + 200
+      } else if (studentdata$fieldEducation[i]=="INFORMATON_TECHNOLOGY") {
+        studentdata$verbal[i] <- (floor(rnorm(1, 166, 5)) - 130) * 15 + 200
+        studentdata$quantitative[i] <- (floor(rnorm(1, 167, 4)) - 130) * 15 + 200
+        studentdata$writing[i] <- (floor(rnorm(1,11.5,0.3)) / 2) * 100 + 200
+      } else if (studentdata$fieldEducation[i]=="ENGINEERING") {
+        studentdata$verbal[i] <- (floor(rnorm(1, 165, 4)) - 130) * 15 + 200
+        studentdata$quantitative[i] <- (floor(rnorm(1, 166, 4)) - 130) * 15 + 200
+        studentdata$writing[i] <- (floor(rnorm(1,10.5,0.5)) / 2) * 100 + 200
+      } else if (studentdata$fieldEducation[i]=="SCIENCE") {
+        studentdata$verbal[i] <- (floor(rnorm(1, 164.5, 4)) - 130) * 15 + 200
+        studentdata$quantitative[i] <- (floor(rnorm(1, 165.5, 4)) - 130) * 15 + 200
+        studentdata$writing[i] <- (floor(rnorm(1,10.3,0.5)) / 2) * 100 + 200
+      }
+      
+    } else {
+      
+      if (studentdata$fieldEducation[i]!="DRAMA"||
+          studentdata$fieldEducation[i]!="MUSIC"||
+          studentdata$fieldEducation[i]!="ART") {
+        studentdata$verbal[i] <- (floor(rnorm(1, 165, 4)) - 130) * 15 + 200
+        studentdata$quantitative[i] <- (floor(rnorm(1, 164.5, 4)) - 130) * 15 + 200
+        studentdata$writing[i] <- (floor(rnorm(1,10.2,0.5)) / 2) * 100 + 200
+      } else if (studentdata$fieldEducation[i]=="INFORMATION_SYSTEMS_MANAGEMENT") {
+        studentdata$verbal[i] <- (floor(rnorm(1, 166, 4)) - 130) * 15 + 200
+        studentdata$quantitative[i] <- (floor(rnorm(1, 165.5, 4)) - 130) * 15 + 200
+        studentdata$writing[i] <- (floor(rnorm(1,11.3,0.5)) / 2) * 100 + 200
+      } else if (studentdata$fieldEducation[i]=="INFORMATON_TECHNOLOGY") {
+        studentdata$verbal[i] <- (floor(rnorm(1, 167, 5)) - 130) * 15 + 200
+        studentdata$quantitative[i] <- (floor(rnorm(1, 166.5, 4)) - 130) * 15 + 200
+        studentdata$writing[i] <- (floor(rnorm(1,12,0.3)) / 2) * 100 + 200
+      } else if (studentdata$fieldEducation[i]=="ENGINEERING") {
+        studentdata$verbal[i] <- (floor(rnorm(1, 166, 4)) - 130) * 15 + 200
+        studentdata$quantitative[i] <- (floor(rnorm(1, 166, 4)) - 130) * 15 + 200
+        studentdata$writing[i] <- (floor(rnorm(1,11.2,0.5)) / 2) * 100 + 200
+      } else if (studentdata$fieldEducation[i]=="SCIENCE") {
+        studentdata$verbal[i] <- (floor(rnorm(1, 165.5, 4)) - 130) * 15 + 200
+        studentdata$quantitative[i] <- (floor(rnorm(1, 165, 4)) - 130) * 15 + 200
+        studentdata$writing[i] <- (floor(rnorm(1,10.5,0.5)) / 2) * 100 + 200
+      }
+      
+    }
+    
+    # GMAT SCORE GENERATOR
+    #----------------------
+    
+  } else if (studentdata$entranceExam[i]=="GMAT") {
+    
+    if (studentdata$languageSpokenAtHome[i]!="English") {
+      
+      if (studentdata$fieldEducation[i]!="DRAMA"||
+          studentdata$fieldEducation[i]!="MUSIC"||
+          studentdata$fieldEducation[i]!="ART") {
+        studentdata$verbal[i] <- floor(rnorm(1, 75, 4)) * 10
+        studentdata$quantitative[i] <- (floor(rnorm(1,10,0.5)) / 2) * 100 + 200
+        studentdata$writing[i] <- (floor(rnorm(1,13.5,0.5)) / (16/6)) * 100 + 200
+      } else if (studentdata$fieldEducation[i]=="INFORMATION_SYSTEMS_MANAGEMENT") {
+        studentdata$verbal[i] <- floor(rnorm(1, 76, 4)) * 10
+        studentdata$quantitative[i] <- (floor(rnorm(1,11,0.4)) / 2) * 100 + 200
+        studentdata$writing[i] <- (floor(rnorm(1,14.5,0.4)) / (16/6)) * 100 + 200
+      } else if (studentdata$fieldEducation[i]=="INFORMATON_TECHNOLOGY") {
+        studentdata$verbal[i] <- floor(rnorm(1, 77, 5)) * 10
+        studentdata$quantitative[i] <- (floor(rnorm(1,11,0.3)) / 2) * 100 + 200
+        studentdata$writing[i] <- (floor(rnorm(1,15,0.4)) / (16/6)) * 100 + 200
+      } else if (studentdata$fieldEducation[i]=="ENGINEERING") {
+        studentdata$verbal[i] <- floor(rnorm(1, 75.5, 4)) * 10
+        studentdata$quantitative[i] <- (floor(rnorm(1,10.5,0.3)) / 2) * 100 + 200
+        studentdata$writing[i] <- (floor(rnorm(1,14.3,0.5)) / (16/6)) * 100 + 200
+      } else if (studentdata$fieldEducation[i]=="SCIENCE") {
+        studentdata$verbal[i] <- floor(rnorm(1, 74.5, 4)) * 10
+        studentdata$quantitative[i] <- (floor(rnorm(1,10.5,0.4)) / 2) * 100 + 200
+        studentdata$writing[i] <- (floor(rnorm(1,14,0.5)) / (16/6)) * 100 + 200
+      }
+      
+    } else {
+      
+      if (studentdata$fieldEducation[i]!="DRAMA"||
+          studentdata$fieldEducation[i]!="MUSIC"||
+          studentdata$fieldEducation[i]!="ART") {
+        studentdata$verbal[i] <- floor(rnorm(1, 75, 4)) * 10
+        studentdata$quantitative[i] <- (floor(rnorm(1,10.5,0.5)) / 2) * 100 + 200
+        studentdata$writing[i] <- (floor(rnorm(1,14,0.5)) / (16/6)) * 100 + 200
+      } else if (studentdata$fieldEducation[i]=="INFORMATION_SYSTEMS_MANAGEMENT") {
+        studentdata$verbal[i] <- floor(rnorm(1, 77, 4)) * 10
+        studentdata$quantitative[i] <- (floor(rnorm(1,11.2,0.4)) / 2) * 100 + 200
+        studentdata$writing[i] <- (floor(rnorm(1,15,0.5)) / (16/6)) * 100 + 200
+      } else if (studentdata$fieldEducation[i]=="INFORMATON_TECHNOLOGY") {
+        studentdata$verbal[i] <- floor(rnorm(1, 77.5, 5)) * 10
+        studentdata$quantitative[i] <- (floor(rnorm(1,11.5,0.3)) / 2) * 100 + 200
+        studentdata$writing[i] <- (floor(rnorm(1,15.5,0.3)) / (16/6)) * 100 + 200
+      } else if (studentdata$fieldEducation[i]=="ENGINEERING") {
+        studentdata$verbal[i] <- floor(rnorm(1, 76, 4)) * 10
+        studentdata$quantitative[i] <- (floor(rnorm(1,11,0.4)) / 2) * 100 + 200
+        studentdata$writing[i] <- (floor(rnorm(1,14.5,0.5)) / (16/6)) * 100 + 200
+      } else if (studentdata$fieldEducation[i]=="SCIENCE") {
+        studentdata$verbal[i] <- floor(rnorm(1, 75.5, 4)) * 10
+        studentdata$quantitative[i] <- (floor(rnorm(1,11,0.5)) / 2) * 100 + 200
+        studentdata$writing[i] <- (floor(rnorm(1,14.5,0.5)) / (16/6)) * 100 + 200
+      }
+      
+    }
+    
+  }
+  
+  # Scaling Logic:
+  # for scaling from 130-170 to 200-800:
+  #   minus by 130, then multiply by 15 and add 200
+  # for scaling from 0-6 to 200-800:
+  #   multiply by 100 and add 200
+  # for scaling from 0-8 to 200-800:
+  #   just multiply by (600/8) + 200
+  
+  # Admissison requirements estimate:
+  # http://admission.enrollment.cmu.edu/pages/undergraduate-admission-statistics
+  
+  # EQUITY DATA GENERATOR
+  #=======================
+  
+  if (studentdata$gender[i]=="F"
+      &&(studentdata$fieldEducation[i]=="SCIENCE"
+         ||studentdata$fieldEducation[i]=="ENGINEERING"
+         ||studentdata$fieldEducation[i]=="INFORMATION_SYSTEMS_MANAGEMENT"
+         ||studentdata$fieldEducation[i]=="INFORMATION_TECHNOLOGY")) {
+    studentdata$womenNontraditionalRole[i] <- 1
+  }
+  RNG <- runif(1,0,1)
+  if (RNG < 0.06) {
+    studentdata$lowIncome[i] <- 1
+  }
+  RNG <- runif(1,0,1)
+  if (RNG < 0.02) {
+    studentdata$disability[i] <- 1
+  }
+  RNG <- runif(1,0,1)
+  if ((studentdata$citizenship=="American"&&RNG < 0.02)
+      ||(studentdata$citizenship!="American"&&RNG < 0.04)) {
+    studentdata$regionalRemote[i] <- 1
+  }
+  
+  # BASIS OF ADMISSION DATA GENERATOR
+  #===================================
+  
+  compositeScore <- studentdata$verbal[i]+
+    studentdata$quantitative[i]+
+    studentdata$writing[i]
+  
+  if (compositeScore > 2250) {
+    studentdata$basisAdmission[i] <- "ACADEMICS"
+  } else if (studentdata$disability[i]==1
+             ||studentdata$womenNontraditionalRole[i]==1
+             ||studentdata$regionalRemote[i]==1
+             ||studentdata$lowIncome[i]==1) {
+    studentdata$basisAdmission[i] <- "EQUITY"
+  } else if (studentdata$fieldEducation[i]=="DRAMA") {
+    studentdata$basisAdmission[i] <- "AUDITION"
+  } else if (studentdata$fieldEducation[i]=="ART"||studentdata$fieldEducation[i]=="MUSIC") {
+    studentdata$basisAdmission[i] <- "PORTFOLIO"
+  } else if (studentdata$city[i]=="Pittsburgh") {
+    studentdata$basisAdmission[i] <- "RESIDENT"
+  } else {
+    RNG <- runif(1,0,1)
+    if (RNG < 0.3) {
+      studentdata$basisAdmission[i] <- "PARENTAL"
+    } else {
+      studentdata$basisAdmission[i] <- "SPORTS"
+    }
+  }
+}
+
+# GPA SCORE DATA GENERATOR
+#==========================
+
+# Factors to consider
+# Gender, course, admissions test scores, basis of admission
+# F > M, certain courses better, higher scores better, quant important, 
+# all except sports and parental are better.
+
+Qverbal <- quantile(studentdata$verbal)
+Qquant <- quantile(studentdata$quantitative)
+Qwriting <- quantile(studentdata$writing)
+
+for (i in 1:nrow(studentdata)) {
+  
+  if (studentdata$degreeLevel[i]=="UNDERGRADUATE") {
+    
+    if (studentdata$fieldEducation[i]=="ENGINEERING"
+        ||studentdata$fieldEducation[i]=="SCIENCE"
+        ||studentdata$fieldEducation[i]=="BUSINESS") {
+      meanGPA <- 3.85
+    } else if (studentdata$fieldEducation[i]=="INFORMATION_SYSTEMS_MANAGEMENT"
+               ||studentdata$fieldEducation[i]=="INFORMATION_TECHNOLOGY") {
+      meanGPA <- 3.95
+    } else {
+      meanGPA <- 3.75
+    }
+    
+  } else {
+    
+    if (studentdata$fieldEducation[i]=="ENGINEERING"
+       ||studentdata$fieldEducation[i]=="SCIENCE"
+       ||studentdata$fieldEducation[i]=="BUSINESS") {
+      meanGPA <- 4.20
+    } else if (studentdata$fieldEducation[i]=="INFORMATION_SYSTEMS_MANAGEMENT"
+               ||studentdata$fieldEducation[i]=="INFORMATION_TECHNOLOGY") {
+      meanGPA <- 4.30
+    } else {
+      meanGPA <- 4.10
+    }
+  }
+    
+  if (studentdata$gender[i]=="F") {
+      meanGPA <- meanGPA + 0.02
+  }
+    
+  if (studentdata$basisAdmission[i]=="ACADEMICS"||
+      studentdata$basisAdmission[i]=="PORTFOLIO") {
+    meanGPA <- meanGPA + 0.02
+  } else if (studentdata$basisAdmission[i]=="SPORTS"||
+             studentdata$basisAdmission[i]=="PARENTAL") {
+    meanGPA <- meanGPA - 0.07
+  } else if (studentdata$basisAdmission[i]=="RESIDENT") {
+    meanGPA <- meanGPA - 0.02
+  }
+  
+  if (studentdata$verbal[i] < Qverbal[2]) {
+    meanGPA <- meanGPA - 0.04
+  } else if (studentdata$verbal[i] < Qverbal[3]) {
+    meanGPA <- meanGPA - 0.02
+  } else if (studentdata$verbal[i] > Qverbal[4]) {
+    meanGPA <- meanGPA + 0.02
+  }
+  
+  if (studentdata$quantitative[i] < Qquant[2]) {
+    meanGPA <- meanGPA - 0.06
+  } else if (studentdata$quantitative[i] < Qquant[3]) {
+    meanGPA <- meanGPA - 0.04
+  } else if (studentdata$quantitative[i] > Qquant[4]) {
+    meanGPA <- meanGPA + 0.03
+  }
+  
+  if (studentdata$writing[i] < Qwriting[2]) {
+    meanGPA <- meanGPA - 0.02
+  } else if (studentdata$writing[i] < Qwriting[3]) {
+    meanGPA <- meanGPA - 0.01
+  }
+  
+  meanGPA <- meanGPA - (0.05 * studentdata$disability[i]) +
+    (0.02 * studentdata$lowIncome[i]) -
+    (0.02 * studentdata$regionalRemote[i]) -
+    (0.02 * studentdata$womenNontraditionalRole[i])
+  
+  studentdata$earnedGPA[i] <- rnorm(1, meanGPA, 0.07)
+  
+  if (studentdata$degreeLevel[i]=="UNDERGRADUATE") {
+    if (studentdata$earnedGPA[i] > 4) {
+      studentdata$earnedGPA[i] <- 4
+    }
+  }
+  # << APPEND NEW DATA GENERATOR STUFF HERE >>
+  
+}
+
+## SET HARD LIMITS TO TEST SCORES
+studentdata$verbal <- ceiling(studentdata$verbal)
+studentdata$verbal[studentdata$verbal > 800] <- 800
+studentdata$quantitative <- ceiling(studentdata$quantitative)
+studentdata$quantitative[studentdata$quantitative > 800] <- 800
+studentdata$writing <- ceiling(studentdata$writing)
+studentdata$writing[studentdata$writing > 800] <- 800
+
+## SET HARD LIMIT TO GPA
+studentdata$earnedGPA[studentdata$earnedGPA > 4.33] <- 4.33
+studentdata$earnedGPA <- round(studentdata$earnedGPA, digits = 2)
+
+## FACTORISE DATA
+studentdata$courseInformation <- as.factor(studentdata$courseInformation)
+studentdata$fieldEducation <- as.factor(studentdata$fieldEducation)
+studentdata$basisAdmission <- as.factor(studentdata$basisAdmission)
+
+## =============== END OF DATA GENERATOR ===============
+## =====================================================
+
+write.csv(studentdata,"C:/Users/Dell/Desktop/test.csv")
+
+kable(table(studentdata$fieldEducation,studentdata$degreeLevel))
+meanGPA <- tapply(studentdata$earnedGPA, studentdata[c("fieldEducation","degreeLevel")], FUN = mean)
+kable(meanGPA)
+```
+
+Course Information data:
+
+```{r, results = 'asis'}
+
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
