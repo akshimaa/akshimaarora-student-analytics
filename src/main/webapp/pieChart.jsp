@@ -15,6 +15,9 @@
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
+<div class="row">
+    <img src="PieChartServlet" width="300" height="300">
+</div>
             <!-- /.row -->
            
     
