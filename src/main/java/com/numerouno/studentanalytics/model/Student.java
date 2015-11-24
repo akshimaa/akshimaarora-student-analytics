@@ -24,14 +24,12 @@ import org.supercsv.cellprocessor.ParseDate;
 public class Student {
 
     
-    public int systemID;
     public int studentID;
-    public enum Course {ARCHITECTURE,ART,BIOLOGY,BUSINESS,CHEMICAL_ENGINEERING,CHEMISTRY,DESIGN,DRAMA,ELECTRICAL_ENGINEERING,ENGLISH,HISTORY,INFORMATION_SYSTEMS_MANAGEMENT,INFORMATION_TECHNOLOGY,LANGUGAE,MATHEMATHICS,MECHANICAL_ENGINEERING,MUSIC,PHILOSOPHY,PHYSICS,PSYCHOLOGY,PUBLIC_POLICY,PUBLIC_POLICY_MANAGEMENT,STATISTICS}; //awaiting final  
-
+    public enum Course {ARCHITECTURE,ART,BIOLOGY,BUSINESS,CHEMICAL_ENGINEERING,CHEMISTRY,DESIGN,DRAMA,ELECTRICAL_ENGINEERING,ENGLISH,HISTORY,INFORMATION_SYSTEMS_MANAGEMENT,INFORMATION_TECHNOLOGY,LANGUAGE,MATHEMATHICS,MECHANICAL_ENGINEERING,MUSIC,PHILOSOPHY,PHYSICS,PSYCHOLOGY,PUBLIC_POLICY,PUBLIC_POLICY_MANAGEMENT,STATISTICS}; //awaiting final  
     private Course courseInformation;
-    public enum Degree {UNDERGRADUATE, POSTGRAD};
+    public enum Degree {UNDERGRADUATE, POSTGRADUATE, PHD};
     private Degree degreeLevel;
-    public enum Field {ARCHITECTURE,ART,BUSINESS,DESIGN,DRAMA,ENGINEERING,ENGLISH,HISTORY,INFORMATION_SYSTEMS_MANAGEMENT,INFORMATION_TECHNOLOGY,LANGUGAE,MATHEMATHICS,MUSIC,PHILOSOPHY,PSYCHOLOGY,PUBLIC_POLICY,PUBLIC_POLICY_MANAGEMENT,SCIENCE,STATISTICS};
+    public enum Field {ARCHITECTURE,ART,BUSINESS,DESIGN,DRAMA,ENGINEERING,ENGLISH,HISTORY,INFORMATION_SYSTEMS_MANAGEMENT,INFORMATION_TECHNOLOGY,LANGUAGE,MATHEMATHICS,MUSIC,PHILOSOPHY,PSYCHOLOGY,PUBLIC_POLICY,PUBLIC_POLICY_MANAGEMENT,SCIENCE,STATISTICS};
     private Field fieldEducation; 
     private Date dOb;
     public enum Sex {M, F};
@@ -43,7 +41,7 @@ public class Student {
     private String state;
     private int zipCode;
     private Locale country;
-    public enum BasisAdmission {ACADEMICS,AUDITION,EQUITY,PRENTAL,PORTFOLIO,SPORTS};
+    public enum BasisAdmission {ACADEMICS,AUDITION,EQUITY,PARENTAL,PORTFOLIO,SPORTS};
     private BasisAdmission basisAdmission;
     public enum AttendanceType {FULLTIME, PARTTIME};
     private AttendanceType attendanceType;
@@ -67,13 +65,6 @@ public class Student {
     private int courseCompletionYear;
     private double earnedGPA;
 
-    public int getSystemID() {
-        return systemID;
-    }
-
-    public void setNumber(int number) {
-        this.systemID = number;
-    }
     public int getStudentID() {
         return studentID;
     }
@@ -333,7 +324,7 @@ public class Student {
                 new NotNull(new ParseCourse()), //course information
                 new NotNull(new ParseDegree()), //degree level             
                 new NotNull(new ParseField()), // field of study
-                new NotNull(new ParseDate ("MM/dd/yyyy")), // date of birth US Format
+                new NotNull(new ParseDate ("MM-dd-yy")), // date of birth US Format
                 new NotNull(new ParseSex()), //gender
                 new NotNull(), //citizenship
                 new NotNull(), //term residence
@@ -352,6 +343,7 @@ public class Student {
                 new NotNull(new ParseExam()),// exam type
                 new NotNull(new ParseInt()), //verbal score
                 new NotNull(new ParseInt()), //quantitatvie score
+                new NotNull(new ParseInt()), //writing score
                 new NotNull(new ParseInt()), //disability
                 new NotNull(new ParseInt()), //rural/remote
                 new NotNull(new ParseInt()), //women in non-traditional role
