@@ -121,7 +121,7 @@
                                     <a href="flot.html">Flot Charts</a>
                                 </li>
                                 <li>
-                                    <a href="morris.html">Morris.js Charts</a>
+                                    <a href="javascript:;" onClick="like(this);">Pie Chart</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
@@ -175,6 +175,12 @@
 
     <!-- Custom Theme JavaScript -->
     <script src="js/sb-admin-2.js"></script>
+    <script>
+        function like(placeholder) {
+            $('#page-wrapper').load('pieChart.jsp');
+        }
+        
+    </script>
     
 </body>
 
