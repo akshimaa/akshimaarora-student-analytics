@@ -41,7 +41,7 @@ public class Student {
     private String state;
     private int zipCode;
     private Locale country;
-    public enum BasisAdmission {ACADEMICS,AUDITION,EQUITY,PARENTAL,PORTFOLIO,SPORTS};
+    public enum BasisAdmission {ACADEMICS,AUDITION,EQUITY,PARENTAL,RESIDENT,PORTFOLIO,SPORTS};
     private BasisAdmission basisAdmission;
     public enum AttendanceType {FULLTIME, PARTTIME};
     private AttendanceType attendanceType;
@@ -298,13 +298,12 @@ public class Student {
         this.highestEducationLevel = highestEducationLevel;
     }
 
-    public int setCourseCompletionYear() {
+    public int getCourseCompletionYear() {
         return courseCompletionYear;
     }
 
     public void setCourseCompletionYear(int courseCompletionYear) {
         this.courseCompletionYear = courseCompletionYear;
-
     }
 
     public double getEarnedGPA() {
@@ -351,7 +350,6 @@ public class Student {
                 new NotNull(new ParseHighestEducationLevel()), //highest level of degree prior to commencement
                 new NotNull(new ParseInt()), //year of course completion year
                 new NotNull(new ParseDouble())//over gpa score
-               
         };      
         return processors;
 }
@@ -696,6 +694,36 @@ public class Student {
     {
         switch(parameter.toLowerCase())
         {
+            case "languageSpokenAtHome":
+                return (T)this.getLanguageSpokenAtHome().getLanguage();
+            case "courseInformation":
+                return (T)this.getCourseInformation();
+            case "degreLevel":
+                return (T)this.getDegreeLevel();
+            case "basisAdmission":
+                return (T)this.getBasisAdmission();
+            case "modeOfAttendance":
+                return (T)this.getModeOfAttendance();
+            case "entranceExam":
+                return (T)this.getEntranceExam();
+            case "verbal":
+                return (T)Integer.valueOf(this.getVerbal());
+            case "quantitative":
+                return (T)Integer.valueOf(this.getQuantitative());
+            case "writing":
+                return (T)Integer.valueOf(this.getWriting());
+            case "disability":
+                return (T)Integer.valueOf(this.getDisability());
+            case "reginalRemote":
+                return(T)Integer.valueOf(this.getRegionalRemote());
+            case "womenNontraditionalRole":
+                return (T)Integer.valueOf(this.getWomenNontraditionalRole());
+            case "lowIncome":
+                return (T)Integer.valueOf(this.getLowIncome());
+            case "higestEducationLevel":
+                return (T)this.getHighestEducationLevel();
+            case "courseCompletionYear":
+                return (T) Integer.valueOf(this.getCourseCompletionYear());
             case "gpa":
                 return (T)Double.valueOf(this.getEarnedGPA());
             case "gender":
