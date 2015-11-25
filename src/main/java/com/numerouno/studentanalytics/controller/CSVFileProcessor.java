@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.numerouno.studentanalytics.processor;
+package com.numerouno.studentanalytics.controller;
 
 import java.io.IOException;
 import org.ujmp.core.Matrix;
@@ -15,7 +15,9 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.GetObjectRequest;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -114,19 +116,7 @@ public class CSVFileProcessor {
         }
 
     }
-
-    /**
-     * Creates a prediction of a dataset based on a trained classifier.
-     */
-    public static void predict() {
-
-    }
-
-    /**
-     * Trains a new classifier from existing data.
-     */
-    public static void train() {
-
-    }
+    
+    
 
 }

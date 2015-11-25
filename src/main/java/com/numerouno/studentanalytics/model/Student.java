@@ -11,26 +11,26 @@ import java.util.Locale;
 import org.supercsv.cellprocessor.CellProcessorAdaptor;
 import org.supercsv.cellprocessor.ParseDouble;
 import org.supercsv.cellprocessor.ParseInt;
-import org.supercsv.cellprocessor.ParseLong;
 import org.supercsv.cellprocessor.constraint.NotNull;
-import org.supercsv.cellprocessor.constraint.StrRegEx;
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.exception.SuperCsvCellProcessorException;
 import org.supercsv.util.CsvContext;
 import java.util.Date;
+import org.supercsv.cellprocessor.ParseDate;
 /**
  * 
  * @author Madan Parameswaran
  */
 public class Student {
+
     
-    public int systemID;
     public int studentID;
-    public enum Course {MSIT};
+    public enum Course {ARCHITECTURE,ART,BIOLOGY,BUSINESS,CHEMICAL_ENGINEERING,CHEMISTRY,DESIGN,DRAMA,ELECTRICAL_ENGINEERING,ENGLISH,HISTORY,INFORMATION_SYSTEMS_MANAGEMENT,INFORMATION_TECHNOLOGY,LANGUAGE,MATHEMATHICS,MECHANICAL_ENGINEERING,MUSIC,PHILOSOPHY,PHYSICS,PSYCHOLOGY,PUBLIC_POLICY,PUBLIC_POLICY_MANAGEMENT,STATISTICS}; //awaiting final  
     private Course courseInformation;
-    public enum Degree {UNDERGRADUATE, POSTGRAD};
+    public enum Degree {UNDERGRADUATE, POSTGRADUATE, PHD};
     private Degree degreeLevel;
-    private String fieldEducation; 
+    public enum Field {ARCHITECTURE,ART,BUSINESS,DESIGN,DRAMA,ENGINEERING,ENGLISH,HISTORY,INFORMATION_SYSTEMS_MANAGEMENT,INFORMATION_TECHNOLOGY,LANGUAGE,MATHEMATHICS,MUSIC,PHILOSOPHY,PSYCHOLOGY,PUBLIC_POLICY,PUBLIC_POLICY_MANAGEMENT,SCIENCE,STATISTICS};
+    private Field fieldEducation; 
     private Date dOb;
     public enum Sex {M, F};
     private Sex gender;
@@ -41,7 +41,7 @@ public class Student {
     private String state;
     private int zipCode;
     private Locale country;
-    public enum BasisAdmission {TESTSCORE,SOCIECONOMICAL,PARENTAL,RESIDENTIAL,SPORTS};
+    public enum BasisAdmission {ACADEMICS,AUDITION,EQUITY,PARENTAL,RESIDENT,PORTFOLIO,SPORTS};
     private BasisAdmission basisAdmission;
     public enum AttendanceType {FULLTIME, PARTTIME};
     private AttendanceType attendanceType;
@@ -58,20 +58,13 @@ public class Student {
     private int writing;
     private int disability;
     private int regionalRemote;
-    private int wNt;
+    private int womenNontraditionalRole;
     private int lowIncome;
-    public enum HighestEducationLevel {HS,AS,BS,BA,MA};
+    public enum HighestEducationLevel {HS_DIPLOMA,UNDERGRADUATE,POSTGRADUATE};
     private HighestEducationLevel highestEducationLevel;
     private int courseCompletionYear;
     private double earnedGPA;
 
-    public int getSystemID() {
-        return systemID;
-    }
-
-    public void setNumber(int number) {
-        this.systemID = number;
-    }
     public int getStudentID() {
         return studentID;
     }
@@ -96,12 +89,20 @@ public class Student {
         this.degreeLevel = degreeLevel;
     }
 
-    public String getFieldEducation() {
+    public Field getFieldEducation() {
         return fieldEducation;
     }
 
-    public void setFieldEducation(String fieldEducation) {
+    public void setFieldEducation(Field fieldEducation) {
         this.fieldEducation = fieldEducation;
+    }
+
+    public int getWomenNontraditionalRole() {
+        return womenNontraditionalRole;
+    }
+
+    public void setWomenNontraditionalRole(int womenNontraditionalRole) {
+        this.womenNontraditionalRole = womenNontraditionalRole;
     }
 
     public Date getdOb() {
@@ -281,14 +282,6 @@ public class Student {
         this.regionalRemote = reginalRemote;
     }
 
-    public int getWNt() {
-        return wNt;
-    }
-
-    public void setWNt(int womenInNonTraditional) {
-        this.wNt = wNt;
-    }
-
     public int getLowIncome() {
         return lowIncome;
     }
@@ -305,13 +298,12 @@ public class Student {
         this.highestEducationLevel = highestEducationLevel;
     }
 
-    public int setCourseCompletionYear() {
+    public int getCourseCompletionYear() {
         return courseCompletionYear;
     }
 
     public void setCourseCompletionYear(int courseCompletionYear) {
         this.courseCompletionYear = courseCompletionYear;
-
     }
 
     public double getEarnedGPA() {
@@ -330,8 +322,8 @@ public class Student {
                 new NotNull(new ParseInt()), // student ID
                 new NotNull(new ParseCourse()), //course information
                 new NotNull(new ParseDegree()), //degree level             
-                new NotNull(), // field of study
-                new NotNull(), // date of birth
+                new NotNull(new ParseField()), // field of study
+                new NotNull(new ParseDate ("MM-dd-yy")), // date of birth US Format
                 new NotNull(new ParseSex()), //gender
                 new NotNull(), //citizenship
                 new NotNull(), //term residence
@@ -350,6 +342,7 @@ public class Student {
                 new NotNull(new ParseExam()),// exam type
                 new NotNull(new ParseInt()), //verbal score
                 new NotNull(new ParseInt()), //quantitatvie score
+                new NotNull(new ParseInt()), //writing score
                 new NotNull(new ParseInt()), //disability
                 new NotNull(new ParseInt()), //rural/remote
                 new NotNull(new ParseInt()), //women in non-traditional role
@@ -357,8 +350,6 @@ public class Student {
                 new NotNull(new ParseHighestEducationLevel()), //highest level of degree prior to commencement
                 new NotNull(new ParseInt()), //year of course completion year
                 new NotNull(new ParseDouble())//over gpa score
-                //we are finished
-          
         };      
         return processors;
 }
@@ -418,7 +409,33 @@ public class Student {
         }
         
         }  
-    
+        private static class ParseField extends CellProcessorAdaptor{
+        public ParseField()
+        {
+            super();
+        }
+        
+        public ParseField(CellProcessor next)
+        {
+            super(next);
+        }  
+        
+        @Override
+        public Object execute(Object value, CsvContext context) {
+        
+        validateInputNotNull(value, context); // throws an Exception if the input is null
+            
+            for(Field fieldEducation : Field.values()) {
+                if (fieldEducation.name().equalsIgnoreCase(value.toString())){
+                    fieldEducation = Field.valueOf(((String) value).toUpperCase());
+                        return next.execute(fieldEducation, context);
+                }
+            }   
+                throw new SuperCsvCellProcessorException(
+                        String.format("Could not parse '%s' as a field education", value), context, this);
+        }
+        
+        }  
     private static class ParseSex extends CellProcessorAdaptor
     {
        
@@ -525,7 +542,7 @@ public class Student {
                         }      
                 }           
                   throw new SuperCsvCellProcessorException(
-                        String.format("Could not parse '%s' for attendanceType", value), context, this);
+                        String.format("Could not parse '%s' for attendance Type", value), context, this);
         }
         }    
     private static class ParseMode extends CellProcessorAdaptor
@@ -553,7 +570,7 @@ public class Student {
                         }      
                 }           
                   throw new SuperCsvCellProcessorException(
-                        String.format("Could not parse '%s' as an acceptable Basis for admission", value), context, this);
+                        String.format("Could not parse '%s' as an acceptable attendance mode", value), context, this);
         }
         } 
      private static class ParseCountryOfBirth extends CellProcessorAdaptor
@@ -672,5 +689,49 @@ public class Student {
         }
         } 
         
-    
+    @SuppressWarnings("UnnecessaryBoxing")
+    public <T> T getParameter(String parameter)
+    {
+        switch(parameter.toLowerCase())
+        {
+            case "languageSpokenAtHome":
+                return (T)this.getLanguageSpokenAtHome().getLanguage();
+            case "courseInformation":
+                return (T)this.getCourseInformation();
+            case "degreLevel":
+                return (T)this.getDegreeLevel();
+            case "basisAdmission":
+                return (T)this.getBasisAdmission();
+            case "modeOfAttendance":
+                return (T)this.getModeOfAttendance();
+            case "entranceExam":
+                return (T)this.getEntranceExam();
+            case "verbal":
+                return (T)Integer.valueOf(this.getVerbal());
+            case "quantitative":
+                return (T)Integer.valueOf(this.getQuantitative());
+            case "writing":
+                return (T)Integer.valueOf(this.getWriting());
+            case "disability":
+                return (T)Integer.valueOf(this.getDisability());
+            case "reginalRemote":
+                return(T)Integer.valueOf(this.getRegionalRemote());
+            case "womenNontraditionalRole":
+                return (T)Integer.valueOf(this.getWomenNontraditionalRole());
+            case "lowIncome":
+                return (T)Integer.valueOf(this.getLowIncome());
+            case "higestEducationLevel":
+                return (T)this.getHighestEducationLevel();
+            case "courseCompletionYear":
+                return (T) Integer.valueOf(this.getCourseCompletionYear());
+            case "gpa":
+                return (T)Double.valueOf(this.getEarnedGPA());
+            case "gender":
+                return (T)this.getGender();
+            case "country":
+                return (T)this.getCountry().getDisplayCountry();
+            default:
+                return null;
+        }
+    }
 }

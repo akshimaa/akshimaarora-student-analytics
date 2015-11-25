@@ -3,15 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.numerouno.studentanalytics.service;
+package com.numerouno.studentanalytics.controller;
 
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.profile.ProfileCredentialsProvider;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.GetObjectRequest;
-import com.numerouno.studentanalytics.processor.CSVParser;
-import com.numerouno.studentanalytics.processor.CSVFileProcessor;
 import java.io.File;
 
 import java.util.logging.Logger;
@@ -57,8 +55,9 @@ public class CSVFileUploadServlet extends HttpServlet {
             Logger log = Logger.getLogger(CSVFileUploadServlet.class.getName());
             log.info(req.getPart("file").getSubmittedFileName().concat(" file uploaded successfully!"));
             //CSVFileProcessor.mergeCSV(req.getPart("file").getInputStream());
-            CSVFileProcessor.writeIntosS3(req.getPart("file").getInputStream());
+           // CSVFileProcessor.writeIntosS3(req.getPart("file").getInputStream());
             try {
+                
                 CSVParser.parseIntoPOJO(req.getPart("file").getInputStream());
                 log.info(req.getPart("file").getSubmittedFileName().concat(" file parsed successfully!"));
 
