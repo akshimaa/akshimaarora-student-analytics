@@ -112,7 +112,7 @@
                             <!-- /input-group -->
                         </li>
                         <li>
-                            <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                            <a href="index"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                         </li>
                         <li>
                             <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Charts<span class="fa arrow"></span></a>
@@ -141,7 +141,7 @@
                        
                       
                         <li>
-                            <a href="#"><i class="fa fa-edit fa-fw"></i> Generate Report</a>
+                            <a href="generateReport.jsp"><i class="fa fa-edit fa-fw"></i> Generate Report</a>
                     
                             <!-- /.nav-second-level -->
                         </li>
@@ -182,6 +182,8 @@
         function bar(placeholder) {
             $('#page-wrapper').load('barChart.jsp');
         }
+
+        
         
     </script>
     

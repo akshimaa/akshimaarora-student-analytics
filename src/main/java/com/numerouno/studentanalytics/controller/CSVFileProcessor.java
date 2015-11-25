@@ -46,14 +46,14 @@ public class CSVFileProcessor {
         
     }
     
-       public static void writeIntosS3(InputStream stream) {
+       public static void writeIntosS3(InputStream stream, String bucket, String key) {
         
         AWSCredentials credentials = new ProfileCredentialsProvider().getCredentials();
         AmazonS3 s3client = new AmazonS3Client(credentials);
         File tempFile = new File("Temp/tempFile.csv");
         try {
             FileUtils.copyInputStreamToFile(stream, tempFile);
-            s3client.putObject(new PutObjectRequest("student-beta","student-upload.csv",tempFile));
+            s3client.putObject(new PutObjectRequest(bucket,key,tempFile));
         } catch (IOException ex) {
             Logger.getLogger(CSVFileProcessor.class.getName()).log(Level.SEVERE, null, ex);
         }
