@@ -30,7 +30,8 @@
                     <li><a href="#">Merged Data</a></li>
                 </ul>
             </div>
-        </div><div class="btn-group">
+        </div>
+        <div class="btn-group">
             <div class="dropdown">
                 <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                     Choose Y value
@@ -38,16 +39,28 @@
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
                     <li class="dropdown-header">Parameter</li>
-                    <li><a href="#">Age</a></li>
-                    <li><a href="#">GPA</a></li>
-                    <li><a href="#">Gender</a></li>
+                    <li><a href="javascript:;" value = "Age" onclick="dropdownSelector(this)">Age</a></li>
+                    <li><a href="javascript:;" onclick="dropdownSelector(this)">GPA</a></li>
+                    <li><a href="javascript:;" onclick="dropdownSelector(this)">Gender</a></li>
                 </ul>
             </div></div>
     </div>
 </div>
+<div>
+    <form id="parameters" action="PieChart" method="POST">
+        
+    </form>
+</div>
 <div class="row">
     <img src="PieChart" width="300" height="300">
 </div>
+<script>
+   $(document).ready(function(){
+    $(".dropdown-toggle").dropdown('toggle');
+}); 
+    
+</script>
+    
 <!-- /.row -->
 
 

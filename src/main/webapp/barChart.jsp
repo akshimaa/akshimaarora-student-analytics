@@ -29,6 +29,7 @@
                     <li><a href="#">Merged Data</a></li>
                 </ul>
             </div>
+<<<<<<< Updated upstream
         </div><div class="btn-group">
             <div class="dropdown">
                 <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -44,6 +45,9 @@
             </div></div>
     </div>
 </div>
+=======
+
+>>>>>>> Stashed changes
 <div class="row">
     <img src="BarChart" width="300" height="300">
 </div>
