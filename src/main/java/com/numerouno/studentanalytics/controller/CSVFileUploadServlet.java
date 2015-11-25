@@ -60,11 +60,12 @@ public class CSVFileUploadServlet extends HttpServlet {
             } catch (Exception ex) {
                 Logger.getLogger(CSVFileUploadServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
-     
-        }
-        
-        CSVFileProcessor.writeIntosS3(req.getPart("file").getInputStream(), "student-alpha", "student-upload.csv"); //write into s3 bucket 1
+        File file = new File(getServletContext().getRealPath("/Temp")+"/upload.csv");
+        FileUtils.copyInputStreamToFile(req.getPart("file").getInputStream(), file);
+        CSVFileProcessor.writeIntosS3("student-beta", "student-upload.csv", file); //write into s3 bucket 1
         CSVFileProcessor.mergeCSV(req.getPart("file").getInputStream()); //merge to exsiting data
+        
+        }
         
         
         

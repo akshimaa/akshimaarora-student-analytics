@@ -5,6 +5,7 @@
  */
 package com.numerouno.studentanalytics.controller;
 
+import com.amazonaws.AmazonClientException;
 import java.io.IOException;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.calculation.Calculation;
@@ -46,15 +47,15 @@ public class CSVFileProcessor {
         
     }
     
-       public static void writeIntosS3(InputStream stream, String bucket, String key) {
+       public static void writeIntosS3(String bucket, String key, File file) {
         
         AWSCredentials credentials = new ProfileCredentialsProvider().getCredentials();
-        AmazonS3 s3client = new AmazonS3Client(credentials);
-        File tempFile = new File("Temp/tempFile.csv");
+        
+        
         try {
-            FileUtils.copyInputStreamToFile(stream, tempFile);
-            s3client.putObject(new PutObjectRequest(bucket,key,tempFile));
-        } catch (IOException ex) {
+            AmazonS3 s3client = new AmazonS3Client(credentials);
+            s3client.putObject(new PutObjectRequest(bucket,key,file));
+        } catch (AmazonClientException ex) {
             Logger.getLogger(CSVFileProcessor.class.getName()).log(Level.SEVERE, null, ex);
         }
       
