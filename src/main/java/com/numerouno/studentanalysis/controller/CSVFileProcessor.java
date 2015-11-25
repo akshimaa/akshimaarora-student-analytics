@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.numerouno.studentanalytics.processor;
+package com.numerouno.studentanalysis.controller;
 
 import java.io.IOException;
 import org.ujmp.core.Matrix;

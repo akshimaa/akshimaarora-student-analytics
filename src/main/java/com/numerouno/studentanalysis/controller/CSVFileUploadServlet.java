@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.numerouno.studentanalytics.service;
+package com.numerouno.studentanalysis.controller;
 
 
 import com.amazonaws.auth.AWSCredentials;
@@ -11,8 +11,6 @@ import com.amazonaws.auth.profile.ProfileCredentialsProvider;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.GetObjectRequest;
-import com.numerouno.studentanalytics.processor.CSVParser;
-import com.numerouno.studentanalytics.processor.CSVFileProcessor;
 import java.io.File;
 
 import java.util.logging.Logger;

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.numerouno.studentanalytics.processor;
+package com.numerouno.studentanalysis.controller;
 
 import com.numerouno.studentanalytics.model.Student;
 import com.numerouno.studentanalytics.model.StudentList;
