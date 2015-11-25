@@ -134,7 +134,7 @@
                        
                       
                         <li>
-                            <a href="generateReport.jsp"><i class="fa fa-edit fa-fw"></i> Generate Report</a>
+                            <a href="javascript:;" onClick="generateReport(this);"><i class="fa fa-edit fa-fw"></i> Generate Report</a>
                     
                             <!-- /.nav-second-level -->
                         </li>
@@ -176,7 +176,9 @@
         function bar(placeholder) {
             $('#page-wrapper').load('barChart.jsp');
         }
-
+        function generateReport(placeholder) {
+            $('#page-wrapper').load('generateReport.jsp');
+        }
         
         
     </script>
