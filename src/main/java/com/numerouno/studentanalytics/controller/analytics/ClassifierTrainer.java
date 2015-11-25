@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.numerouno.studentanalytics.controller;
+package com.numerouno.studentanalytics.controller.analytics;
 
 import weka.classifiers.Evaluation;
 import weka.classifiers.functions.LinearRegression;
@@ -45,7 +45,6 @@ public class ClassifierTrainer {
     public static LinearRegression trainLR() {
         
         LinearRegression lr = new LinearRegression();
-        
         Instances filteredData = ARFFProcessor.filterData(ARFFProcessor.readARFF());
 
         try {

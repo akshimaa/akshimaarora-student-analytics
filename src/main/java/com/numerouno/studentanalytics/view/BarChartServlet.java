@@ -8,7 +8,6 @@ package com.numerouno.studentanalytics.view;
 import java.awt.Color;
 import java.awt.GradientPaint;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
@@ -90,6 +89,7 @@ response.setContentType("image/png");
     
     private JFreeChart getChart(HttpServletRequest request)
     {
+        
                 // row keys...
         final String series1 = "First";
         final String series2 = "Second";

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.numerouno.studentanalytics.controller;
+package com.numerouno.studentanalytics.controller.analytics;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -22,11 +22,11 @@ public class ClassifierIO {
 
     protected static void writeClassifier(Classifier classifier) {
 
-        String fileName;
+        String fileName = "";
 
         if (classifier instanceof MultilayerPerceptron) {
             fileName = "MLP";
-        } else {
+        } else if (classifier instanceof LinearRegression) {
             fileName = "LinearRegression";
         }
 
