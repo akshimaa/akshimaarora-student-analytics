@@ -26,7 +26,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>LoginServlet</servlet-name>
-        <servlet-class>com.numerouno.studentanalysis.controller.LoginServlet</servlet-class>
+        <servlet-class>com.numerouno.studentanalytics.controller.LoginServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>BarChartServlet</servlet-name>
@@ -42,7 +42,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>CSVFileUploadServlet</servlet-name>
-        <servlet-class>com.numerouno.studentanalysis.controller.CSVFileUploadServlet</servlet-class>
+        <servlet-class>com.numerouno.studentanalytics.controller.CSVFileUploadServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>CSVFileUploadServlet</servlet-name>

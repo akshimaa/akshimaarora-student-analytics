@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.numerouno.studentanalysis.controller;
+package com.numerouno.studentanalytics.controller;
 
 import weka.classifiers.Evaluation;
 import weka.classifiers.functions.LinearRegression;
 import weka.core.Instances;
 import weka.classifiers.functions.MultilayerPerceptron;
-import weka.core.Utils;
+
 
 /**
  *
@@ -66,36 +66,36 @@ public class ClassifierTrainer {
     }
     
 
-    @Override
-    public String toString() {
-        
-        StringBuffer result;
-
-        result = new StringBuffer();
-        result.append("Weka - Demo\n===========\n\n");
-
-        result.append("Classifier...: "
-                + mlp.getClass().getName() + " "
-                + Utils.joinOptions(mlp.getOptions()) + "\n");
-        result.append("Training file: "
-                + "Temp/temp.arff" + "\n");
-        result.append("\n");
-
-        result.append(mlp.toString() + "\n");
-        result.append(eval.toSummaryString() + "\n");
-        try {
-            result.append(eval.toMatrixString() + "\n");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        try {
-            result.append(eval.toClassDetailsString() + "\n");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return result.toString();
-        
-    }
+//    @Override
+//    public String toString() {
+//        
+//        StringBuffer result;
+//
+//        result = new StringBuffer();
+//        result.append("Weka - Demo\n===========\n\n");
+//
+//        result.append("Classifier...: "
+//                + mlp.getClass().getName() + " "
+//                + Utils.joinOptions(mlp.getOptions()) + "\n");
+//        result.append("Training file: "
+//                + "Temp/temp.arff" + "\n");
+//        result.append("\n");
+//
+//        result.append(mlp.toString() + "\n");
+//        result.append(eval.toSummaryString() + "\n");
+//        try {
+//            result.append(eval.toMatrixString() + "\n");
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        try {
+//            result.append(eval.toClassDetailsString() + "\n");
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//
+//        return result.toString();
+//        
+//    }
 
 }
