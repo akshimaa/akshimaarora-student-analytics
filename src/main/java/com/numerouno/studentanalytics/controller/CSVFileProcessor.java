@@ -37,7 +37,7 @@ public class CSVFileProcessor {
     /**
      * Reads from the Amazon AWS S3 bucket and saves the file as a temp file.
      */
-    public static void readFromsS3() {
+    public static void readFromsS3(String bucket, String key) {
         
         AWSCredentials credentials = new ProfileCredentialsProvider().getCredentials();
         AmazonS3 s3client = new AmazonS3Client(credentials);
