@@ -86,7 +86,7 @@ public class PieChartServlet extends HttpServlet {
 
     private JFreeChart getChart(HttpServletRequest request) {
       DefaultPieDataset dataset = new DefaultPieDataset( );             
-      dataset.setValue( "IPhone 5s" , new Double( 20 ) );             
+      dataset.setValue( "IPhone 5s" , new Double( 20 ) );
       dataset.setValue( "SamSung Grand" , new Double( 20 ) );             
       dataset.setValue( "MotoG" , new Double( 40 ) );             
       dataset.setValue( "Nokia Lumia" , new Double( 10 ) ); 

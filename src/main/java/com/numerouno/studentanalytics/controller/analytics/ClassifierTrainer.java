@@ -32,6 +32,8 @@ public class ClassifierTrainer {
             
             System.out.println("Classifier taining complete");
             
+            System.out.println(mlp);
+            
             ClassifierIO.writeClassifier(mlp);
             
         } catch (Exception e) {
@@ -62,6 +64,7 @@ public class ClassifierTrainer {
         }
 
         return lr;
+        
     }
     
 

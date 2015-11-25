@@ -127,7 +127,7 @@
                             <!-- /.nav-second-level -->
                         </li>
                         <li>
-                            <a href="tables.html"><i class="fa fa-table fa-fw"></i> Analysis</a>
+                            <a href="javascript:;" onclick="analysis(this);"><i class="fa fa-edit fa-fw"></i>Analysis</a>
                                     
                         </li>
                         
@@ -175,6 +175,9 @@
         }
         function bar(placeholder) {
             $('#page-wrapper').load('barChart.jsp');
+        }
+        function analysis(placeholder) {
+            $('#page-wrapper').load('analysis.jsp');
         }
         function generateReport(placeholder) {
             $('#page-wrapper').load('generateReport.jsp');
