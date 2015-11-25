@@ -127,15 +127,8 @@
                             <!-- /.nav-second-level -->
                         </li>
                         <li>
-                            <a href="tables.html"><i class="fa fa-table fa-fw"></i> Analysis<span class="fa arrow"></span></a>
-                                     <ul class="nav nav-second-level">
-                                <li>
-                                    <a href="#">Predictive Analysis</a>
-                                </li>
-                                <li>
-                                    <a href="#">Naives Bayer</a>
-                                </li>
-                            </ul>
+                            <a href="tables.html"><i class="fa fa-table fa-fw"></i> Analysis</a>
+                                    
                         </li>
                         
                        
@@ -146,15 +139,16 @@
                             <!-- /.nav-second-level -->
                         </li>
                     </ul>
+
                 </div>
-                <!-- /.sidebar-collapse -->
+                <!-- /.navbar-static-side -->
+            </nav>
+            <div id="page-wrapper">
+                <jsp:include page="overview.jsp"></jsp:include>
+                <!-- /#page-wrapper -->
             </div>
-            <!-- /.navbar-static-side -->
-        </nav>
-        <div id="page-wrapper">
-            <jsp:include page="overview.jsp"></jsp:include>
-        <!-- /#page-wrapper -->
         </div>
+
     </div>
     <!-- /#wrapper -->
 
@@ -188,5 +182,6 @@
     </script>
     
 </body>
+
 
 </html>
