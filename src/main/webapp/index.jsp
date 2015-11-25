@@ -1,7 +1,7 @@
 <%-- 
     Document   : index
     Created on : Nov 3, 2015, 5:23:33 PM
-    Author     : madan
+    Author     : madan, akshima
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -281,7 +281,7 @@
                     <form action="upload" method="post" enctype="multipart/form-data">
                 <input id="upload-input" class="form-control" type="file" name="file" accept=".csv" style="width: 181px"/>
                  <span class="input-group-btn">
-                <button class="btn btn-default" type="submit" value="upload">
+                     <button class="btn btn-default" type="submit" value="upload" onclick="submitCSV();">
                                     <i class="fa fa-upload"></i>
                                 </button>
                  </span>
@@ -297,7 +297,7 @@
                             <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Charts<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="flot.html">Flot Charts</a>
+                                    <a href="" onclick='show_more_menu();'>Flot Charts</a>
                                 </li>
                                 <li>
                                     <a href="morris.html">Morris.js Charts</a>
@@ -914,7 +914,7 @@
                                 <span class="input-group-btn">
                                     <button class="btn btn-warning btn-sm" id="btn-chat">
                                         Send
-                                    </button>
+                                    </button>button
                                 </span>
                             </div>
                         </div>
@@ -932,6 +932,8 @@
     <!-- /#wrapper -->
 
     <!-- jQuery -->
+     <script src="js/index.js"></script>
+     <script src="js/folder/jquery.popup.js"></script>
     <script src="js/jquery-2.1.4.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
   
