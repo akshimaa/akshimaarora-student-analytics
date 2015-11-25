@@ -45,7 +45,6 @@ public class ClassifierTrainer {
     public static LinearRegression trainLR() {
         
         LinearRegression lr = new LinearRegression();
-        
         Instances filteredData = ARFFProcessor.filterData(ARFFProcessor.readARFF());
 
         try {
