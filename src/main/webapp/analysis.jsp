@@ -12,6 +12,25 @@
         <title>Predictive Analytics</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <h1>PREDICTIVE ANALYTICS FTW!</h1>
+
+        <form action="histogram" method="post" enctype="multipart/form-data">
+            <input id="upload-input" class="form-control" type="file" name="file" accept=".csv" style="width: 250px"/>
+            <span class="input-group-btn">
+                <button class="btn btn-default" type="submit" value="upload">
+                    <i class="fa fa-upload"></i>
+                </button>
+            </span>
+        </form>
+
+        <SCRIPT LANGUAGE="JavaScript">
+            <!--
+        function button1()
+            {
+                document.form1.buttonName.value = "yes";
+                form1.submit();
+            }
+            // --> 
+        </SCRIPT>
     </body>
 </html>
