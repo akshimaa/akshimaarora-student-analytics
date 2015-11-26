@@ -26,6 +26,7 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PiePlot3D;
 import org.jfree.data.general.DefaultPieDataset;
 import com.numerouno.studentanalytics.controller.CSVParser;
+import com.numerouno.studentanalytics.model.Student.*;
 import com.numerouno.studentanalytics.model.Student;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -174,5 +175,14 @@ public class PieChartServlet extends HttpServlet {
       return chart;
 
     }
+    
+     public static void processObjects( ArrayList<Student> studentList, String key) {
+         
+     Set<Object> setObject = new HashSet<Object>();
+       for(Object aType : studentList) {
+       setObject.add(aType);
+       }
+     
+     }
 
 }
