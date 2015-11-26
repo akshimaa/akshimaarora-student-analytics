@@ -15,7 +15,9 @@ import javax.servlet.ServletOutputStream;
 import java.awt.Color;
 import java.awt.Font;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.util.Random;
+import javax.servlet.RequestDispatcher;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -53,11 +55,16 @@ public class HistogramServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        response.setContentType("image/png");
-
-        ServletOutputStream os = response.getOutputStream();
-        ChartUtilities.writeChartAsPNG(os, getChart(request), 300, 300);
-
+        //response.setContentType("image/png");
+        request.setAttribute("content", "analytics");
+        File imageFile = new File(getServletContext().getRealPath("/images")+"/chart.png");
+        FileOutputStream fos = new FileOutputStream(imageFile);
+        ChartUtilities.writeChartAsPNG(fos, getChart(request), 300, 300);
+        request.setAttribute("contextPath", getServletContext().getContextPath());
+        request.setAttribute("chart", imageFile.getName());
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/index");
+        requestDispatcher.forward(request, response);
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

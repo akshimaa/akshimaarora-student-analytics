@@ -113,7 +113,7 @@
                             <!-- /.nav-second-level -->
                         </li>
                         <li>
-                            <a href="javascript:;" onclick="analysis(this);"><i class="fa fa-table fa-fw"></i>Analysis</a>
+                            <a href="javascript:;" onclick="analysis(this);"><i class="fa fa-table fa-fw"></i> Analysis</a>
                                     
                         </li>
                         
@@ -136,9 +136,16 @@
                               <div> <c:out value="${status}"/></div>
                            </choose:otherwise>
                        </choose:when>
-                       
-                    
-                <jsp:include page="overview.jsp"></jsp:include>
+                       <c:set var="content" scope="request" value="${requestScope.content}" />  
+                              <c:choose>
+                                  <c:when test="${content eq 'analytics'}">
+                                      <jsp:include page="analysis.jsp"></jsp:include>
+                                  </c:when>
+                                  <c:otherwise>
+                                      <jsp:include page="overview.jsp"></jsp:include>
+                                  </c:otherwise>
+                              </c:choose>
+                
                 <!-- /#page-wrapper -->
             </div>
         </div>
