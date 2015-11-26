@@ -5,7 +5,7 @@
  */
 package com.numerouno.studentanalytics.model;
 
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  *
@@ -13,13 +13,13 @@ import java.util.List;
  */
 public class StudentList {
     
-    private static List<Student> list;
+    private static ArrayList<Student> list;
 
-    public static List<Student> getList() {
+    public static ArrayList<Student> getList() {
         return list;
     }
 
-    public static void setList(List<Student> list) {
+    public static void setList(ArrayList<Student> list) {
         StudentList.list = list;
     }
     

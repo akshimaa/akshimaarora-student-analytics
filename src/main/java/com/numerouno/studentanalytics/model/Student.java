@@ -7,6 +7,7 @@ package com.numerouno.studentanalytics.model;
 
 
 
+import java.io.Serializable;
 import java.util.Locale;
 import org.supercsv.cellprocessor.CellProcessorAdaptor;
 import org.supercsv.cellprocessor.ParseDouble;
@@ -21,7 +22,7 @@ import org.supercsv.cellprocessor.ParseDate;
  * 
  * @author Madan Parameswaran
  */
-public class Student {
+public class Student implements Serializable {
 
     
     public int studentID;
