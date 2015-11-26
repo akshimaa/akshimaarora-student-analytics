@@ -17,6 +17,8 @@ import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.exception.SuperCsvCellProcessorException;
 import org.supercsv.util.CsvContext;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 import org.supercsv.cellprocessor.ParseDate;
 /**
  * 
@@ -46,7 +48,7 @@ public class Student implements Serializable {
     private BasisAdmission basisAdmission;
     public enum AttendanceType {FULLTIME, PARTTIME};
     private AttendanceType attendanceType;
-    private enum ModeAttendance {INTERNAL, EXTERNAL, MULTIMODAL};
+    public enum ModeAttendance {INTERNAL, EXTERNAL, MULTIMODAL};
     private ModeAttendance modeOfAttendance;
     private Locale countryOfBirth;
     private Locale LanguageSpokenAtHome;
@@ -65,6 +67,8 @@ public class Student implements Serializable {
     private HighestEducationLevel highestEducationLevel;
     private int courseCompletionYear;
     private double earnedGPA;
+
+
 
     public int getStudentID() {
         return studentID;
@@ -373,7 +377,7 @@ public class Student implements Serializable {
         validateInputNotNull(value, context); // throws an Exception if the input is null
             
             for (Course courseInformation : Course.values()) {
-                if (courseInformation.name().equalsIgnoreCase(value.toString())){
+                if (courseInformation.name().equals(value.toString())){
                     courseInformation = Course.valueOf(((String) value).toUpperCase());
                         return next.execute(courseInformation, context);
                 }
@@ -693,13 +697,15 @@ public class Student implements Serializable {
     @SuppressWarnings("UnnecessaryBoxing")
     public <T> T getParameter(String parameter)
     {
-        switch(parameter.toLowerCase())
+        switch(parameter)
         {
+            case "attendanceType":
+                return (T)this.getAttendanceType();
             case "languageSpokenAtHome":
                 return (T)this.getLanguageSpokenAtHome().getLanguage();
             case "courseInformation":
                 return (T)this.getCourseInformation();
-            case "degreLevel":
+            case "degreeLevel":
                 return (T)this.getDegreeLevel();
             case "basisAdmission":
                 return (T)this.getBasisAdmission();
@@ -731,6 +737,8 @@ public class Student implements Serializable {
                 return (T)this.getGender();
             case "country":
                 return (T)this.getCountry().getDisplayCountry();
+
+                
             default:
                 return null;
         }

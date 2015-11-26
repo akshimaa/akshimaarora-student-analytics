@@ -5,9 +5,18 @@
  */
 package com.numerouno.studentanalytics.view;
 
+import com.numerouno.studentanalytics.model.Student;
 import java.awt.Color;
 import java.awt.GradientPaint;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
@@ -23,6 +32,9 @@ import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.renderer.category.BarRenderer;
 import org.jfree.data.category.DefaultCategoryDataset;
+import org.ujmp.core.collections.list.ArrayIndexList;
+import com.numerouno.studentanalytics.model.Student;
+import java.lang.Integer;
 
 /**
  *
@@ -41,10 +53,19 @@ public class BarChartServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-response.setContentType("image/png");
+        request.setAttribute("content", "analytics");
+        request.setAttribute("contextPath", getServletContext().getContextPath());
+        //request.setAttribute("chart", imageFile.getName());
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/index");
+        requestDispatcher.forward(request, response);
+        getChart(request);
+        String preset = request.getParameter("preset");
+        String datasource = request.getParameter("datasource");
         
-        ServletOutputStream os = response.getOutputStream();
-        ChartUtilities.writeChartAsPNG(os, getChart(request), 300, 300);
+        
+        
+//        ServletOutputStream os = response.getOutputStream();
+//        ChartUtilities.writeChartAsPNG(os, getChart(request), 300, 300);
        
     }
 
@@ -87,8 +108,54 @@ response.setContentType("image/png");
         return "Short description";
     }// </editor-fold>
     
-    private JFreeChart getChart(HttpServletRequest request)
-    {
+        private JFreeChart getChart(HttpServletRequest request) throws FileNotFoundException {
+        String preset= request.getParameter("preset");
+          
+        String datasource= request.getParameter("datasource");
+        
+        ArrayList<Student> studentList=new ArrayIndexList<>();
+      
+     try {
+          
+      FileInputStream fis = new FileInputStream(getServletContext().getRealPath("/STUDENT.DAT"));
+      ObjectInputStream in = new ObjectInputStream(fis);
+         studentList= (ArrayList<Student> )in.readObject();
+     } catch (IOException ex) {
+         Logger.getLogger(BarChartServlet.class.getName()).log(Level.SEVERE, null, ex);
+     } catch (ClassNotFoundException ex) {
+         Logger.getLogger(BarChartServlet.class.getName()).log(Level.SEVERE, null, ex);
+     }
+    
+       Logger log = Logger.getLogger(PieChartServlet.class.getName());
+        log.info(studentList.get(5).getCourseInformation().name());
+     HashMap<Object, Integer> map = new HashMap<>();
+     for(Student student : studentList)
+     {
+         log.info(student.getParameter(preset).toString());
+
+            if(map.containsKey(student.getParameter(preset)))
+            {
+             
+                int count = map.get(student.getParameter(preset));
+                map.put(student.getParameter(preset),count+1);
+            }
+            else
+            {
+                map.put(student.getParameter(preset),1);
+            }
+        
+     }
+     for(Object key : map.keySet())
+     {
+         
+       Object value =   map.get(key);
+       String kvpMap = key+": "+value;
+       log.info(kvpMap);
+     }
+      
+        
+       
+        
         
                 // row keys...
         final String series1 = "First";
@@ -179,5 +246,7 @@ response.setContentType("image/png");
         return chart;
         
     }
+    
+
 
 }
