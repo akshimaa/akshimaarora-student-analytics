@@ -31,6 +31,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
+import java.util.Random;
 import org.ujmp.core.collections.list.ArrayIndexList;
 
 /**
@@ -126,6 +127,17 @@ public class PieChartServlet extends HttpServlet {
       dataset.setValue( "SamSung Grand" , new Double( 20 ) );             
       dataset.setValue( "MotoG" , new Double( 40 ) );             
       dataset.setValue( "Nokia Lumia" , new Double( 10 ) ); 
+      
+        double[] value = new double[100];
+        Random generator = new Random();
+        for (int i = 1; i < 100; i++) {
+
+            value[i] = generator.nextDouble();
+            int number = 10;
+            dataset.setValue("IPhone 5s" , new Double( 20 ));
+
+        }
+
 
       JFreeChart chart = ChartFactory.createPieChart3D( 
          "Mobile Sales" ,  // chart title                   
