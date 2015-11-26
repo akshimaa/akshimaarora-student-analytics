@@ -17,7 +17,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Bootstrap Admin Theme</title>
+    <title>CMU Student Analytics</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -56,7 +56,7 @@
     fjs.parentNode.insertBefore(js, fjs);
   }(document, 'script', 'facebook-jssdk'));
     </script>
-    <div id="userId" style="display: none;">${someValue}</div>
+    <div id="userId" style="display: none;">${userID}</div>
     <div id="wrapper">
 
         <!-- Navigation -->
@@ -96,21 +96,7 @@
             <div class="navbar-default sidebar" style="margin-top: 101px" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
-                        <li class="sidebar-search">
-                            <div class="input-group custom-search-form">
-                                                         
-                    <form action="upload" method="post" enctype="multipart/form-data">
-                <input id="upload-input" class="form-control" type="file" name="file" accept=".csv" style="width: 181px"/>
-                 <span class="input-group-btn">
-                <button class="btn btn-default" type="submit" value="upload">
-                                    <i class="fa fa-upload"></i>
-                                </button>
-                 </span>
-                </form> 
-              
-                            </div>
-                            <!-- /input-group -->
-                        </li>
+                        <jsp:include page="upload.jsp"></jsp:include>
                         <li>
                             <a href="index"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                         </li>
@@ -143,7 +129,15 @@
                 </div>
                 <!-- /.navbar-static-side -->
             </nav>
-            <div id="page-wrapper">
+              <c:set var="status" scope="request" value="${requestScope.status}" />           
+               <div id="page-wrapper">
+                   <choose:when test="${status == null}">
+                           <choose:otherwise>
+                              <div> <c:out value="${status}"/></div>
+                           </choose:otherwise>
+                       </choose:when>
+                       
+                    
                 <jsp:include page="overview.jsp"></jsp:include>
                 <!-- /#page-wrapper -->
             </div>
