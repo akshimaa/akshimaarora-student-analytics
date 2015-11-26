@@ -20,13 +20,14 @@ import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PiePlot3D;
 import org.jfree.data.general.DefaultPieDataset;
+import com.numerouno.studentanalytics.controller.CSVParser;
 
 /**
  *
  * @author Melissa
  */
 public class PieChartServlet extends HttpServlet {
-
+Logger log = Logger.getLogger(PieChartServlet.class.getName());
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -38,14 +39,19 @@ public class PieChartServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+       // http.setRequestHeader("Content-length", parameters .length);
         response.setContentType("image/png");
-        String data = "Hello World!";
-//response.setContentType("text/plain");
-//response.setCharacterEncoding("UTF-8");
-//response.getWriter().write(data);
+     CSVParser csvParser= new CSVParser();
+     
+     csvParser.parseIntoPOJO("");
+       String valParameter= request.getParameter("val");
+       log.info("param================"+request.getParameter("param"));
+       log.info("valParameter===="+valParameter);
+       valParameter="OriginalData,GPA";
+       String [] parameters=valParameter.split(",");
+       
         ServletOutputStream os = response.getOutputStream();
        ChartUtilities.writeChartAsPNG(os, getChart(request), 300, 300);
-        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
