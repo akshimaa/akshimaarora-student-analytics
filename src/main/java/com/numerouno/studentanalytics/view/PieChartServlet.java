@@ -43,7 +43,7 @@ Logger log = Logger.getLogger(PieChartServlet.class.getName());
         response.setContentType("image/png");
      CSVParser csvParser= new CSVParser();
      
-     csvParser.parseIntoPOJO("");
+     //csvParser.parseIntoPOJO("");
        String valParameter= request.getParameter("val");
        log.info("param================"+request.getParameter("param"));
        log.info("valParameter===="+valParameter);
