@@ -45,8 +45,10 @@
      <button id="generatePie"  class="btn btn-default">Generate Pie!</button>
  </div>
 
-<div class="row" id="actualcharts" style="display:none">
-
+ 
+  
+<div class="row" id="uploadDiv" style="display:none">
+ <jsp:include page="upload.jsp"></jsp:include>
 </div>
 
 <form id="pieChartForm" action="PieChart" name="PieChart" method="POST" style="display:none;">

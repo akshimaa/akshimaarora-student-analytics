@@ -159,8 +159,8 @@ public class PieChartServlet extends HttpServlet {
       plot.setStartAngle( 270 );             
       plot.setForegroundAlpha( 0.60f );             
       plot.setInteriorGap( 0.02 );             
-      int width = 800; /* Width of the image */             
-      int height = 800; /* Height of the image */                             
+      int width = 1200; /* Width of the image */             
+      int height = 1200; /* Height of the image */                             
       File pieChart3D = new File( getServletContext().getRealPath("/Temp")+"/pie_Chart3D.png" );  
       
         try { 
@@ -197,7 +197,7 @@ public class PieChartServlet extends HttpServlet {
          
        Object value =   map.get(key);
        String kvpMap = key+": "+value;
-       log.info(kvpMap);
+      // log.info(kvpMap);
      }
       return map;
      
