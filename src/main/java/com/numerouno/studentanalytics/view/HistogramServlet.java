@@ -5,6 +5,10 @@
  */
 package com.numerouno.studentanalytics.view;
 
+import com.numerouno.studentanalytics.controller.CSVParser;
+import com.numerouno.studentanalytics.controller.analytics.ClassifierIO;
+import com.numerouno.studentanalytics.controller.analytics.DataCleaner;
+import com.numerouno.studentanalytics.controller.analytics.Predictor;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -16,7 +20,9 @@ import java.awt.Color;
 import java.awt.Font;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.util.Random;
+import java.util.logging.Level;
 import javax.servlet.RequestDispatcher;
 
 import org.jfree.chart.ChartFactory;
@@ -36,11 +42,16 @@ import org.jfree.ui.Layer;
 import org.jfree.ui.RectangleAnchor;
 import org.jfree.ui.RefineryUtilities;
 import org.jfree.ui.TextAnchor;
+import weka.classifiers.Classifier;
+import weka.core.Instances;
+import java.util.logging.Logger;
+import javax.servlet.annotation.MultipartConfig;
 
 /**
  *
  * @author Dell
  */
+@MultipartConfig
 public class HistogramServlet extends HttpServlet {
 
     /**
@@ -55,16 +66,21 @@ public class HistogramServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        Logger log = Logger.getLogger(HistogramServlet.class.getName());
         //response.setContentType("image/png");
         request.setAttribute("content", "analytics");
-        File imageFile = new File(getServletContext().getRealPath("/images")+"/chart.png");
+        request.setAttribute("status", getServletContext().getRealPath("/models"));
+        File imageFile = new File(getServletContext().getRealPath("/images") + "/chart.png");
+        
+        log.info(request.getPart("file").getSubmittedFileName());
+        log.info("Classifier: "+ request.getParameter("classifier"));
         FileOutputStream fos = new FileOutputStream(imageFile);
         ChartUtilities.writeChartAsPNG(fos, getChart(request), 300, 300);
         request.setAttribute("contextPath", getServletContext().getContextPath());
         request.setAttribute("chart", imageFile.getName());
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("/index");
         requestDispatcher.forward(request, response);
-        
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -107,31 +123,35 @@ public class HistogramServlet extends HttpServlet {
     }// </editor-fold>
 
     protected JFreeChart getChart(HttpServletRequest request) {
-        
-        HistogramDataset dataset = new HistogramDataset();
-        dataset.setType(HistogramType.RELATIVE_FREQUENCY);
+
         JFreeChart chart;
-        
-//        ClassifierIO.(request.getContextPath());
-        
-        double[] value = new double[100];
-        Random generator = new Random();
-        
+        double[] predictions = null;
+
+        try {
+            String classifierKey = request.getParameter("classifier");
+            InputStream inputStream = request.getPart("file").getInputStream();
+            String modelsPath = getServletContext().getRealPath("/models");
+            System.out.println(modelsPath);
+            Classifier classifier = ClassifierIO.readClassifier(modelsPath, classifierKey);
+            Instances unfilteredData = CSVParser.parseIntoInstances(inputStream);
+            Instances data = DataCleaner.filterData(unfilteredData);
+            predictions = Predictor.predict(data, classifier);
+        } catch (Exception ex) {
+            Logger.getLogger(HistogramServlet.class.getName()).log(Level.SEVERE, null, ex);
+            request.setAttribute("status", "Oops something went wrong! Server side error while attempting to parse and upload");
+        }
+
+        HistogramDataset dataset = new HistogramDataset();
+        dataset.setType(HistogramType.FREQUENCY);
+        dataset.addSeries("Histogram", predictions, 10);
+
         boolean show = false;
         boolean toolTips = false;
         boolean urls = false;
-        String plotTitle = "Histogram";
-        String xaxis = "number";
-        String yaxis = "value";
+        String plotTitle = "Predicted GPA";
+        String xaxis = "GPA";
+        String yaxis = "Frequency";
         PlotOrientation orientation = PlotOrientation.VERTICAL;
-
-        for (int i = 1; i < 100; i++) {
-
-            value[i] = generator.nextDouble();
-            int number = 10;
-            dataset.addSeries("Histogram", value, number);
-
-        }
 
         chart = ChartFactory.createHistogram(
                 plotTitle,
@@ -145,12 +165,6 @@ public class HistogramServlet extends HttpServlet {
         );
         int width = 500;
         int height = 300;
-
-        try {
-            ChartUtilities.saveChartAsPNG(new File("histogram.PNG"), chart, width, height);
-        } catch (IOException e) {
-
-        }
 
         return chart;
 

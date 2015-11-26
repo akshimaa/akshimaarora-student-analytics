@@ -106,7 +106,7 @@
                             <!-- /input-group -->
                         </li>
 
-                        <jsp:include page="upload.jsp"></jsp:include>
+                      
 
                         <li>
                             <a href="index"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
