@@ -7,15 +7,11 @@ package com.numerouno.studentanalytics.controller;
 
 import com.numerouno.studentanalytics.model.Student;
 import com.numerouno.studentanalytics.model.StudentList;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.io.CsvBeanReader;
@@ -46,15 +42,8 @@ public class CSVParser implements Serializable  {
                         studentList.add(student);
                                 
                 }
-                
-                StudentList.setList((ArrayList <Student> )studentList);
-                try ( FileOutputStream fos = new FileOutputStream("C:\\Users\\Melissa\\Documents\\NetBeansProjects\\student-analytics\\STUDENT.DAT");
-                        ObjectOutputStream oos = new ObjectOutputStream(fos)) {
-                    oos.writeObject(StudentList.getList());
-                }
-                catch (Exception e) {
-                    System.out.println("error");
-                }
+                StudentList.setList((ArrayList<Student>)studentList);
+
                 
         }
    
