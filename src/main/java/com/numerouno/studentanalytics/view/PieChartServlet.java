@@ -6,6 +6,11 @@
 package com.numerouno.studentanalytics.view;
 
 
+import com.amazonaws.auth.AWSCredentials;
+import com.amazonaws.auth.profile.ProfileCredentialsProvider;
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.model.GetObjectRequest;
 import java.io.IOException;
 import java.io.File;
 import java.util.logging.Level;
@@ -21,13 +26,19 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PiePlot3D;
 import org.jfree.data.general.DefaultPieDataset;
 import com.numerouno.studentanalytics.controller.CSVParser;
+import com.numerouno.studentanalytics.model.Student;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.ObjectInputStream;
+import java.util.ArrayList;
+import org.ujmp.core.collections.list.ArrayIndexList;
 
 /**
  *
  * @author Melissa, Akshima
  */
 public class PieChartServlet extends HttpServlet {
-
+ Logger log = Logger.getLogger(PieChartServlet.class.getName());
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -40,9 +51,14 @@ public class PieChartServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-       Logger log = Logger.getLogger(PieChartServlet.class.getName());
-       log.info("Hello");
+      
+   String preset= request.getParameter("preset");
+   String datasource= request.getParameter("datasource");
+
+   
        
+       ServletOutputStream os = response.getOutputStream();
+        ChartUtilities.writeChartAsPNG(os, getChart(request), 300, 300);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -84,7 +100,27 @@ public class PieChartServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    private JFreeChart getChart(HttpServletRequest request) {
+    private JFreeChart getChart(HttpServletRequest request) throws FileNotFoundException {
+          String preset= request.getParameter("preset");
+   String datasource= request.getParameter("datasource");
+         ArrayList<Student> studentList=new ArrayIndexList<>();
+      
+     try {
+          
+      FileInputStream fis = new FileInputStream("STUDENT.DAT");
+      ObjectInputStream in = new ObjectInputStream(fis);
+         studentList= (ArrayList<Student> )in.readObject();
+     } catch (IOException ex) {
+         Logger.getLogger(PieChartServlet.class.getName()).log(Level.SEVERE, null, ex);
+     } catch (ClassNotFoundException ex) {
+         Logger.getLogger(PieChartServlet.class.getName()).log(Level.SEVERE, null, ex);
+     }
+      
+      for(Student student : studentList){
+      log.info(student.getPermanentHomeResidence());
+      }
+        
+        
       DefaultPieDataset dataset = new DefaultPieDataset( );             
       dataset.setValue( "IPhone 5s" , new Double( 20 ) );
       dataset.setValue( "SamSung Grand" , new Double( 20 ) );             
