@@ -34,15 +34,15 @@
               
                 <select style="width: 123px;" name="" value="Select2" id="presetDropdown">
                    
-                    <option value="age" ><a href="#">Age</a></option>
+                    <option value="attendanceType" ><a href="#">Attendance Type</a></option>
                 <option value="courseInformation"><a href="#">Course Information</a></option>
-                    <option value="gpa"><a href="#">GPA</a></option>
-                    <option value="gender"><a href="#">Gender</a></option>
+                    <option value="modeOfAttendance"><a href="#">Attendance Mode</a></option>
+                        <option value="basisAdmission"><a href="#">Basis for Admission</a></option>
                 </select>
             </div>
          </div>
     </div>
-</div>
+
  <div class="row">
      <button id="generateBar"  class="btn btn-default">Generate Bar!</button>
  </div>

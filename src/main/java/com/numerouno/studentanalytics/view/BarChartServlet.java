@@ -67,7 +67,7 @@ public class BarChartServlet extends HttpServlet {
         
        
        FileOutputStream fos = new FileOutputStream(imageFile);
-        ChartUtilities.writeChartAsPNG(fos, getChart(request), 500, 500);
+        ChartUtilities.writeChartAsPNG(fos, getChart(request), 800, 600);
        
     }
 
@@ -156,7 +156,7 @@ public class BarChartServlet extends HttpServlet {
 
         
         final JFreeChart chart = ChartFactory.createBarChart(
-            "Bar Chart Demo",         // chart title
+            Student.getLegend(preset),         // chart title
             "Category",               // domain axis label
             "Value",                  // range axis label
             dataset,                  // data
@@ -187,11 +187,11 @@ public class BarChartServlet extends HttpServlet {
         
         // set up gradient paints for series...
         final GradientPaint gp0 = new GradientPaint(
-            0.0f, 0.0f, Color.orange, 
-            0.0f, 0.0f, Color.lightGray
+            0.0f, 0.0f, Color.green, 
+            0.0f, 0.0f, Color.BLUE
         );
         final GradientPaint gp1 = new GradientPaint(
-            0.0f, 0.0f, Color.green, 
+            0.0f, 0.0f, Color.blue, 
             0.0f, 0.0f, Color.lightGray
         );
         final GradientPaint gp2 = new GradientPaint(
@@ -204,7 +204,7 @@ public class BarChartServlet extends HttpServlet {
 
         final CategoryAxis domainAxis = plot.getDomainAxis();
         domainAxis.setCategoryLabelPositions(
-            CategoryLabelPositions.createUpRotationLabelPositions(Math.PI / 6.0)
+            CategoryLabelPositions.createUpRotationLabelPositions(Math.PI / 4.0)
         );
         // OPTIONAL CUSTOMISATION COMPLETED.
         
