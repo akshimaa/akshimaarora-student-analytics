@@ -113,7 +113,7 @@
                             <!-- /.nav-second-level -->
                         </li>
                         <li>
-                            <a href="javascript:;" onclick="analysis(this);"><i class="fa fa-edit fa-fw"></i>Analysis</a>
+                            <a href="javascript:;" onclick="analysis(this);"><i class="fa fa-table fa-fw"></i>Analysis</a>
                                     
                         </li>
                         
