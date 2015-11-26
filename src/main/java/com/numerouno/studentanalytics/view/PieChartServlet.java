@@ -176,7 +176,7 @@ public class PieChartServlet extends HttpServlet {
 
     }
     
-     public static void processObjects( ArrayList<Student> studentList, String key) {
+     public static void processObjects( ArrayList<Student> studentList) {
          
      Set<Object> setObject = new HashSet<Object>();
        for(Object aType : studentList) {
