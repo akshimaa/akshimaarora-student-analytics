@@ -106,7 +106,7 @@
                             <!-- /input-group -->
                         </li>
 
-                        <jsp:include page="upload.jsp"></jsp:include>
+                      
 
                         <li>
                             <a href="index"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
@@ -152,6 +152,9 @@
                                   <c:when test="${content eq 'analytics'}">
                                       <jsp:include page="analysis.jsp"></jsp:include>
                                   </c:when>
+                                  <c:when test="${content eq 'barChart'}">
+                                      <jsp:include page="barChart.jsp"></jsp:include>
+                                  </c:when>
                                   <c:otherwise>
                                       <jsp:include page="overview.jsp"></jsp:include>
                                   </c:otherwise>
@@ -181,6 +184,7 @@
 
     <!-- Custom Theme JavaScript -->
     <script src="js/sb-admin-2.js"></script>
+   
     <script>
         function pie(placeholder) {
             $('#page-wrapper').load('pieChart.jsp');

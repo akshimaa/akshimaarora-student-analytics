@@ -20,17 +20,17 @@ import weka.filters.unsupervised.attribute.Remove;
  */
 public class DataCleaner {
     
-    protected static Instances filterData(Instances data) {
+    public static Instances filterData(Instances data) {
 
         // Set options to remove irrelevant columns of data
         String[] options = new String[2];
-        options[1] = "-R";
-        options[2] = "1-2, 5, 7-12, 15-17, 19-20, 29-30";
+        options[0] = "-R";
+        options[1] = "1-2, 5, 7-12, 15-17, 19-20, 29-30";
 
         // Set options to change "numeric" equity data to nominal
         String[] optionsNTN = new String[2];
-        optionsNTN[1] = "-R";
-        optionsNTN[2] = "11-14";
+        optionsNTN[0] = "-R";
+        optionsNTN[1] = "11-14";
 
         Remove remove = new Remove();
         NumericToNominal numToNom = new NumericToNominal();

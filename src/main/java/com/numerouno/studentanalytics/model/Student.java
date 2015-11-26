@@ -17,6 +17,8 @@ import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.exception.SuperCsvCellProcessorException;
 import org.supercsv.util.CsvContext;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 import org.supercsv.cellprocessor.ParseDate;
 /**
  * 
@@ -46,7 +48,7 @@ public class Student implements Serializable {
     private BasisAdmission basisAdmission;
     public enum AttendanceType {FULLTIME, PARTTIME};
     private AttendanceType attendanceType;
-    private enum ModeAttendance {INTERNAL, EXTERNAL, MULTIMODAL};
+    public enum ModeAttendance {INTERNAL, EXTERNAL, MULTIMODAL};
     private ModeAttendance modeOfAttendance;
     private Locale countryOfBirth;
     private Locale LanguageSpokenAtHome;
@@ -65,6 +67,8 @@ public class Student implements Serializable {
     private HighestEducationLevel highestEducationLevel;
     private int courseCompletionYear;
     private double earnedGPA;
+
+
 
     public int getStudentID() {
         return studentID;
@@ -373,7 +377,7 @@ public class Student implements Serializable {
         validateInputNotNull(value, context); // throws an Exception if the input is null
             
             for (Course courseInformation : Course.values()) {
-                if (courseInformation.name().equalsIgnoreCase(value.toString())){
+                if (courseInformation.name().equals(value.toString())){
                     courseInformation = Course.valueOf(((String) value).toUpperCase());
                         return next.execute(courseInformation, context);
                 }
@@ -693,13 +697,15 @@ public class Student implements Serializable {
     @SuppressWarnings("UnnecessaryBoxing")
     public <T> T getParameter(String parameter)
     {
-        switch(parameter.toLowerCase())
+        switch(parameter)
         {
+            case "attendanceType":
+                return (T)this.getAttendanceType();
             case "languageSpokenAtHome":
                 return (T)this.getLanguageSpokenAtHome().getLanguage();
             case "courseInformation":
                 return (T)this.getCourseInformation();
-            case "degreLevel":
+            case "degreeLevel":
                 return (T)this.getDegreeLevel();
             case "basisAdmission":
                 return (T)this.getBasisAdmission();
@@ -715,7 +721,7 @@ public class Student implements Serializable {
                 return (T)Integer.valueOf(this.getWriting());
             case "disability":
                 return (T)Integer.valueOf(this.getDisability());
-            case "reginalRemote":
+            case "regionalRemote":
                 return(T)Integer.valueOf(this.getRegionalRemote());
             case "womenNontraditionalRole":
                 return (T)Integer.valueOf(this.getWomenNontraditionalRole());
@@ -731,6 +737,58 @@ public class Student implements Serializable {
                 return (T)this.getGender();
             case "country":
                 return (T)this.getCountry().getDisplayCountry();
+
+                
+            default:
+                return null;
+        }
+    }
+    
+    
+    public static String getLegend(String parameter)
+    {
+        switch(parameter)
+        {
+            case "attendanceType":
+                return "Attendance Type";
+            case "languageSpokenAtHome":
+                return "Language Spoken at Home";
+            case "courseInformation":
+                return "Course Information";
+            case "degreeLevel":
+                return "Degree Level";
+            case "basisAdmission":
+                return "Basis of Admission";
+            case "modeOfAttendance":
+                return "Mode of Attendance";
+            case "entranceExam":
+                return "Entrance exam";
+            case "verbal":
+                return "Verbal";
+            case "quantitative":
+                return "Quantitative Score";
+            case "writing":
+                return "Writing Score";
+            case "disability":
+                return "Disability";
+            case "regionalRemote":
+                return "Regional Remote";
+            case "womenNontraditionalRole":
+                return "Women in non-traditional role";
+            case "lowIncome":
+                return "Low Income";
+            case "higestEducationLevel":
+                return "Highest Education Level";
+            case "courseCompletionYear":
+                return "Course Completion Year";
+            case "gpa":
+                return "Grade Point Aggregate (GPA)";
+            case "gender":
+                return "Gender";
+            case "country":
+                return "Country";
+
+                
             default:
                 return null;
         }

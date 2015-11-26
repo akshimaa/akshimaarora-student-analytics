@@ -5,9 +5,18 @@
  */
 package com.numerouno.studentanalytics.view;
 
+import com.numerouno.studentanalytics.model.Student;
 import java.awt.Color;
 import java.awt.GradientPaint;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
@@ -23,6 +32,11 @@ import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.renderer.category.BarRenderer;
 import org.jfree.data.category.DefaultCategoryDataset;
+import org.ujmp.core.collections.list.ArrayIndexList;
+import com.numerouno.studentanalytics.model.Student;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.lang.Integer;
 
 /**
  *
@@ -41,10 +55,19 @@ public class BarChartServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-response.setContentType("image/png");
+        request.setAttribute("content", "barChart");
+        request.setAttribute("contextPath", getServletContext().getContextPath());
+        File imageFile = new File(getServletContext().getRealPath("/images")+"/chart.png");
+        request.setAttribute("chart", imageFile.getName());
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/index");
+        requestDispatcher.forward(request, response);
+        getChart(request);
+        String preset = request.getParameter("preset");
+        String datasource = request.getParameter("datasource");
         
-        ServletOutputStream os = response.getOutputStream();
-        ChartUtilities.writeChartAsPNG(os, getChart(request), 300, 300);
+       
+       FileOutputStream fos = new FileOutputStream(imageFile);
+        ChartUtilities.writeChartAsPNG(fos, getChart(request), 500, 500);
        
     }
 
@@ -87,41 +110,50 @@ response.setContentType("image/png");
         return "Short description";
     }// </editor-fold>
     
-    private JFreeChart getChart(HttpServletRequest request)
-    {
+        private JFreeChart getChart(HttpServletRequest request) throws FileNotFoundException {
+        String preset= request.getParameter("preset");
+          
+        String datasource= request.getParameter("datasource");
         
-                // row keys...
-        final String series1 = "First";
-        final String series2 = "Second";
-        final String series3 = "Third";
+        ArrayList<Student> studentList=new ArrayIndexList<>();
+      
+     try {
+          
+      FileInputStream fis = new FileInputStream(getServletContext().getRealPath("/STUDENT.DAT"));
+      ObjectInputStream in = new ObjectInputStream(fis);
+         studentList= (ArrayList<Student> )in.readObject();
+     } catch (IOException ex) {
+         Logger.getLogger(BarChartServlet.class.getName()).log(Level.SEVERE, null, ex);
+     } catch (ClassNotFoundException ex) {
+         Logger.getLogger(BarChartServlet.class.getName()).log(Level.SEVERE, null, ex);
+     }
+    
+       Logger log = Logger.getLogger(PieChartServlet.class.getName());
+        log.info(studentList.get(5).getCourseInformation().name());
+     HashMap<Object, Integer> map = new HashMap<>();
+     for(Student student : studentList)
+     {
+         log.info(student.getParameter(preset).toString());
 
-        // column keys...
-        final String category1 = "Category 1";
-        final String category2 = "Category 2";
-        final String category3 = "Category 3";
-        final String category4 = "Category 4";
-        final String category5 = "Category 5";
-
-        // create the dataset...
+            if(map.containsKey(student.getParameter(preset)))
+            {
+             
+                int count = map.get(student.getParameter(preset));
+                map.put(student.getParameter(preset),count+1);
+            }
+            else
+            {
+                map.put(student.getParameter(preset),1);
+            }
+        
+     }
+    
         final DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+        for(Object key : map.keySet())
+        {
+             dataset.addValue(map.get(key), Student.getLegend(preset), key.toString());
+        }
 
-        dataset.addValue(1.0, series1, category1);
-        dataset.addValue(4.0, series1, category2);
-        dataset.addValue(3.0, series1, category3);
-        dataset.addValue(5.0, series1, category4);
-        dataset.addValue(5.0, series1, category5);
-
-        dataset.addValue(5.0, series2, category1);
-        dataset.addValue(7.0, series2, category2);
-        dataset.addValue(6.0, series2, category3);
-        dataset.addValue(8.0, series2, category4);
-        dataset.addValue(4.0, series2, category5);
-
-        dataset.addValue(4.0, series3, category1);
-        dataset.addValue(3.0, series3, category2);
-        dataset.addValue(2.0, series3, category3);
-        dataset.addValue(3.0, series3, category4);
-        dataset.addValue(6.0, series3, category5);
         
         final JFreeChart chart = ChartFactory.createBarChart(
             "Bar Chart Demo",         // chart title
@@ -155,7 +187,7 @@ response.setContentType("image/png");
         
         // set up gradient paints for series...
         final GradientPaint gp0 = new GradientPaint(
-            0.0f, 0.0f, Color.blue, 
+            0.0f, 0.0f, Color.orange, 
             0.0f, 0.0f, Color.lightGray
         );
         final GradientPaint gp1 = new GradientPaint(
@@ -179,5 +211,7 @@ response.setContentType("image/png");
         return chart;
         
     }
+    
+
 
 }

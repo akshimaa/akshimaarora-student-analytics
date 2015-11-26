@@ -8,7 +8,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Facebook Login JavaScript Example</title>
+<title>CMU Student Analytics</title>
 <meta charset="UTF-8">
     
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
