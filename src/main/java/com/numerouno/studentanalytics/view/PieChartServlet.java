@@ -32,9 +32,11 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
+import javax.servlet.RequestDispatcher;
 import org.ujmp.core.collections.list.ArrayIndexList;
 
 /**
@@ -63,6 +65,8 @@ public class PieChartServlet extends HttpServlet {
        
        ServletOutputStream os = response.getOutputStream();
         ChartUtilities.writeChartAsPNG(os, getChart(request), 300, 300);
+        request.setAttribute("contextPath", getServletContext().getContextPath());
+      
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -119,41 +123,33 @@ public class PieChartServlet extends HttpServlet {
      } catch (ClassNotFoundException ex) {
          Logger.getLogger(PieChartServlet.class.getName()).log(Level.SEVERE, null, ex);
      }
-      
-      for(Student student : studentList){
-     // log.info(student.getPermanentHomeResidence());
-      }
-      
-      
-         Set<Student> setStudent = new HashSet<Student>(studentList);
-          for(Student student : setStudent){
-             
-        	log.info(student.getState());
-        }
-        
+
       DefaultPieDataset dataset = new DefaultPieDataset( );             
-      dataset.setValue( "IPhone 5s" , new Double( 20 ) );
-      dataset.setValue( "SamSung Grand" , new Double( 20 ) );             
-      dataset.setValue( "MotoG" , new Double( 40 ) );             
-      dataset.setValue( "Nokia Lumia" , new Double( 10 ) ); 
+//      dataset.setValue( "IPhone 5s" , new Double( 20 ) );
+//      dataset.setValue( "SamSung Grand" , new Double( 20 ) );             
+//      dataset.setValue( "MotoG" , new Double( 40 ) );             
+//      dataset.setValue( "Nokia Lumia" , new Double( 10 ) ); 
       
+       HashMap<Object, Integer> map= processObjects(studentList,preset);
+       
+       
         double[] value = new double[100];
         Random generator = new Random();
         for (int i = 1; i < 100; i++) {
 
             value[i] = generator.nextDouble();
             int number = 10;
-          //  dataset.setValue("IPhone 5s" , new Double( 20 ));
-
         }
- for(Student student : studentList){
-      log.info(student.getPermanentHomeResidence());
-    //  dataset.setValue(student.getCity() , new Double( 20 ));
-      }
-        
-
+     for(Object key : map.keySet())
+     {
+         
+       Object val=   map.get(key);
+       String kvpMap = key+": "+val;
+       dataset.setValue( key.toString(),(Integer) val );
+       //log.info(kvpMap);
+     }
       JFreeChart chart = ChartFactory.createPieChart3D( 
-         "Mobile Sales" ,  // chart title                   
+         "Pie Charts" ,  // chart title                   
          dataset ,         // data 
          true ,            // include legend                   
          true, 
@@ -163,8 +159,8 @@ public class PieChartServlet extends HttpServlet {
       plot.setStartAngle( 270 );             
       plot.setForegroundAlpha( 0.60f );             
       plot.setInteriorGap( 0.02 );             
-      int width = 640; /* Width of the image */             
-      int height = 480; /* Height of the image */                             
+      int width = 800; /* Width of the image */             
+      int height = 800; /* Height of the image */                             
       File pieChart3D = new File( getServletContext().getRealPath("/Temp")+"/pie_Chart3D.png" );  
       
         try { 
@@ -176,12 +172,34 @@ public class PieChartServlet extends HttpServlet {
 
     }
     
-     public static void processObjects( ArrayList<Student> studentList) {
+     public static HashMap<Object, Integer> processObjects( ArrayList<Student> studentList, String preset) {
          
-     Set<Object> setObject = new HashSet<Object>();
-       for(Object aType : studentList) {
-       setObject.add(aType);
-       }
+         Logger log = Logger.getLogger(PieChartServlet.class.getName());
+       // log.info(studentList.get(5).getCourseInformation().name());
+     HashMap<Object, Integer> map = new HashMap<>();
+     for(Student student : studentList)
+     {
+       //  log.info(student.getParameter(preset).toString());
+
+            if(map.containsKey(student.getParameter(preset)))
+            {
+                int count = map.get(student.getParameter(preset));
+                map.put(student.getParameter(preset),count+1);
+            }
+            else
+            {
+                map.put(student.getParameter(preset),1);
+            }
+        
+     }
+     for(Object key : map.keySet())
+     {
+         
+       Object value =   map.get(key);
+       String kvpMap = key+": "+value;
+       log.info(kvpMap);
+     }
+      return map;
      
      }
 
