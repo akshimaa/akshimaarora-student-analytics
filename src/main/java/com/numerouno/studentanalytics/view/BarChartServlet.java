@@ -62,8 +62,7 @@ public class BarChartServlet extends HttpServlet {
         String preset = request.getParameter("preset");
         String datasource = request.getParameter("datasource");
         
-        
-        
+       
 //        ServletOutputStream os = response.getOutputStream();
 //        ChartUtilities.writeChartAsPNG(os, getChart(request), 300, 300);
        
@@ -153,8 +152,6 @@ public class BarChartServlet extends HttpServlet {
        log.info(kvpMap);
      }
       
-        
-       
         
         
                 // row keys...
