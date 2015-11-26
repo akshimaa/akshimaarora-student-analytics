@@ -23,7 +23,7 @@
     <servlet>
         <servlet-name>HistogramServlet</servlet-name>
         <servlet-class>com.numerouno.studentanalytics.view.HistogramServlet</servlet-class>
-        <jsp-file> analysis.jsp </jsp-file>
+        
     </servlet>
     <servlet-mapping>
         <servlet-name>PieChartServlet</servlet-name>
