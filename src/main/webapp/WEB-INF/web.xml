@@ -51,7 +51,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>HistogramServlet</servlet-name>
-        <url-pattern>/histogram</url-pattern>
+        <url-pattern>/Histogram</url-pattern>
     </servlet-mapping>
     <servlet>
         <servlet-name>CSVFileUploadServlet</servlet-name>

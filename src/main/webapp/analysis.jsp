@@ -16,7 +16,7 @@
     <!-- /.col-lg-12 -->
 </div>
 <div class="row">
-        <form action="histogram" method="post" enctype="multipart/form-data">
+        <form action="Histogram" method="post" enctype="multipart/form-data">
             <input id="upload-input" class="form-control" type="file" name="file" accept=".csv" style="width: 250px"/>
             <span class="input-group-btn">
                 <button class="btn btn-default" type="submit" value="upload">
