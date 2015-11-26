@@ -18,34 +18,14 @@ import weka.filters.unsupervised.attribute.Remove;
  *
  * @author Dell
  */
-public class ARFFProcessor {
-    
-    protected static Instances readARFF() {
-
-        Instances data = null;
-
-        try {
-            BufferedReader reader = new BufferedReader(
-                    new FileReader(new File("Temp/temp.arff")));
-            data = new Instances(reader);
-            reader.close();
-            // setting class attribute
-            data.setClassIndex(data.numAttributes() - 1);
-
-        } catch (IOException i) {
-            System.out.println(i);
-        }
-
-        return data;
-
-    }
+public class DataCleaner {
     
     protected static Instances filterData(Instances data) {
 
         // Set options to remove irrelevant columns of data
         String[] options = new String[2];
         options[1] = "-R";
-        options[2] = "1-3, 6, 8-13, 16-18, 20-21, 30-31";
+        options[2] = "1-2, 5, 7-12, 15-17, 19-20, 29-30";
 
         // Set options to change "numeric" equity data to nominal
         String[] optionsNTN = new String[2];

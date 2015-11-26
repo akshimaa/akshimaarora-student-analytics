@@ -93,31 +93,4 @@ public class CSVFileProcessor {
 
     }
 
-    /**
-     * Parses .csv files into .arff files for use by the Weka package.
-     * @param fileName The path of the file to be parsed.
-     */
-    public static void CSVtoARFF(String filePath) {
-        
-        try {
-            
-            // load CSV
-            CSVLoader loader = new CSVLoader();
-            loader.setSource(new File(filePath));
-            Instances data = loader.getDataSet();
-
-            // save ARFF
-            ArffSaver saver = new ArffSaver();
-            saver.setInstances(data);
-            saver.setFile(new File("Temp/temp.arff"));
-            saver.writeBatch();
-            
-        } catch (IOException i) {
-            
-        }
-
-    }
-    
-    
-
 }

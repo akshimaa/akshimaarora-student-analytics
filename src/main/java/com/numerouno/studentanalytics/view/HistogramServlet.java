@@ -112,6 +112,8 @@ public class HistogramServlet extends HttpServlet {
         dataset.setType(HistogramType.RELATIVE_FREQUENCY);
         JFreeChart chart;
         
+//        ClassifierIO.(request.getContextPath());
+        
         double[] value = new double[100];
         Random generator = new Random();
         
