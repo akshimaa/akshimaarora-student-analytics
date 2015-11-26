@@ -17,7 +17,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Bootstrap Admin Theme</title>
+    <title>CMU Student Analytics</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -129,7 +129,15 @@
                 </div>
                 <!-- /.navbar-static-side -->
             </nav>
-            <div id="page-wrapper">
+              <c:set var="status" scope="request" value="${requestScope.status}" />           
+               <div id="page-wrapper">
+                   <choose:when test="${status == null}">
+                           <choose:otherwise>
+                              <div> <c:out value="${status}"/></div>
+                           </choose:otherwise>
+                       </choose:when>
+                       
+                    
                 <jsp:include page="overview.jsp"></jsp:include>
                 <!-- /#page-wrapper -->
             </div>

@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.logging.Level;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
@@ -52,19 +53,26 @@ public class CSVFileUploadServlet extends HttpServlet {
             log.info(req.getPart("file").getSubmittedFileName().concat(" file uploaded successfully!"));
             CSVFileProcessor.mergeCSV(req.getPart("file").getInputStream());
            // CSVFileProcessor.writeIntosS3(req.getPart("file").getInputStream());
+            RequestDispatcher requestDispatcher = req.getRequestDispatcher("/index");
+      
             try {
                 
                 CSVParser.parseIntoPOJO(req.getPart("file").getInputStream());
                 log.info(req.getPart("file").getSubmittedFileName().concat(" file parsed successfully!"));
+                File file = new File(getServletContext().getRealPath("/Temp")+"/upload.csv");
+                FileUtils.copyInputStreamToFile(req.getPart("file").getInputStream(), file);
+                CSVFileProcessor.writeIntosS3("student-beta", "student-upload.csv", file); //write into s3 bucket 1
+                CSVFileProcessor.mergeCSV(req.getPart("file").getInputStream()); //merge to exsiting data
+                req.setAttribute("status", req.getPart("file").getSubmittedFileName()+" has been parsed and uploaded successfully");
+                
            
             } catch (Exception ex) {
                 Logger.getLogger(CSVFileUploadServlet.class.getName()).log(Level.SEVERE, null, ex);
+                req.setAttribute("status", "Oops something went wrong! Server side error while attempting to parse and upload");
+         
             }
-        File file = new File(getServletContext().getRealPath("/Temp")+"/upload.csv");
-        FileUtils.copyInputStreamToFile(req.getPart("file").getInputStream(), file);
-        CSVFileProcessor.writeIntosS3("student-beta", "student-upload.csv", file); //write into s3 bucket 1
-        CSVFileProcessor.mergeCSV(req.getPart("file").getInputStream()); //merge to exsiting data
-        
+            requestDispatcher.forward(req, resp);
+
         }
         
         

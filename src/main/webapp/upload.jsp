@@ -9,7 +9,7 @@
                    <li class="sidebar-search">
                             <div class="input-group custom-search-form">
                                                          
-                    <form action="upload" method="post" enctype="multipart/form-data">
+                    <form id="uploadForm"action="upload" method="post" enctype="multipart/form-data">
                 <input id="upload-input" class="form-control" type="file" name="file" accept=".csv" style="width: 181px"/>
                  <span class="input-group-btn">
                 <button class="btn btn-default" type="submit" value="upload">
@@ -21,3 +21,5 @@
                             </div>
                             <!-- /input-group -->
                         </li>
+                       
+ 
