@@ -8,8 +8,14 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 
-        <h1>PREDICTIVE ANALYTICS FTW!</h1>
+       <div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">Predictive Analysis</h1>
 
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+<div class="row">
         <form action="histogram" method="post" enctype="multipart/form-data">
             <input id="upload-input" class="form-control" type="file" name="file" accept=".csv" style="width: 250px"/>
             <span class="input-group-btn">
@@ -18,7 +24,8 @@
                 </button>
             </span>
         </form>
-        
+</div>
+<div class="row">
         <c:set var="chart" scope="request" value="${requestScope.chart}" /> 
         <c:set var="contextPath" scope="request" value="${requestScope.contextPath}"/>
         <c:choose>
@@ -26,6 +33,8 @@
                 <img src="${contextPath}/images/${chart}">
             </c:when>
         </c:choose>
+</div>
+        
         
                 
 
