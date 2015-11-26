@@ -24,7 +24,7 @@ import com.numerouno.studentanalytics.controller.CSVParser;
 
 /**
  *
- * @author Melissa
+ * @author Melissa, Akshima
  */
 public class PieChartServlet extends HttpServlet {
 Logger log = Logger.getLogger(PieChartServlet.class.getName());
