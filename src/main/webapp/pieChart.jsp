@@ -6,12 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
- <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-<script>
-   
 
-    
-    </script>
     <div class="row">
     <div class="col-lg-12">
         <h1 class="page-header">Pie Chart</h1>
@@ -20,77 +15,59 @@
     <!-- /.col-lg-12 -->
 </div>
  <script src="js/pieChart.js"></script>
-  <table>
-
-      <tr>
-          <td>
+ 
 <div class="row">
     <div class="btn-toolbar" role="toolbar">
-        <div class="btn-group"><div class="dropdown">
+        <div class="btn-group">
+            <div class="dropdown">
                 
-                <select style="width: 123px;" name="" value="Select1" id="Select1">
+                <select style="width: 123px;" name=""  id="datasourceDropdown">
                    
-                    <option value="200"><a href="#">OriginalData</a></option>
-                    <option ><a href="#">UploadedData</a></option>
-                    <option><a href="#">MergedData</a></option>
+                    <option value="OriginalData"><a href="#">OriginalData</a></option>
+                    <option value="UploadedData"><a href="#">UploadedData</a></option>
+                    <option value="MergedData"><a href="#">MergedData</a></option>
                 </select>
             </div>
-
-        </td>
-            </tr>
-            <tr></tr>
-             <tr></tr>
-            <tr>
-                <td>
-        </div><div class="btn-group">
-            <div class="dropdown">
+           
+            
               
-                <select style="width: 123px;" name="" value="Select2" id="Select2">
+                <select style="width: 123px;" name="" value="Select2" id="presetDropdown">
                    
-                    <option value="100"><a href="#">Age</a></option>
-                    <option ><a href="#">GPA</a></option>
-                    <option ><a href="#">Gender</a></option>
-             
-            </div></div>
+                    <option value="age" ><a href="#">Age</a></option>
+                    <option value="gpa"><a href="#">GPA</a></option>
+                    <option value="gender"><a href="#">Gender</a></option>
+                </select>
+            </div>
+         </div>
     </div>
 </div>
+ <div class="row">
+    <!-- <button id="generatePie"  class="btn btn-default" onclick="generate();">Generate Pie!</button>-->
+ </div>
 
-          </td>
-      </tr>
-       <tr></tr>
-</table>
-<table>
-<input type="button" value="Generate Charts" onclick="checkOptions();">
-</table>
- <tr></tr>
-  <tr></tr>
-   <tr></tr> <tr></tr>
-   
- <table>
-       <div class="input-group-btn" style="display:none" id="uploadID" >
-     <form  action="upload" method="post" enctype="multipart/form-data">
-   
-                <input id="upload-input" class="form-control" type="file" name="file" accept=".csv" style="width: 181px"/>
-                
-                <button class="btn btn-default" type="submit" value="upload">
-                                    <i class="fa fa-upload"></i>
-                                </button>
-              
-                </form> 
-   </div>
-     </table>
-<div id="data"></div>
 <div class="row" id="actualcharts" style="display:none">
 
     <img src="PieChart" width="300" height="300">
 </div>
+
+<form id="pieChartForm" action="PieChart" name="PieChart" method="POST" style="display:none;">
+  <input type="hidden" name="datasource" id="datasource" />
+<input type="hidden" name="preset" id="preset" />
+</form>
 <script>
-   $(document).ready(function(){
-    $(".dropdown-toggle").dropdown('toggle');
-}); 
     
-</script>
-    
+   function generate(){
+        console.log("generate button clicked!");
+        console.log($('#datasourceDropdown').val());
+        console.log($('#presetDropdown').val());
+        datasource = $('#datasourceDropdown').val();
+        preset = $('#presetDropdown').val();
+        $('#datasource').attr('value',datasource);
+        $('#preset').attr('value', preset);
+        $('#pieChartFrom').submit();
+         
+    } 
+    </script>
 <!-- /.row -->
 
 

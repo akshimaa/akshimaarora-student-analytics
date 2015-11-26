@@ -27,7 +27,7 @@ import com.numerouno.studentanalytics.controller.CSVParser;
  * @author Melissa, Akshima
  */
 public class PieChartServlet extends HttpServlet {
-Logger log = Logger.getLogger(PieChartServlet.class.getName());
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -39,19 +39,10 @@ Logger log = Logger.getLogger(PieChartServlet.class.getName());
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       // http.setRequestHeader("Content-length", parameters .length);
-        response.setContentType("image/png");
-     CSVParser csvParser= new CSVParser();
-     
-     //csvParser.parseIntoPOJO("");
-       String valParameter= request.getParameter("val");
-       log.info("param================"+request.getParameter("param"));
-       log.info("valParameter===="+valParameter);
-       valParameter="OriginalData,GPA";
-       String [] parameters=valParameter.split(",");
+
+       Logger log = Logger.getLogger(PieChartServlet.class.getName());
+       log.info("Hello");
        
-        ServletOutputStream os = response.getOutputStream();
-       ChartUtilities.writeChartAsPNG(os, getChart(request), 300, 300);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
