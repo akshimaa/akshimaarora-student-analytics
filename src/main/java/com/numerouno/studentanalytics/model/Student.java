@@ -721,7 +721,7 @@ public class Student implements Serializable {
                 return (T)Integer.valueOf(this.getWriting());
             case "disability":
                 return (T)Integer.valueOf(this.getDisability());
-            case "reginalRemote":
+            case "regionalRemote":
                 return(T)Integer.valueOf(this.getRegionalRemote());
             case "womenNontraditionalRole":
                 return (T)Integer.valueOf(this.getWomenNontraditionalRole());
@@ -737,6 +737,56 @@ public class Student implements Serializable {
                 return (T)this.getGender();
             case "country":
                 return (T)this.getCountry().getDisplayCountry();
+
+                
+            default:
+                return null;
+        }
+    }
+    
+    
+    public String getLegend(String parameter)
+    {
+        switch(parameter)
+        {
+            case "attendanceType":
+                return "Attendance Type";
+            case "languageSpokenAtHome":
+                return "Language Spoken at Home";
+            case "courseInformation":
+                return "Course Information";
+            case "degreeLevel":
+                return "Degree Level";
+            case "basisAdmission":
+                return "Basis of Admission";
+            case "modeOfAttendance":
+                return "Mode of Attendance";
+            case "entranceExam":
+                return "Entrance exam";
+            case "verbal":
+                return "Verbal";
+            case "quantitative":
+                return "Quantitative Score";
+            case "writing":
+                return "Writing Score";
+            case "disability":
+                return "Disability";
+            case "regionalRemote":
+                return "Regional Remote";
+            case "womenNontraditionalRole":
+                return "Women in non-traditional role";
+            case "lowIncome":
+                return "Low Income";
+            case "higestEducationLevel":
+                return "Highest Education Level";
+            case "courseCompletionYear":
+                return "Course Completion Year";
+            case "gpa":
+                return "Grade Point Aggregate (GPA)";
+            case "gender":
+                return "Gender";
+            case "country":
+                return "Country";
 
                 
             default:
