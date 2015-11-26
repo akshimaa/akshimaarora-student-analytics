@@ -42,12 +42,11 @@
     </div>
 </div>
  <div class="row">
-    <!-- <button id="generatePie"  class="btn btn-default" onclick="generate();">Generate Pie!</button>-->
+     <button id="generatePie"  class="btn btn-default">Generate Pie!</button>
  </div>
 
 <div class="row" id="actualcharts" style="display:none">
 
-    <img src="PieChart" width="300" height="300">
 </div>
 
 <form id="pieChartForm" action="PieChart" name="PieChart" method="POST" style="display:none;">
@@ -56,7 +55,8 @@
 </form>
 <script>
     
-   function generate(){
+    $( document ).ready(function() {
+    $('#generatePie').click(function(){
         console.log("generate button clicked!");
         console.log($('#datasourceDropdown').val());
         console.log($('#presetDropdown').val());
@@ -64,9 +64,11 @@
         preset = $('#presetDropdown').val();
         $('#datasource').attr('value',datasource);
         $('#preset').attr('value', preset);
-        $('#pieChartFrom').submit();
+        $('#pieChartForm').submit();
          
-    } 
+    }); 
+     
+  }); 
     </script>
 <!-- /.row -->
 
