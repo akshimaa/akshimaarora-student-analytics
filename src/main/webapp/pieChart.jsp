@@ -12,7 +12,7 @@
         <h1 class="page-header">Pie Chart</h1>
 
     </div>
-    <!-- /.col-lg-12 -->
+  
 </div>
  <script src="js/pieChart.js"></script>
  
@@ -33,9 +33,9 @@
               
                 <select style="width: 123px;" name="" value="Select2" id="presetDropdown">
                    
-                    <option value="age" ><a href="#">Age</a></option>
-                    <option value="gpa"><a href="#">GPA</a></option>
-                    <option value="gender"><a href="#">Gender</a></option>
+                    <option value="gender" ><a href="#">Gender</a></option>
+                    <option value="language"><a href="#">Language</a></option>
+                    <option value="course"><a href="#">Course</a></option>
                 </select>
             </div>
          </div>
@@ -53,24 +53,8 @@
   <input type="hidden" name="datasource" id="datasource" />
 <input type="hidden" name="preset" id="preset" />
 </form>
-<script>
-    
-    $( document ).ready(function() {
-    $('#generatePie').click(function(){
-        console.log("generate button clicked!");
-        console.log($('#datasourceDropdown').val());
-        console.log($('#presetDropdown').val());
-        datasource = $('#datasourceDropdown').val();
-        preset = $('#presetDropdown').val();
-        $('#datasource').attr('value',datasource);
-        $('#preset').attr('value', preset);
-        $('#pieChartForm').submit();
-         
-    }); 
-     
-  }); 
-    </script>
-<!-- /.row -->
+
+
 
 
 

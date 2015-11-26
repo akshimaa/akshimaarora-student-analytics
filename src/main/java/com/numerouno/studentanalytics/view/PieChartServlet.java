@@ -26,12 +26,15 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PiePlot3D;
 import org.jfree.data.general.DefaultPieDataset;
 import com.numerouno.studentanalytics.controller.CSVParser;
+import com.numerouno.studentanalytics.model.Student.*;
 import com.numerouno.studentanalytics.model.Student;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Random;
+import java.util.Set;
 import org.ujmp.core.collections.list.ArrayIndexList;
 
 /**
@@ -108,7 +111,7 @@ public class PieChartServlet extends HttpServlet {
       
      try {
           
-      FileInputStream fis = new FileInputStream("STUDENT.DAT");
+      FileInputStream fis = new FileInputStream(getServletContext().getRealPath("STUDENT.DAT"));
       ObjectInputStream in = new ObjectInputStream(fis);
          studentList= (ArrayList<Student> )in.readObject();
      } catch (IOException ex) {
@@ -118,9 +121,15 @@ public class PieChartServlet extends HttpServlet {
      }
       
       for(Student student : studentList){
-      log.info(student.getPermanentHomeResidence());
+     // log.info(student.getPermanentHomeResidence());
       }
-        
+      
+      
+         Set<Student> setStudent = new HashSet<Student>(studentList);
+          for(Student student : setStudent){
+             
+        	log.info(student.getState());
+        }
         
       DefaultPieDataset dataset = new DefaultPieDataset( );             
       dataset.setValue( "IPhone 5s" , new Double( 20 ) );
@@ -134,10 +143,14 @@ public class PieChartServlet extends HttpServlet {
 
             value[i] = generator.nextDouble();
             int number = 10;
-            dataset.setValue("IPhone 5s" , new Double( 20 ));
+          //  dataset.setValue("IPhone 5s" , new Double( 20 ));
 
         }
-
+ for(Student student : studentList){
+      log.info(student.getPermanentHomeResidence());
+    //  dataset.setValue(student.getCity() , new Double( 20 ));
+      }
+        
 
       JFreeChart chart = ChartFactory.createPieChart3D( 
          "Mobile Sales" ,  // chart title                   
@@ -162,5 +175,14 @@ public class PieChartServlet extends HttpServlet {
       return chart;
 
     }
+    
+     public static void processObjects( ArrayList<Student> studentList) {
+         
+     Set<Object> setObject = new HashSet<Object>();
+       for(Object aType : studentList) {
+       setObject.add(aType);
+       }
+     
+     }
 
 }
