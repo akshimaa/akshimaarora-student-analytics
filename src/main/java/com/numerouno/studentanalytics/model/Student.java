@@ -7,6 +7,7 @@ package com.numerouno.studentanalytics.model;
 
 
 
+import java.io.Serializable;
 import java.util.Locale;
 import org.supercsv.cellprocessor.CellProcessorAdaptor;
 import org.supercsv.cellprocessor.ParseDouble;
@@ -21,9 +22,9 @@ import org.supercsv.cellprocessor.ParseDate;
  * 
  * @author Madan Parameswaran
  */
-public class Student {
+public class Student implements Serializable {
 
-    
+    private static final long serialVersionUID = 611625980304671996L;
     public int studentID;
     public enum Course {ARCHITECTURE,ART,BIOLOGY,BUSINESS,CHEMICAL_ENGINEERING,CHEMISTRY,DESIGN,DRAMA,ELECTRICAL_ENGINEERING,ENGLISH,HISTORY,INFORMATION_SYSTEMS_MANAGEMENT,INFORMATION_TECHNOLOGY,LANGUAGE,MATHEMATHICS,MECHANICAL_ENGINEERING,MUSIC,PHILOSOPHY,PHYSICS,PSYCHOLOGY,PUBLIC_POLICY,PUBLIC_POLICY_MANAGEMENT,STATISTICS}; //awaiting final  
     private Course courseInformation;

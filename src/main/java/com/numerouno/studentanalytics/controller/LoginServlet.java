@@ -38,8 +38,7 @@ public class LoginServlet extends HttpServlet {
         HttpSession session = request.getSession();
         session.setAttribute("accessToken", accessToken);
         session.setAttribute("userID", userID);
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/index");
-        requestDispatcher.forward(request, response);
+        response.sendRedirect(request.getContextPath() + "/index");
         Logger log = Logger.getLogger(LoginServlet.class.getName());
         log.info("Request dispatched! ".concat(accessToken));
     }

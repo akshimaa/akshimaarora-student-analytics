@@ -4,14 +4,37 @@
     Author     : Dell
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Predictive Analytics</title>
-    </head>
-    <body>
-        <h1>Hello World!</h1>
-    </body>
-</html>
+
+       <div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">Predictive Analysis</h1>
+
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+<div class="row">
+        <form action="Histogram" method="post" enctype="multipart/form-data">
+            <input id="upload-input" class="form-control" type="file" name="file" accept=".csv" style="width: 250px"/>
+            <span class="input-group-btn">
+                <button class="btn btn-default" type="submit" value="upload">
+                    <i class="fa fa-upload"></i>
+                </button>
+            </span>
+        </form>
+</div>
+<div class="row">
+        <c:set var="chart" scope="request" value="${requestScope.chart}" /> 
+        <c:set var="contextPath" scope="request" value="${requestScope.contextPath}"/>
+        <c:choose>
+            <c:when test="${chart != null}">
+                <img src="${contextPath}/images/${chart}">
+            </c:when>
+        </c:choose>
+</div>
+        
+        
+                
+

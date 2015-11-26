@@ -35,6 +35,7 @@
                     <option><a href="#">MergedData</a></option>
                 </select>
             </div>
+
         </td>
             </tr>
             <tr></tr>
@@ -80,8 +81,16 @@
      </table>
 <div id="data"></div>
 <div class="row" id="actualcharts" style="display:none">
+
     <img src="PieChart" width="300" height="300">
 </div>
+<script>
+   $(document).ready(function(){
+    $(".dropdown-toggle").dropdown('toggle');
+}); 
+    
+</script>
+    
 <!-- /.row -->
 
 
