@@ -39,9 +39,12 @@ public class PieChartServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("image/png");
-        
+        String data = "Hello World!";
+//response.setContentType("text/plain");
+//response.setCharacterEncoding("UTF-8");
+//response.getWriter().write(data);
         ServletOutputStream os = response.getOutputStream();
-        ChartUtilities.writeChartAsPNG(os, getChart(request), 300, 300);
+       ChartUtilities.writeChartAsPNG(os, getChart(request), 300, 300);
         
     }
 
@@ -104,7 +107,8 @@ public class PieChartServlet extends HttpServlet {
       plot.setInteriorGap( 0.02 );             
       int width = 640; /* Width of the image */             
       int height = 480; /* Height of the image */                             
-      File pieChart3D = new File( getServletContext().getRealPath("/Temp")+"/pie_Chart3D.png" );                           
+      File pieChart3D = new File( getServletContext().getRealPath("/Temp")+"/pie_Chart3D.png" );  
+      
         try { 
             ChartUtilities.saveChartAsPNG( pieChart3D , chart , width , height );
         } catch (IOException ex) {
