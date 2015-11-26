@@ -33,9 +33,9 @@
               
                 <select style="width: 123px;" name="" value="Select2" id="presetDropdown">
                    
-                    <option value="age" ><a href="#">Age</a></option>
-                    <option value="gpa"><a href="#">GPA</a></option>
-                    <option value="gender"><a href="#">Gender</a></option>
+                    <option value="gender" ><a href="#">Gender</a></option>
+                    <option value="language"><a href="#">Language</a></option>
+                    <option value="course"><a href="#">Course</a></option>
                 </select>
             </div>
          </div>
