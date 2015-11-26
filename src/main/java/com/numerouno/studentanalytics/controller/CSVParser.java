@@ -48,9 +48,9 @@ public class CSVParser implements Serializable  {
                 }
                 
                 StudentList.setList((ArrayList <Student> )studentList);
-                try ( FileOutputStream fos = new FileOutputStream("C:\\Users\\Melissa\\Documents\\NetBeansProjects\\student-analytics\\TEST.DAT");
+                try ( FileOutputStream fos = new FileOutputStream("C:\\Users\\Melissa\\Documents\\NetBeansProjects\\student-analytics\\STUDENT.DAT");
                         ObjectOutputStream oos = new ObjectOutputStream(fos)) {
-                    oos.writeObject(studentList);
+                    oos.writeObject(StudentList.getList());
                 }
                 catch (Exception e) {
                     System.out.println("error");

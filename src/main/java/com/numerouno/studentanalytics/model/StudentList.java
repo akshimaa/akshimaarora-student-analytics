@@ -5,14 +5,13 @@
  */
 package com.numerouno.studentanalytics.model;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  *
  * @author madan
  */
-public class StudentList implements Serializable {
+public class StudentList {
     
     private static ArrayList<Student> list;
 
