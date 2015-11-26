@@ -745,7 +745,7 @@ public class Student implements Serializable {
     }
     
     
-    public String getLegend(String parameter)
+    public static String getLegend(String parameter)
     {
         switch(parameter)
         {
