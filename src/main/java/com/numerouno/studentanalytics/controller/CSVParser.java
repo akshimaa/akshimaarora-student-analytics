@@ -8,8 +8,11 @@ package com.numerouno.studentanalytics.controller;
 import com.numerouno.studentanalytics.model.Student;
 import com.numerouno.studentanalytics.model.StudentList;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -23,7 +26,7 @@ import org.supercsv.prefs.CsvPreference;
  *
  * @author Dell
  */
-public class CSVParser  {
+public class CSVParser implements Serializable  {
 
     public static void parseIntoPOJO(InputStream fileStream) throws Exception
     {
@@ -43,11 +46,20 @@ public class CSVParser  {
                         studentList.add(student);
                                 
                 }
-                StudentList.setList(studentList);
+                
+                StudentList.setList((ArrayList <Student> )studentList);
+                try ( FileOutputStream fos = new FileOutputStream("C:\\Users\\Melissa\\Documents\\NetBeansProjects\\student-analytics\\TEST.DAT");
+                        ObjectOutputStream oos = new ObjectOutputStream(fos)) {
+                    oos.writeObject(studentList);
+                }
+                catch (Exception e) {
+                    System.out.println("error");
+                }
+                
         }
-        catch (FileNotFoundException ex) {
-            Logger.getLogger(CSVParser.class.getName()).log(Level.SEVERE, null, ex);
-        }
+   
     }
     
 }
+
+           
