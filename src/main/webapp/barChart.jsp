@@ -4,6 +4,7 @@
     Author     : Melissa, Akshima
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 
@@ -46,8 +47,14 @@
      <button id="generateBar"  class="btn btn-default">Generate Bar!</button>
  </div>
 
-<div class="row" id="actualcharts" style="display:none">
-
+<div class="row" >
+  <c:set var="chart" scope="request" value="${requestScope.chart}" /> 
+    <c:set var="contextPath" scope="request" value="${requestScope.contextPath}"/>
+    <c:choose>
+        <c:when test="${chart != null}">
+            <img src="${contextPath}/images/${chart}">
+        </c:when>
+    </c:choose>
 </div>
 
 <form id="barChartForm" action="BarChart" name="BarChart" method="POST" style="display:none;">
