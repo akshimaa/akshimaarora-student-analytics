@@ -30,6 +30,7 @@ import com.numerouno.studentanalytics.model.Student.*;
 import com.numerouno.studentanalytics.model.Student;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -61,12 +62,21 @@ public class PieChartServlet extends HttpServlet {
    String preset= request.getParameter("preset");
    String datasource= request.getParameter("datasource");
 
-   
-       
+   if(datasource.equalsIgnoreCase("UploadedData")){
+   log.info("datasource="+ datasource);
+       try {
+           CSVParser.parseIntoPOJO(request.getPart("file").getInputStream());
+           log.info(request.getPart("file").getSubmittedFileName().concat(" file parsed successfully!"));
+       } catch (Exception ex) {
+           Logger.getLogger(PieChartServlet.class.getName()).log(Level.SEVERE, null, ex);
+       }
+   }
+   else{
        ServletOutputStream os = response.getOutputStream();
         ChartUtilities.writeChartAsPNG(os, getChart(request), 300, 300);
         request.setAttribute("contextPath", getServletContext().getContextPath());
       
+    }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -203,4 +213,6 @@ public class PieChartServlet extends HttpServlet {
      
      }
 
+     
+     
 }
