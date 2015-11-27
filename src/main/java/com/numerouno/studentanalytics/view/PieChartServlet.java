@@ -6,6 +6,11 @@
 package com.numerouno.studentanalytics.view;
 
 
+import com.amazonaws.auth.AWSCredentials;
+import com.amazonaws.auth.profile.ProfileCredentialsProvider;
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.model.GetObjectRequest;
 import java.io.IOException;
 import java.io.File;
 import java.util.logging.Level;
@@ -20,13 +25,26 @@ import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PiePlot3D;
 import org.jfree.data.general.DefaultPieDataset;
+import com.numerouno.studentanalytics.controller.CSVParser;
+import com.numerouno.studentanalytics.model.Student.*;
+import com.numerouno.studentanalytics.model.Student;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.ObjectInputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Random;
+import java.util.Set;
+import javax.servlet.RequestDispatcher;
+import org.ujmp.core.collections.list.ArrayIndexList;
 
 /**
  *
- * @author Melissa
+ * @author Melissa, Akshima
  */
 public class PieChartServlet extends HttpServlet {
-
+ Logger log = Logger.getLogger(PieChartServlet.class.getName());
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -38,11 +56,17 @@ public class PieChartServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("image/png");
-        
-        ServletOutputStream os = response.getOutputStream();
+
+      
+   String preset= request.getParameter("preset");
+   String datasource= request.getParameter("datasource");
+
+   
+       
+       ServletOutputStream os = response.getOutputStream();
         ChartUtilities.writeChartAsPNG(os, getChart(request), 300, 300);
-        
+        request.setAttribute("contextPath", getServletContext().getContextPath());
+      
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -84,15 +108,48 @@ public class PieChartServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    private JFreeChart getChart(HttpServletRequest request) {
-      DefaultPieDataset dataset = new DefaultPieDataset( );             
-      dataset.setValue( "IPhone 5s" , new Double( 20 ) );             
-      dataset.setValue( "SamSung Grand" , new Double( 20 ) );             
-      dataset.setValue( "MotoG" , new Double( 40 ) );             
-      dataset.setValue( "Nokia Lumia" , new Double( 10 ) ); 
+    private JFreeChart getChart(HttpServletRequest request) throws FileNotFoundException {
+          String preset= request.getParameter("preset");
+   String datasource= request.getParameter("datasource");
+         ArrayList<Student> studentList=new ArrayIndexList<>();
+      
+     try {
+          
+      FileInputStream fis = new FileInputStream(getServletContext().getRealPath("STUDENT.DAT"));
+      ObjectInputStream in = new ObjectInputStream(fis);
+         studentList= (ArrayList<Student> )in.readObject();
+     } catch (IOException ex) {
+         Logger.getLogger(PieChartServlet.class.getName()).log(Level.SEVERE, null, ex);
+     } catch (ClassNotFoundException ex) {
+         Logger.getLogger(PieChartServlet.class.getName()).log(Level.SEVERE, null, ex);
+     }
 
+      DefaultPieDataset dataset = new DefaultPieDataset( );             
+//      dataset.setValue( "IPhone 5s" , new Double( 20 ) );
+//      dataset.setValue( "SamSung Grand" , new Double( 20 ) );             
+//      dataset.setValue( "MotoG" , new Double( 40 ) );             
+//      dataset.setValue( "Nokia Lumia" , new Double( 10 ) ); 
+      
+       HashMap<Object, Integer> map= processObjects(studentList,preset);
+       
+       
+        double[] value = new double[100];
+        Random generator = new Random();
+        for (int i = 1; i < 100; i++) {
+
+            value[i] = generator.nextDouble();
+            int number = 10;
+        }
+     for(Object key : map.keySet())
+     {
+         
+       Object val=   map.get(key);
+       String kvpMap = key+": "+val;
+       dataset.setValue( key.toString(),(Integer) val );
+       //log.info(kvpMap);
+     }
       JFreeChart chart = ChartFactory.createPieChart3D( 
-         "Mobile Sales" ,  // chart title                   
+         "Pie Charts" ,  // chart title                   
          dataset ,         // data 
          true ,            // include legend                   
          true, 
@@ -102,9 +159,10 @@ public class PieChartServlet extends HttpServlet {
       plot.setStartAngle( 270 );             
       plot.setForegroundAlpha( 0.60f );             
       plot.setInteriorGap( 0.02 );             
-      int width = 640; /* Width of the image */             
-      int height = 480; /* Height of the image */                             
-      File pieChart3D = new File( getServletContext().getRealPath("/Temp")+"/pie_Chart3D.png" );                           
+      int width = 1200; /* Width of the image */             
+      int height = 1200; /* Height of the image */                             
+      File pieChart3D = new File( getServletContext().getRealPath("/Temp")+"/pie_Chart3D.png" );  
+      
         try { 
             ChartUtilities.saveChartAsPNG( pieChart3D , chart , width , height );
         } catch (IOException ex) {
@@ -113,5 +171,36 @@ public class PieChartServlet extends HttpServlet {
       return chart;
 
     }
+    
+     public static HashMap<Object, Integer> processObjects( ArrayList<Student> studentList, String preset) {
+         
+         Logger log = Logger.getLogger(PieChartServlet.class.getName());
+       // log.info(studentList.get(5).getCourseInformation().name());
+     HashMap<Object, Integer> map = new HashMap<>();
+     for(Student student : studentList)
+     {
+       //  log.info(student.getParameter(preset).toString());
+
+            if(map.containsKey(student.getParameter(preset)))
+            {
+                int count = map.get(student.getParameter(preset));
+                map.put(student.getParameter(preset),count+1);
+            }
+            else
+            {
+                map.put(student.getParameter(preset),1);
+            }
+        
+     }
+     for(Object key : map.keySet())
+     {
+         
+       Object value =   map.get(key);
+       String kvpMap = key+": "+value;
+      // log.info(kvpMap);
+     }
+      return map;
+     
+     }
 
 }

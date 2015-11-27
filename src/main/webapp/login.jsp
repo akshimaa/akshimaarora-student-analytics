@@ -1,14 +1,14 @@
 <%-- 
     Document   : login
     Created on : Nov 16, 2015, 4:24:08 AM
-    Author     : madan
+    Author     : Akshima, madan
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-<title>Facebook Login JavaScript Example</title>
+<title>CMU Student Analytics</title>
 <meta charset="UTF-8">
     
 <meta name="viewport" content="width=device-width, initial-scale=1.0">

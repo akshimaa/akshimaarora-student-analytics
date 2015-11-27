@@ -17,7 +17,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Bootstrap Admin Theme</title>
+    <title>CMU Student Analytics</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -56,7 +56,7 @@
     fjs.parentNode.insertBefore(js, fjs);
   }(document, 'script', 'facebook-jssdk'));
     </script>
-    <div id="userId" style="display: none;">${someValue}</div>
+    <div id="userId" style="display: none;">${userID}</div>
     <div id="wrapper">
 
         <!-- Navigation -->
@@ -96,21 +96,18 @@
             <div class="navbar-default sidebar" style="margin-top: 101px" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
+
                         <li class="sidebar-search">
                             <div class="input-group custom-search-form">
                                                          
-                    <form action="upload" method="post" enctype="multipart/form-data">
-                <input id="upload-input" class="form-control" type="file" name="file" accept=".csv" style="width: 181px"/>
-                 <span class="input-group-btn">
-                <button class="btn btn-default" type="submit" value="upload">
-                                    <i class="fa fa-upload"></i>
-                                </button>
-                 </span>
-                </form> 
+                   
               
                             </div>
                             <!-- /input-group -->
                         </li>
+
+                      
+
                         <li>
                             <a href="index"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                         </li>
@@ -127,7 +124,7 @@
                             <!-- /.nav-second-level -->
                         </li>
                         <li>
-                            <a href="tables.html"><i class="fa fa-table fa-fw"></i> Analysis</a>
+                            <a href="javascript:;" onclick="analysis(this);"><i class="fa fa-table fa-fw"></i> Analysis</a>
                                     
                         </li>
                         
@@ -143,8 +140,26 @@
                 </div>
                 <!-- /.navbar-static-side -->
             </nav>
-            <div id="page-wrapper">
-                <jsp:include page="overview.jsp"></jsp:include>
+              <c:set var="status" scope="request" value="${requestScope.status}" />           
+               <div id="page-wrapper">
+                   <choose:when test="${status == null}">
+                           <choose:otherwise>
+                              <div> <c:out value="${status}"/></div>
+                           </choose:otherwise>
+                       </choose:when>
+                       <c:set var="content" scope="request" value="${requestScope.content}" />  
+                              <c:choose>
+                                  <c:when test="${content eq 'analytics'}">
+                                      <jsp:include page="analysis.jsp"></jsp:include>
+                                  </c:when>
+                                  <c:when test="${content eq 'barChart'}">
+                                      <jsp:include page="barChart.jsp"></jsp:include>
+                                  </c:when>
+                                  <c:otherwise>
+                                      <jsp:include page="overview.jsp"></jsp:include>
+                                  </c:otherwise>
+                              </c:choose>
+                
                 <!-- /#page-wrapper -->
             </div>
         </div>
@@ -169,12 +184,16 @@
 
     <!-- Custom Theme JavaScript -->
     <script src="js/sb-admin-2.js"></script>
+   
     <script>
         function pie(placeholder) {
             $('#page-wrapper').load('pieChart.jsp');
         }
         function bar(placeholder) {
             $('#page-wrapper').load('barChart.jsp');
+        }
+        function analysis(placeholder) {
+            $('#page-wrapper').load('analysis.jsp');
         }
         function generateReport(placeholder) {
             $('#page-wrapper').load('generateReport.jsp');
