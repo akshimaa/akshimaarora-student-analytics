@@ -19,26 +19,30 @@
     <!-- /.col-lg-12 -->
 </div>
 <div class="input-group custom-search-form">
-    <form action="Histogram" method="post" enctype="multipart/form-data">
-        <input id="upload-input" class="form-control" type="file" name="file" accept=".csv" style="width: 250px"/>
+    <form id="analysisInput" action="Histogram" method="post" enctype="multipart/form-data">
+        <input id="upload-input" class="form-control" value="file" type="file" name="file" accept=".csv" style="width: 250px"/>
         <input type="hidden" name="classifier" id="classifier" />
-        <span class="input-group-btn">
-            <button class="btn btn-default" id="submit" value="upload">
-                <i class="fa fa-upload"></i>
-            </button>
-        </span>
-        
-        
-    </form>
-</div>
-
-<div class="dropdown">
-    <select style="width: 180px;" name="" value="dropmenu" id="dropmenu">
+            <select style="width: 180px;" name=""  value="1" id="dropmenu">
         <option value="1"><a href="#">MultilayerPerceptron</a></option>
         <option value="2"><a href="#">LinearRegression</a></option>
     </select>
+        <span class="input-group-btn">
+            <button class="btn btn-default" id="buttonPress"  value="upload">
+                <i class="fa fa-upload"></i>
+            </button>
+        </span>
+    </form>
 </div>
+
+<!--<div class="dropdown">
+    <select style="width: 180px;" name=""  id="">
+        <option value="1"><a href="#">MultilayerPerceptron</a></option>
+        <option value="2"><a href="#">LinearRegression</a></option>
+    </select>
+</div>-->
+
 <p></p>
+
 <div class="row">
     <c:set var="chart" scope="request" value="${requestScope.chart}" /> 
     <c:set var="contextPath" scope="request" value="${requestScope.contextPath}"/>
@@ -52,9 +56,37 @@
 
 
 <script>
-$('#submit').click(function(){
+    $('#buttonPress').click(function () {
+//    
+        $('#classifier').attr('value', $('#dropmenu').val());
+//        $('#upload-input').attr('value', $('#upload-input').val());
+//    console.log($('#analysisInput').attr('file'));
+        console.log("It works! WOOT!");
+        console.log($('#dropmenu').val());
+        console.log($('#upload-input').val());
+
+        $('#analysisInput').submit();
+
+    });
     
-    $('#classifier').attr('value',$('#dropmenu').val());
     
-});
 </script>
+<!--<SCRIPT LANGUAGE="JavaScript">
+function getParm(string,parm) {
+    // returns value of parm from string
+    var startPos = string.indexOf(parm + "=");
+    if (startPos > -1) {
+        startPos = startPos + parm.length + 1;
+        var endPos = string.indexOf("&",startPos);
+        if (endPos == -1)
+            endPos = string.length;
+        return unescape(string.substring(startPos,endPos));
+    }
+    return '';
+}
+
+var passed = location.search.substring(1);
+
+document.analysisInput.file.value = getParm(passed,'file');
+document.analysisInput.classifier.value = getParm(passed,'classifier');
+//</SCRIPT>-->

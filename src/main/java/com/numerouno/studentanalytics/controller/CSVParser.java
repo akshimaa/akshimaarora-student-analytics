@@ -54,6 +54,7 @@ public class CSVParser implements Serializable {
         loader.setSource(inputStream);
         Instances data = loader.getDataSet();
         data.setClassIndex(data.numAttributes() - 1);
+        loader.reset();
         
         return data;
         
