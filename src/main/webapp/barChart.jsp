@@ -76,9 +76,7 @@
         console.log($('#presetDropdown').val());
         datasource = $('#datasourceDropdown').val();
         preset = $('#presetDropdown').val();
-        $('#datasource').attr('value',datasource);
-        $('#preset').attr('value', preset);
-        //$('#barChartForm').submit();
+
         $.ajax({
   type: "POST",
   url: "/StudentAnalytics/BarChart",

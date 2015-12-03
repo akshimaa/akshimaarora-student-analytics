@@ -35,8 +35,11 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
 import java.lang.Integer;
+import java.text.NumberFormat;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
+import org.jfree.chart.labels.StandardCategoryItemLabelGenerator;
 import org.json.JSONObject;
 
 /**
@@ -253,7 +256,11 @@ public class BarChartServlet extends HttpServlet {
         renderer.setSeriesPaint(8, gp8);
         renderer.setSeriesPaint(9, gp9);
 
-
+        if(map.keySet().size() < 10)
+        {
+            renderer.setSeriesItemLabelGenerator(0, new StandardCategoryItemLabelGenerator("{2}",NumberFormat.getInstance()));
+            renderer.setSeriesItemLabelsVisible(0, true);
+        }
         final CategoryAxis domainAxis = plot.getDomainAxis();
         domainAxis.setCategoryLabelPositions(
             CategoryLabelPositions.createUpRotationLabelPositions(Math.PI / 4.0)
@@ -401,7 +408,11 @@ public class BarChartServlet extends HttpServlet {
         renderer.setSeriesPaint(8, gp8);
         renderer.setSeriesPaint(9, gp9);
 
-       
+        if(argumentTwoSet.size() < 10)
+        {
+            renderer.setSeriesItemLabelGenerator(0, new StandardCategoryItemLabelGenerator("{2}",NumberFormat.getInstance()));
+            renderer.setSeriesItemLabelsVisible(0, true);
+        }
         final CategoryAxis domainAxis = plot.getDomainAxis();
         domainAxis.setCategoryLabelPositions(
             CategoryLabelPositions.createUpRotationLabelPositions(Math.PI / 4.0)
