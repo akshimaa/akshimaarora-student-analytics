@@ -34,13 +34,6 @@
 </form>
 </div>
 
-<!--<div class="dropdown">
-    <select style="width: 180px;" name=""  id="">
-        <option value="1"><a href="#">MultilayerPerceptron</a></option>
-        <option value="2"><a href="#">LinearRegression</a></option>
-    </select>
-</div>-->
-
 <p></p>
 
 <div class="row">
@@ -85,20 +78,6 @@
 //
 //        });
     });
-
-//    function () {
-////    
-////        $('#classifier').attr('value', $('#dropmenu').val());
-//////        $('#upload-input').attr('value', $('#upload-input').val());
-//////    console.log($('#analysisInput').attr('file'));
-////        console.log("It works! WOOT!");
-////        console.log($('#dropmenu').val());
-////        console.log($('#upload-input').val());
-////        alert($('#dropmenu').val());
-//        $('#analysisInput').submit();
-//        
-//
-//    });
 </script>
 <!--<SCRIPT LANGUAGE="JavaScript">
 function getParm(string,parm) {

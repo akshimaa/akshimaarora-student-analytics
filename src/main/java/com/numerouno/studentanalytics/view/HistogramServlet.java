@@ -73,10 +73,10 @@ public class HistogramServlet extends HttpServlet {
         request.setAttribute("status", getServletContext().getRealPath("/models"));
         File imageFile = new File(getServletContext().getRealPath("/images") + "/chart.png");
         
-//        log.info("File:" + request.getParameter("formData"));
-//        log.info("Classifier: "+ request.getParameter("formData.classifier"));
-//        log.info("File:"+request.getPart("file").getSubmittedFileName());
-//        log.info("Classifier: "+ request.getParameter("classifier"));
+        // Diagnostics
+        log.info("File:"+request.getPart("file").getSubmittedFileName());
+        log.info("Classifier: "+ request.getParameter("classifier"));
+        
         FileOutputStream fos = new FileOutputStream(imageFile);
         ChartUtilities.writeChartAsPNG(fos, getChart(request), 300, 300);
         request.setAttribute("contextPath", getServletContext().getContextPath());
