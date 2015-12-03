@@ -12,16 +12,23 @@ import java.util.ArrayList;
  * @author madan
  */
 public class StudentList {
-    
+/**
+ * 
+ */
     private static ArrayList<Student> list;
-
+/**
+ * 
+ * @return 
+ */
     public static ArrayList<Student> getList() {
         return list;
     }
-
+/**
+ * 
+ * @param list 
+ */
     public static void setList(ArrayList<Student> list) {
         StudentList.list = list;
     }
-    
-    
+
 }

@@ -30,6 +30,7 @@ import weka.core.converters.CSVLoader;
 
 /**
  * Used to perform all Weka file parsing and data analytics functionality.
+ *
  * @author Teck Jan Low
  * @version 1.0
  */
@@ -38,53 +39,52 @@ public class CSVFileProcessor {
     /**
      * Reads from the Amazon AWS S3 bucket and saves the file as a temp file.
      */
-    public static void readFromsS3(String bucket, String key, String filePath) {
-        
+    public static void readFromS3(String bucket, String key, String filePath) {
+
         AWSCredentials credentials = new ProfileCredentialsProvider().getCredentials();
         AmazonS3 s3client = new AmazonS3Client(credentials);
-        s3client.getObject(new GetObjectRequest("student-alpha", "student.csv"),
+        s3client.getObject(new GetObjectRequest(bucket, key),
                 new File(filePath));
-        
+
     }
-    
-       public static void writeIntosS3(String bucket, String key, File file) {
-        
+
+    public static void writeIntoS3(String bucket, String key, File file) {
+
         AWSCredentials credentials = new ProfileCredentialsProvider().getCredentials();
-        
-        
+
         try {
             AmazonS3 s3client = new AmazonS3Client(credentials);
-            s3client.putObject(new PutObjectRequest(bucket,key,file));
+            s3client.putObject(new PutObjectRequest(bucket, key, file));
         } catch (AmazonClientException ex) {
             Logger.getLogger(CSVFileProcessor.class.getName()).log(Level.SEVERE, null, ex);
         }
-      
-        
+
     }
 
     /**
      * Merges the remote and local .csv files and saves it as a temp file.
+     * 
      * @param filePath The file path of the local .csv file
      */
-    public static void mergeCSV(InputStream inputStream) {
+    public static void mergeCSV(InputStream inputStream, String path) {
 
         // Specify import file format
         FileFormat csv = FileFormat.CSV;
         // create new File objects
-        File localFile = new File("Temp/tempLocal.csv");
-        File remoteFile = new File("Temp/tempRemote.csv");
-        File exportFile = new File("Temp/tempMerged.csv");
-        
+        File remoteFile = new File(path + "/remote.csv");
+        File mergedFile = new File(path + "/merge.csv");
 
         try {
-            FileUtils.copyInputStreamToFile(inputStream, localFile);
+//            FileUtils.copyInputStreamToFile(inputStream, localFile);
             // Import .csv as matrices
-            Matrix local = Matrix.Factory.importFrom().file(localFile).asDenseCSV();
+            Matrix local = Matrix.Factory.importFrom().stream(inputStream).asDenseCSV();
+            readFromS3("student-alpha", "student.csv", path + "/remote.csv");
             Matrix remote = Matrix.Factory.importFrom().file(remoteFile).asDenseCSV();
             Matrix merged = remote.appendVertically(Calculation.Ret.NEW, local);
 
             // Export merged matrix as .csv
-            merged.exportTo().file(exportFile).asDenseCSV(',');
+            merged.exportTo().file(mergedFile).asDenseCSV(',');
+            writeIntoS3("student-gamma", "student-merged.csv", mergedFile);
 
         } catch (IOException i) {
             Logger log = Logger.getLogger(CSVFileProcessor.class.getName());
