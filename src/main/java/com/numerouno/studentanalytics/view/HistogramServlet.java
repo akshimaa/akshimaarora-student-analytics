@@ -46,6 +46,7 @@ import weka.classifiers.Classifier;
 import weka.core.Instances;
 import java.util.logging.Logger;
 import javax.servlet.annotation.MultipartConfig;
+import org.json.JSONObject;
 
 /**
  *
@@ -72,8 +73,10 @@ public class HistogramServlet extends HttpServlet {
         request.setAttribute("status", getServletContext().getRealPath("/models"));
         File imageFile = new File(getServletContext().getRealPath("/images") + "/chart.png");
         
-        log.info(request.getPart("file").getSubmittedFileName());
-        log.info("Classifier: "+ request.getParameter("classifier"));
+//        log.info("File:" + request.getParameter("formData"));
+//        log.info("Classifier: "+ request.getParameter("formData.classifier"));
+//        log.info("File:"+request.getPart("file").getSubmittedFileName());
+//        log.info("Classifier: "+ request.getParameter("classifier"));
         FileOutputStream fos = new FileOutputStream(imageFile);
         ChartUtilities.writeChartAsPNG(fos, getChart(request), 300, 300);
         request.setAttribute("contextPath", getServletContext().getContextPath());
