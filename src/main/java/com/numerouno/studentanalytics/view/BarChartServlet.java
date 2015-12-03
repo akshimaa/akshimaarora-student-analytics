@@ -5,7 +5,6 @@
  */
 package com.numerouno.studentanalytics.view;
 
-import com.numerouno.studentanalytics.model.Student;
 import java.awt.Color;
 import java.awt.GradientPaint;
 import java.io.FileInputStream;
@@ -16,9 +15,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -34,15 +31,12 @@ import org.jfree.chart.renderer.category.BarRenderer;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.ujmp.core.collections.list.ArrayIndexList;
 import com.numerouno.studentanalytics.model.Student;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
 import java.lang.Integer;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
-import javax.imageio.ImageIO;
 import org.json.JSONObject;
 
 /**
@@ -83,12 +77,14 @@ public class BarChartServlet extends HttpServlet {
        }
 
            
+
         JSONObject json = new JSONObject();
         json.put("chart", getServletContext().getContextPath()+"/images"+"/"+imageFileName);
         PrintWriter out = response.getWriter();
         response.setContentType("application/json"); 
         response.setCharacterEncoding("utf-8"); 
         out.println(json);
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -217,9 +213,46 @@ public class BarChartServlet extends HttpServlet {
             0.0f, 0.0f, Color.red, 
             0.0f, 0.0f, Color.lightGray
         );
+                final GradientPaint gp3 = new GradientPaint(
+            0.0f, 0.0f, Color.yellow, 
+            0.0f, 0.0f, Color.YELLOW
+        );
+         final GradientPaint gp4 = new GradientPaint(
+            0.0f, 0.0f, Color.magenta, 
+            0.0f, 0.0f, Color.MAGENTA
+        );
+        final GradientPaint gp5 = new GradientPaint(
+            0.0f, 0.0f, Color.cyan, 
+            0.0f, 0.0f, Color.CYAN
+        );
+        final GradientPaint gp6 = new GradientPaint(
+            0.0f, 0.0f, Color.orange, 
+            0.0f, 0.0f, Color.ORANGE
+        );
+        final GradientPaint gp7 = new GradientPaint(
+            0.0f, 0.0f, Color.darkGray, 
+            0.0f, 0.0f, Color.DARK_GRAY
+        );
+        final GradientPaint gp8 = new GradientPaint(
+            0.0f, 0.0f, Color.pink, 
+            0.0f, 0.0f, Color.PINK
+        );
+        final GradientPaint gp9 = new GradientPaint(
+            0.0f, 0.0f, Color.black, 
+            0.0f, 0.0f, Color.BLACK
+        );
+
         renderer.setSeriesPaint(0, gp0);
         renderer.setSeriesPaint(1, gp1);
         renderer.setSeriesPaint(2, gp2);
+        renderer.setSeriesPaint(3, gp3);
+        renderer.setSeriesPaint(4, gp4);
+        renderer.setSeriesPaint(5, gp5);
+        renderer.setSeriesPaint(6, gp6);
+        renderer.setSeriesPaint(7, gp7);
+        renderer.setSeriesPaint(8, gp8);
+        renderer.setSeriesPaint(9, gp9);
+
 
         final CategoryAxis domainAxis = plot.getDomainAxis();
         domainAxis.setCategoryLabelPositions(
@@ -285,7 +318,6 @@ public class BarChartServlet extends HttpServlet {
         }
 
 
-        
         final JFreeChart chart = ChartFactory.createBarChart(
             Student.getLegend(preset),         // chart title
             "Category",               // domain axis label
@@ -318,21 +350,58 @@ public class BarChartServlet extends HttpServlet {
         
         // set up gradient paints for series...
         final GradientPaint gp0 = new GradientPaint(
-            0.0f, 0.0f, Color.green, 
-            0.0f, 0.0f, Color.BLUE
+            0.0f, 0.0f, Color.red, 
+            0.0f, 0.0f, Color.RED
         );
         final GradientPaint gp1 = new GradientPaint(
-            0.0f, 0.0f, Color.blue, 
-            0.0f, 0.0f, Color.lightGray
+            0.0f, 0.0f, Color.green, 
+            0.0f, 0.0f, Color.GREEN
         );
         final GradientPaint gp2 = new GradientPaint(
-            0.0f, 0.0f, Color.red, 
-            0.0f, 0.0f, Color.lightGray
+            0.0f, 0.0f, Color.blue, 
+            0.0f, 0.0f, Color.BLUE
         );
+        final GradientPaint gp3 = new GradientPaint(
+            0.0f, 0.0f, Color.yellow, 
+            0.0f, 0.0f, Color.YELLOW
+        );
+        final GradientPaint gp4 = new GradientPaint(
+            0.0f, 0.0f, Color.magenta, 
+            0.0f, 0.0f, Color.MAGENTA
+        );
+        final GradientPaint gp5 = new GradientPaint(
+            0.0f, 0.0f, Color.cyan, 
+            0.0f, 0.0f, Color.CYAN
+        );
+        final GradientPaint gp6 = new GradientPaint(
+            0.0f, 0.0f, Color.orange, 
+            0.0f, 0.0f, Color.ORANGE
+        );
+        final GradientPaint gp7 = new GradientPaint(
+            0.0f, 0.0f, Color.darkGray, 
+            0.0f, 0.0f, Color.DARK_GRAY
+        );
+        final GradientPaint gp8 = new GradientPaint(
+            0.0f, 0.0f, Color.pink, 
+            0.0f, 0.0f, Color.PINK
+        );
+        final GradientPaint gp9 = new GradientPaint(
+            0.0f, 0.0f, Color.black, 
+            0.0f, 0.0f, Color.BLACK
+        );
+
         renderer.setSeriesPaint(0, gp0);
         renderer.setSeriesPaint(1, gp1);
         renderer.setSeriesPaint(2, gp2);
+        renderer.setSeriesPaint(3, gp3);
+        renderer.setSeriesPaint(4, gp4);
+        renderer.setSeriesPaint(5, gp5);
+        renderer.setSeriesPaint(6, gp6);
+        renderer.setSeriesPaint(7, gp7);
+        renderer.setSeriesPaint(8, gp8);
+        renderer.setSeriesPaint(9, gp9);
 
+       
         final CategoryAxis domainAxis = plot.getDomainAxis();
         domainAxis.setCategoryLabelPositions(
             CategoryLabelPositions.createUpRotationLabelPositions(Math.PI / 4.0)
