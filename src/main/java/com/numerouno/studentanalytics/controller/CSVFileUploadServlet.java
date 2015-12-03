@@ -42,6 +42,7 @@ public class CSVFileUploadServlet extends HttpServlet {
 
             try {
 
+                log.info(req.getParameter("merge"));
                 CSVParser.parseIntoPOJO(req.getPart("file").getInputStream());
                 log.info(req.getPart("file").getSubmittedFileName().concat(" file parsed successfully!"));
 
@@ -50,12 +51,18 @@ public class CSVFileUploadServlet extends HttpServlet {
                 log.info(file.getName().concat(" file created successfully!"));
                 CSVFileProcessor.writeIntoS3("student-beta", "student-upload.csv", file); //write into s3 bucket 1
                 log.info("File upload to S3 bucket successful!");
-                req.setAttribute("status", req.getPart("file").getSubmittedFileName() + " has been parsed and uploaded successfully");
-
-                if (req.getPart("merge").equals("1")) {
+                
+                if (req.getParameter("merge").isEmpty()) {
+                    req.setAttribute("status", req.getPart("file").getSubmittedFileName() + " has been parsed and uploaded successfully");
+                } else if (req.getParameter("merge").equals("1")) {
+//                if (req.getParameter("merge").equals("1")) {
                     CSVFileProcessor.mergeCSV(req.getPart("file").getInputStream(), getServletContext().getRealPath("/Temp")); //merge to exsiting data
-                    req.setAttribute("status", req.getPart("file").getSubmittedFileName() + " has been merged and uploaded successfully");
+                    log.info("File merge successful!");
+                    req.setAttribute("status", req.getPart("file").getSubmittedFileName() + " has been parsed, merged and uploaded successfully");
                 }
+//                } else {
+//                    req.setAttribute("status", req.getPart("file").getSubmittedFileName() + " has been parsed and uploaded successfully");
+//                }
 
             } catch (Exception ex) {
                 Logger.getLogger(CSVFileUploadServlet.class.getName()).log(Level.SEVERE, null, ex);

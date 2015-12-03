@@ -16,8 +16,8 @@
                     <i class="fa fa-upload"></i>
                 </button>
             </span>
-            <input type="hidden" name="merge" value="0" />
-            <input type="checkbox" name="merge" value="1"> Merge into database
+            <!--<input type="hidden" name="merge" value="0"/>-->
+            <input type="checkbox" name="merge" value="1"/> Merge into database
         </form> 
 
     </div>
