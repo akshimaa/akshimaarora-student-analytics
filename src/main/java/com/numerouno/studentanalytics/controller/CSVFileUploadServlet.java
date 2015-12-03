@@ -44,15 +44,15 @@ public class CSVFileUploadServlet extends HttpServlet {
 
                 CSVParser.parseIntoPOJO(req.getPart("file").getInputStream());
                 log.info(req.getPart("file").getSubmittedFileName().concat(" file parsed successfully!"));
-                if (req.getPart("merge").equals("0")) {
-                    File file = new File(getServletContext().getRealPath("/Temp") + "/upload.csv");
-                    FileUtils.copyInputStreamToFile(req.getPart("file").getInputStream(), file);
-                    log.info(file.getName().concat(" file created successfully!"));
-                    CSVFileProcessor.writeIntoS3("student-beta", "student-upload.csv", file); //write into s3 bucket 1
-                    log.info("File upload to S3 bucket successful!");
-                    req.setAttribute("status", req.getPart("file").getSubmittedFileName() + " has been parsed and uploaded successfully");
-                } else if (req.getPart("merge").equals("1")) {
-                    File file = new File(getServletContext().getRealPath("/Temp") + "/merge.csv");
+
+                File file = new File(getServletContext().getRealPath("/Temp") + "/upload.csv");
+                FileUtils.copyInputStreamToFile(req.getPart("file").getInputStream(), file);
+                log.info(file.getName().concat(" file created successfully!"));
+                CSVFileProcessor.writeIntoS3("student-beta", "student-upload.csv", file); //write into s3 bucket 1
+                log.info("File upload to S3 bucket successful!");
+                req.setAttribute("status", req.getPart("file").getSubmittedFileName() + " has been parsed and uploaded successfully");
+
+                if (req.getPart("merge").equals("1")) {
                     CSVFileProcessor.mergeCSV(req.getPart("file").getInputStream(), getServletContext().getRealPath("/Temp")); //merge to exsiting data
                     req.setAttribute("status", req.getPart("file").getSubmittedFileName() + " has been merged and uploaded successfully");
                 }

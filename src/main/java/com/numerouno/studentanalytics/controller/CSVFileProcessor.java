@@ -43,7 +43,7 @@ public class CSVFileProcessor {
 
         AWSCredentials credentials = new ProfileCredentialsProvider().getCredentials();
         AmazonS3 s3client = new AmazonS3Client(credentials);
-        s3client.getObject(new GetObjectRequest("student-alpha", "student.csv"),
+        s3client.getObject(new GetObjectRequest(bucket, key),
                 new File(filePath));
 
     }
@@ -78,13 +78,13 @@ public class CSVFileProcessor {
 //            FileUtils.copyInputStreamToFile(inputStream, localFile);
             // Import .csv as matrices
             Matrix local = Matrix.Factory.importFrom().stream(inputStream).asDenseCSV();
-            readFromS3("student-gamma", "student.csv", path + "/remote.csv");
+            readFromS3("student-alpha", "student.csv", path + "/remote.csv");
             Matrix remote = Matrix.Factory.importFrom().file(remoteFile).asDenseCSV();
             Matrix merged = remote.appendVertically(Calculation.Ret.NEW, local);
 
             // Export merged matrix as .csv
             merged.exportTo().file(mergedFile).asDenseCSV(',');
-            writeIntoS3("student-gamma", "student.csv", mergedFile);
+            writeIntoS3("student-gamma", "student-merged.csv", mergedFile);
 
         } catch (IOException i) {
             Logger log = Logger.getLogger(CSVFileProcessor.class.getName());
