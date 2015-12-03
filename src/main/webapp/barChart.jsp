@@ -89,8 +89,8 @@
       
       $('#chartDiv').html('<img src="'+data.chart+'" />');},
   error: function (xhr, ajaxOptions, thrownError) {
-        alert(xhr.status);
-        alert(thrownError);
+        console.log(xhr.status);
+        console.log(thrownError);
       }
 });
          
