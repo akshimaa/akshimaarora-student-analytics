@@ -41,7 +41,7 @@
                     <option value="modeOfAttendance"><a href="#">Attendance Mode</a></option>
                         <option value="basisAdmission"><a href="#">Basis for Admission</a></option>
                             <option value="degreeLevel_gender"><a href="#">Degree by Gender</a></option>
-                             <option value="entranceExam_gender"><a href="#">Exam by Gender</a></option>
+                             <option value="modeOfAttendance_attendanceType"><a href="#">Mode of Attendance by Type Attendance</a></option>
                 </select>
             </div>
          </div>
