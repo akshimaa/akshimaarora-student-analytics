@@ -311,20 +311,61 @@ public class BarChartServlet extends HttpServlet {
         
         // set up gradient paints for series...
         final GradientPaint gp0 = new GradientPaint(
-            0.0f, 0.0f, Color.green, 
-            0.0f, 0.0f, Color.BLUE
+            0.0f, 0.0f, Color.red, 
+            0.0f, 0.0f, Color.RED
         );
         final GradientPaint gp1 = new GradientPaint(
-            0.0f, 0.0f, Color.blue, 
-            0.0f, 0.0f, Color.lightGray
+            0.0f, 0.0f, Color.green, 
+            0.0f, 0.0f, Color.GREEN
         );
         final GradientPaint gp2 = new GradientPaint(
-            0.0f, 0.0f, Color.red, 
-            0.0f, 0.0f, Color.lightGray
+            0.0f, 0.0f, Color.blue, 
+            0.0f, 0.0f, Color.BLUE
+        );
+        final GradientPaint gp3 = new GradientPaint(
+            0.0f, 0.0f, Color.yellow, 
+            0.0f, 0.0f, Color.YELLOW
+        );
+        final GradientPaint gp4 = new GradientPaint(
+            0.0f, 0.0f, Color., 
+            0.0f, 0.0f, Color.BLUE
+        );
+        final GradientPaint gp5 = new GradientPaint(
+            0.0f, 0.0f, Color.blue, 
+            0.0f, 0.0f, Color.BLUE
+        );
+        final GradientPaint gp6 = new GradientPaint(
+            0.0f, 0.0f, Color.blue, 
+            0.0f, 0.0f, Color.BLUE
+        );
+        final GradientPaint gp7 = new GradientPaint(
+            0.0f, 0.0f, Color.blue, 
+            0.0f, 0.0f, Color.BLUE
+        );
+        final GradientPaint gp8 = new GradientPaint(
+            0.0f, 0.0f, Color.blue, 
+            0.0f, 0.0f, Color.BLUE
+        );
+        final GradientPaint gp9 = new GradientPaint(
+            0.0f, 0.0f, Color.blue, 
+            0.0f, 0.0f, Color.BLUE
+        );
+        final GradientPaint gp10 = new GradientPaint(
+            0.0f, 0.0f, Color.blue, 
+            0.0f, 0.0f, Color.BLUE
         );
         renderer.setSeriesPaint(0, gp0);
         renderer.setSeriesPaint(1, gp1);
         renderer.setSeriesPaint(2, gp2);
+        renderer.setSeriesPaint(3, gp3);
+        renderer.setSeriesPaint(4, gp4);
+        renderer.setSeriesPaint(5, gp5);
+        renderer.setSeriesPaint(6, gp6);
+        renderer.setSeriesPaint(7, gp7);
+        renderer.setSeriesPaint(8, gp8);
+        renderer.setSeriesPaint(9, gp9);
+        renderer.setSeriesPaint(10, gp10);
+        
 
         final CategoryAxis domainAxis = plot.getDomainAxis();
         domainAxis.setCategoryLabelPositions(
