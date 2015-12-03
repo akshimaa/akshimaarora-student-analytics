@@ -97,14 +97,6 @@
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
 
-                        <li class="sidebar-search">
-                            <div class="input-group custom-search-form">
-                                                         
-                   
-              
-                            </div>
-                            <!-- /input-group -->
-                        </li>
 
                       <jsp:include page="upload.jsp"></jsp:include>
 
