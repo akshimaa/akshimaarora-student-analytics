@@ -34,12 +34,16 @@ import org.jfree.chart.renderer.category.BarRenderer;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.ujmp.core.collections.list.ArrayIndexList;
 import com.numerouno.studentanalytics.model.Student;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.PrintWriter;
 import java.lang.Integer;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import javax.imageio.ImageIO;
+import org.json.JSONObject;
 
 /**
  *
@@ -59,15 +63,12 @@ public class BarChartServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.setAttribute("content", "barChart");
-        request.setAttribute("contextPath", getServletContext().getContextPath());
-        File imageFile = new File(getServletContext().getRealPath("/images")+"/chart.png");
-        request.setAttribute("chart", imageFile.getName());
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/index");
-        requestDispatcher.forward(request, response);
-
-        String preset = request.getParameter("preset");
         String datasource = request.getParameter("datasource");
-        
+        String preset = request.getParameter("preset");
+        String imageFileName = datasource.concat("_").concat(preset).concat(".png");
+        request.setAttribute("contextPath", getServletContext().getContextPath());
+        File imageFile = new File(getServletContext().getRealPath("/images")+"/"+imageFileName);
+        request.setAttribute("chart", imageFile.getName());
        
        FileOutputStream fos = new FileOutputStream(imageFile);
        if (request.getParameter("preset").contains("_")){
@@ -80,8 +81,14 @@ public class BarChartServlet extends HttpServlet {
            ChartUtilities.writeChartAsPNG(fos, getChart(request), 800, 600);
            fos.close();
        }
+
            
-        
+        JSONObject json = new JSONObject();
+        json.put("chart", getServletContext().getContextPath()+"/images"+"/"+imageFileName);
+        PrintWriter out = response.getWriter();
+        response.setContentType("application/json"); 
+        response.setCharacterEncoding("utf-8"); 
+        out.println(json);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -51,14 +51,15 @@
      <button id="generateBar"  class="btn btn-default">Generate Bar!</button>
  </div>
 
-<div class="row" >
-  <c:set var="chart" scope="request" value="${requestScope.chart}" /> 
+<div id ="chartDiv" class="row" >
+ <!-- <c:set var="chart" scope="request" value="${requestScope.chart}" /> 
     <c:set var="contextPath" scope="request" value="${requestScope.contextPath}"/>
     <c:choose>
         <c:when test="${chart != null}">
             <img src="${contextPath}/images/${chart}">
         </c:when>
-    </c:choose>
+    </c:choose> -->
+           
 </div>
 
 <form id="barChartForm" action="BarChart" name="BarChart" method="POST" style="display:none;">
@@ -69,6 +70,7 @@
     
     $( document ).ready(function() {
     $('#generateBar').click(function(){
+        $('#chartDiv').html('');
         console.log("generate button clicked!");
         console.log($('#datasourceDropdown').val());
         console.log($('#presetDropdown').val());
@@ -76,7 +78,21 @@
         preset = $('#presetDropdown').val();
         $('#datasource').attr('value',datasource);
         $('#preset').attr('value', preset);
-        $('#barChartForm').submit();
+        //$('#barChartForm').submit();
+        $.ajax({
+  type: "POST",
+  url: "/StudentAnalytics/BarChart",
+  data: {datasource:datasource, preset:preset},
+  cache: false,
+  datatype: "application/json",
+  success: function(data, textStatus, request){
+      
+      $('#chartDiv').html('<img src="'+data.chart+'" />');},
+  error: function (xhr, ajaxOptions, thrownError) {
+        alert(xhr.status);
+        alert(thrownError);
+      }
+});
          
     }); 
      
