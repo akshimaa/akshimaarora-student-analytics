@@ -71,7 +71,8 @@ public class HistogramServlet extends HttpServlet {
         //response.setContentType("image/png");
         request.setAttribute("content", "analytics");
         request.setAttribute("status", getServletContext().getRealPath("/models"));
-        File imageFile = new File(getServletContext().getRealPath("/images") + "/chart.png");
+        String imageFileName = request.getParameter("classifier").concat("_analysisChart.png");
+        File imageFile = new File(getServletContext().getRealPath("/images") + "/"+imageFileName);
         
         // Diagnostics
         log.info("File:"+request.getPart("file").getSubmittedFileName());
@@ -80,10 +81,14 @@ public class HistogramServlet extends HttpServlet {
         FileOutputStream fos = new FileOutputStream(imageFile);
         ChartUtilities.writeChartAsPNG(fos, getChart(request), 300, 300);
         request.setAttribute("contextPath", getServletContext().getContextPath());
-        request.setAttribute("chart", imageFile.getName());
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/index");
-        requestDispatcher.forward(request, response);
-
+        
+    
+        JSONObject json = new JSONObject();
+        json.put("chart", getServletContext().getContextPath()+"/images"+"/"+imageFileName);
+        PrintWriter out = response.getWriter();
+        response.setContentType("application/json"); 
+        response.setCharacterEncoding("utf-8"); 
+        out.println(json);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

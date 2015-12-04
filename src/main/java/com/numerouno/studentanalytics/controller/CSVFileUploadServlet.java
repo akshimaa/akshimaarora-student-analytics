@@ -42,7 +42,7 @@ public class CSVFileUploadServlet extends HttpServlet {
 
             try {
 
-                log.info(req.getParameter("merge"));
+                log.info("MERGE? : " + req.getParameter("merge"));
                 CSVParser.parseIntoPOJO(req.getPart("file").getInputStream());
                 log.info(req.getPart("file").getSubmittedFileName().concat(" file parsed successfully!"));
 
@@ -52,7 +52,7 @@ public class CSVFileUploadServlet extends HttpServlet {
                 CSVFileProcessor.writeIntoS3("student-beta", "student-upload.csv", file); //write into s3 bucket 1
                 log.info("File upload to S3 bucket successful!");
                 
-                if (req.getParameter("merge").isEmpty()) {
+                if (req.getParameter("merge").equals("0")) {
                     req.setAttribute("status", req.getPart("file").getSubmittedFileName() + " has been parsed and uploaded successfully");
                 } else if (req.getParameter("merge").equals("1")) {
 //                if (req.getParameter("merge").equals("1")) {
