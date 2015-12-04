@@ -5,6 +5,7 @@
  */
 package com.numerouno.studentanalytics.view;
 
+import static com.numerouno.studentanalytics.controller.CSVFileProcessor.readFromS3;
 import java.awt.Color;
 import java.awt.GradientPaint;
 import java.io.FileInputStream;
@@ -33,6 +34,7 @@ import org.ujmp.core.collections.list.ArrayIndexList;
 import com.numerouno.studentanalytics.model.Student;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.lang.Integer;
 import java.text.NumberFormat;
@@ -62,7 +64,7 @@ public class BarChartServlet extends HttpServlet {
         request.setAttribute("content", "barChart");
         String datasource = request.getParameter("datasource");
         String preset = request.getParameter("preset");
-        String imageFileName = datasource.concat("_").concat(preset).concat(".png");
+        String imageFileName = datasource.concat("_").concat(preset).concat("_bar.png");
         request.setAttribute("contextPath", getServletContext().getContextPath());
         File imageFile = new File(getServletContext().getRealPath("/images")+"/"+imageFileName);
         request.setAttribute("chart", imageFile.getName());
@@ -80,14 +82,13 @@ public class BarChartServlet extends HttpServlet {
        }
 
            
-//JSON Response from Servlet
+        //JSON Response from Servlet
         JSONObject json = new JSONObject();
         json.put("chart", getServletContext().getContextPath()+"/images"+"/"+imageFileName);
         PrintWriter out = response.getWriter();
         response.setContentType("application/json"); 
         response.setCharacterEncoding("utf-8"); 
         out.println(json);
-
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -138,7 +139,7 @@ public class BarChartServlet extends HttpServlet {
       
      try {
           
-      FileInputStream fis = new FileInputStream(getServletContext().getRealPath("/STUDENT.DAT"));
+      FileInputStream fis = new FileInputStream(getServletContext().getRealPath("/STUDENT.dat"));
       ObjectInputStream in = new ObjectInputStream(fis);
          studentList= (ArrayList<Student> )in.readObject();
      } catch (IOException ex) {
@@ -284,10 +285,12 @@ public class BarChartServlet extends HttpServlet {
         
          ArrayList<Student> studentList=new ArrayIndexList<>();
         switch(datasource){
-            case "OriginalData":               
-                studentList = getDataSource("/STUDENT.DAT");
+            case "OriginalData":
+                readFromS3("student-alpha", "STUDENT.dat", request.getServletContext() + "/remote.dat");
+                studentList = getDataSource("/remote.dat");
                 break;
             case "UploadedData":
+                
                 break;
             case "MergedData":
                 break;

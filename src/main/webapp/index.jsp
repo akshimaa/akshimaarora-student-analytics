@@ -102,8 +102,6 @@
                             <li class="sidebar-search">
                                 <div class="input-group custom-search-form">
 
-
-
                                 </div>
                                 <!-- /input-group -->
                             </li>
@@ -157,6 +155,9 @@
                     <c:when test="${content eq 'barChart'}">
                         <jsp:include page="barChart.jsp"></jsp:include>
                     </c:when>
+                    <c:when test="${content eq 'pieChart'}">
+                        <jsp:include page="pieChart.jsp"></jsp:include>
+                    </c:when>
                     <c:otherwise>
                         <jsp:include page="overview.jsp"></jsp:include>
                     </c:otherwise>
@@ -201,7 +202,20 @@
                                             $('#page-wrapper').load('generateReport.jsp');
                                         }
 
-
+                                        $(document).ready(function () {
+                                            console.log("upload.jsp is ready!");
+                                            $('#uploadToS3Button').click(function () {
+                                                alert("TEST");
+                                                console.log($('#uploadMergeCheckbox').is(":checked"));
+                                                console.log("BUTTON PRESSED! YAY!");
+                                                if ($('#uploadMergeCheckbox').is(":checked")) {
+                                                    $('#hiddenMergeFlag').val("1");
+                                                } else {
+                                                    $('#hiddenMergeFlag').val("0");
+                                                }
+                                                $('#uploadForm').submit();
+                                            });
+                                        });
     </script>
 
 </body>

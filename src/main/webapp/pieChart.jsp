@@ -15,7 +15,7 @@
     </div>
   
 </div>
- <script src="js/pieChart.js"></script>
+
  
 <div class="row">
     <div class="btn-toolbar" role="toolbar">
@@ -49,14 +49,8 @@
      <button id="generatePie"  class="btn btn-default">Generate Pie!</button>
  </div>
 
-<div id ="chartDiv" class="row" >
- <!-- <c:set var="chart" scope="request" value="${requestScope.chart}" /> 
-    <c:set var="contextPath" scope="request" value="${requestScope.contextPath}"/>
-    <c:choose>
-        <c:when test="${chart != null}">
-            <img src="${contextPath}/images/${chart}">
-        </c:when>
-    </c:choose> -->
+<div id ="pieChartDiv" class="row" >
+
            
 </div>
 
@@ -67,7 +61,7 @@
 <script>
     $( document ).ready(function() {
     $('#generatePie').click(function(){
-        $('#chartDiv').html('');
+        $('#pieChartDiv').html('');
         console.log("generate button clicked!");
         console.log($('#datasourceDropdown').val());
         console.log($('#presetDropdown').val());
@@ -75,19 +69,19 @@
         preset = $('#presetDropdown').val();
 
         $.ajax({
-  type: "POST",
-  url: "/StudentAnalytics/PieChart",
-  data: {datasource:datasource, preset:preset},
-  cache: false,
-  datatype: "application/json",
-  success: function(data, textStatus, request){
-      
-      $('#chartDiv').html('<img src="'+data.chart+'" />');},
-  error: function (xhr, ajaxOptions, thrownError) {
-        console.log(xhr.status);
-        console.log(thrownError);
-      }
-});
+            type: "POST",
+            url: "PieChart",
+            data: {datasource:datasource, preset:preset},
+            cache: false,
+            datatype: "application/json",
+            success: function(data, textStatus, request){
+                console.log(data);
+                        $('#pieChartDiv').html('<img src="'+data.chart+'" />');},
+            error: function (xhr, ajaxOptions, thrownError) {
+                console.log(xhr.status);
+                console.log(thrownError);
+         }
+        });
          
     }); 
      
