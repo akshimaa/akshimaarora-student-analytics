@@ -26,7 +26,7 @@ import weka.core.converters.CSVLoader;
  */
 public class CSVParser implements Serializable {
 
-    public static void parseIntoPOJO(InputStream fileStream) throws Exception {
+    public static void parseIntoPOJO(InputStream fileStream, String source) throws Exception {
 
         try (ICsvBeanReader beanReader = new CsvBeanReader(new InputStreamReader(fileStream, "UTF8"), CsvPreference.STANDARD_PREFERENCE)) {
 
@@ -43,7 +43,15 @@ public class CSVParser implements Serializable {
                 studentList.add(student);
 
             }
-            StudentList.setList((ArrayList<Student>) studentList);
+            if(source.equals("merged"))
+            {
+                StudentList.setMergedList((ArrayList<Student>) studentList);
+            }
+            else
+            {
+                StudentList.setList((ArrayList<Student>) studentList);
+            }
+            
 
         }
     }

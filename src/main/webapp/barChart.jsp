@@ -44,7 +44,7 @@
                              <option value="modeOfAttendance_attendanceType"><a href="#">Mode of Attendance by Type Attendance</a></option>
                 </select>
                 <div class="btn-group bootstrap-select cmu-dropdown">
-                <button id="generateBar"  class="btn btn-default">Generate Bar!</button>
+                    <button id="generateBar"  class="btn btn-default"><span><img src="images/glyphicons-42-charts.png" height="15px" width="15px" style="margin-right: 6px"></span>  Generate Bar!</button>
                 </div>
                 </div>
             

@@ -16,7 +16,7 @@
   
 </div>
 
- 
+ <link href="css/cmu-dropdowns.css" rel="stylesheet" type="text/css">
 <div class="row">
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
@@ -42,7 +42,7 @@
                              
                 </select>
                 <div class="btn-group bootstrap-select cmu-dropdown">
-                    <button id="generatePie"  class="btn btn-default">Generate Pie!</button>
+                    <button id="generatePie"  class="btn btn-default"><span><img src="images/glyphicons-43-pie-chart.png" height="15px" width="15px" style="margin-right: 6px"></span> Generate Pie!</button>
 
                 </div>
                 </div>
