@@ -172,6 +172,9 @@
                     <c:when test="${content eq 'pieChart'}">
                         <jsp:include page="pieChart.jsp"></jsp:include>
                     </c:when>
+                    <c:when test="${content eq 'reportGenerator'}">
+                        <jsp:include page="pieChart.jsp"></jsp:include>
+                    </c:when>
                     <c:otherwise>
                         <jsp:include page="overview.jsp"></jsp:include>
                     </c:otherwise>
