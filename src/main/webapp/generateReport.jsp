@@ -9,6 +9,7 @@
 <div class="row">
     <div class="col-lg-12">
         <h1 class="page-header">Report Generator</h1>
+        <p>Below is a list of charts that will be exported when the 'Generate Report' button is pressed.</p>
     </div>
 </div>
 <div class="row" id = "progressBarOverview">

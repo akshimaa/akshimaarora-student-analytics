@@ -13,8 +13,8 @@
 <div class="row">
     <div class="col-lg-12">
         <h1 class="page-header">Bar Chart</h1>
-        <p>This is the predictive analytics tool to predict prospective student GPA values.
-        <p>Please select a .csv file and a type of predictive algorithm then press the submit button to continue.</p>
+        <p>This is the bar chart generation tool to generate summary bar charts based on selected data.</p>
+        <p>Please select a data source and the desired variable combination then press the submit button to continue.</p>
     </div>
     <!-- /.col-lg-12 -->
 </div>

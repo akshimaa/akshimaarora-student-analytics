@@ -23,6 +23,7 @@
             <li>Summary .pdf report generation</li></ul>
 
         <p>In order to upload a .csv file to the database, please use the file upload widget on the sidebar. If uploaded data is to be merged with existing data in AWS S3, please check the 'Merge into database' checkbox.</p>
+        <p>Each chart has a dropbox on the top-right, where you will be able to append it to a .pdf file report. Two example charts are shown below, feel free to switch between charts and test the .pdf export function.</p>
     </div>
 </div>
 <div class="row" id = "progressBarOverview">
