@@ -33,7 +33,7 @@ public class CSVFileUploadServlet extends HttpServlet {
 
     }
 /**
- * 
+ * doPost method successfully uploads the file and merge the data.
  * @param req is the request for the data for the upload of the csv file
  * @param resp response is the uploading of the csv file
  * @throws ServletException is thrown during the execution of the code

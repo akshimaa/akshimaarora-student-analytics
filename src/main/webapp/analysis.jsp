@@ -18,6 +18,45 @@
     </div>
     <!-- /.col-lg-12 -->
 </div>
+
+<div class="row">
+    <div class="btn-toolbar" role="toolbar">
+        <div class="btn-group">
+
+
+            <div class="dropdown" style="margin-bottom: 24px">
+                <form id="analysisInput" action="" method="post" enctype="multipart/form-data">
+                    <!--<div class="input-group custom-search-form">-->
+
+
+
+                    <!--</div>-->
+
+                    <input type="hidden" name="classifier" id="classifier" />
+                    <input id="upload-input" class="form-control" value="file" type="file" name="file" accept=".csv" style="width: 250px;float: left;margin-right: 16px"/>
+                    <select class="selectpicker cmu-dropdown" style="width: 123px;float: left;" name="" value="1" id="dropmenu">
+                        <option value="1"><a href="#">MultilayerPerceptron</a></option>
+                        <option value="2"><a href="#">LinearRegression</a></option>
+                    </select>
+                    
+
+                    <div class="btn-group bootstrap-select cmu-dropdown">
+                        <button id="analyseData"  class="btn btn-default" style="float: left;margin-left: 14px"><span><img src="images/glyphicons-42-charts.png" height="15px" width="15px" style="margin-right: 6px;"></span>  Analyze Data!</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
 <div class="input-group custom-search-form">
     <form id="analysisInput" action="" method="post" enctype="multipart/form-data">
         <input id="upload-input" class="form-control" value="file" type="file" name="file" accept=".csv" style="width: 250px"/>
@@ -36,7 +75,7 @@
 
 <p></p>
 
-<div id="chartDiv" class="row">
+<div id="analysisChartDiv" class="row">
     <c:set var="chart" scope="request" value="${requestScope.chart}" /> 
     <c:set var="contextPath" scope="request" value="${requestScope.contextPath}"/>
     <c:choose>
@@ -50,8 +89,12 @@
 
 <script>
     $(document).ready(function () {
+
+        $('#chartPanel').hide();
+        $('.selectpicker').selectpicker();
+
         $('#analyseData').click(function () {
-            $('#chartDiv').html('');
+            $('#analysisChartDiv').html('');
             console.log("analyze button clicked!");
 
             var uploadFileName = $("#upload-input").val();
@@ -74,7 +117,7 @@
                     processData: false,
                     success: function (data, textStatus, request) {
 
-                        $('#chartDiv').html('<img src="' + data.chart + '" />');
+                        $('#analysisChartDiv').html('<img src="' + data.chart + '" />');
                     },
                     error: function (xhr, ajaxOptions, thrownError) {
                         console.log(xhr.status);
