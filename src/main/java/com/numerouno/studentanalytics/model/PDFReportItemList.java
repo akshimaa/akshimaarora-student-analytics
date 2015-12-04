@@ -6,14 +6,14 @@
 package com.numerouno.studentanalytics.model;
 
 import java.util.ArrayList;
-import org.ujmp.core.collections.list.ArrayIndexList;
+
 
 /**
  *PDFReportItemList generates the pdf report of the bar and pie charts
  * @author Akshima
  */
 public class PDFReportItemList {
-    private static ArrayList<String> itemList = new ArrayIndexList<>();
+    private static ArrayList<String> itemList = new ArrayList<>();
 /**
  * gets the item list to generate as pdf
  * @return 
