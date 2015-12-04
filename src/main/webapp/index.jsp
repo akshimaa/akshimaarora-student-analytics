@@ -202,7 +202,20 @@
                                             $('#page-wrapper').load('generateReport.jsp');
                                         }
 
-
+                                        $(document).ready(function () {
+                                            console.log("upload.jsp is ready!");
+                                            $('#uploadToS3Button').click(function () {
+                                                alert("TEST");
+                                                console.log($('#uploadMergeCheckbox').is(":checked"));
+                                                console.log("BUTTON PRESSED! YAY!");
+                                                if ($('#uploadMergeCheckbox').is(":checked")) {
+                                                    $('#hiddenMergeFlag').val("1");
+                                                } else {
+                                                    $('#hiddenMergeFlag').val("0");
+                                                }
+                                                $('#uploadForm').submit();
+                                            });
+                                        });
     </script>
 
 </body>

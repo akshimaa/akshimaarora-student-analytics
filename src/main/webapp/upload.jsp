@@ -15,31 +15,14 @@
         <form id="uploadForm" action="upload" method="post" enctype="multipart/form-data">
             <input id="upload-input" class="form-control" type="file" name="file" accept=".csv" style="width: 181px"/>
             <span class="input-group-btn">
-                <button class="btn btn-default" id="uploadButton" value="upload">
+                <button class="btn btn-default" id="uploadToS3Button" value="upload">
                     <i class="fa fa-upload"></i>
                 </button>
             </span>
-            <input type="hidden" name="merge" value="0"/>
-            <input type="checkbox" name="checkbox" value="1"/> Merge into database
+            <input type="hidden" name="merge" id="hiddenMergeFlag" value="0"/>
+            <input type="checkbox" name="checkbox" id="uploadMergeCheckbox" value="1"/> Merge into database
         </form> 
 
     </div>
     <!-- /input-group -->
 </li>
-
-<script>
-    $(document).ready(function () {
-        $('#uploadButton').click(function () {
-            alert("TEST");
-            console.log($('#checkbox').attr("checked"));
-            console.log("BUTTON PRESSED! YAY!");
-            if ($('#checkbox').attr("checked")) {
-                $('#merge').val("1");
-            } else {
-                $('#merge').val("0");
-            }
-            $('#uploadForm').submit();
-        });
-    });
-</script>
-
