@@ -63,7 +63,10 @@ public class PieChartServlet extends HttpServlet {
 
         String preset = request.getParameter("preset");
         String datasource = request.getParameter("datasource");
-
+           String imageFileName = datasource.concat("_").concat(preset).concat(".png");
+            File imageFile = new File(getServletContext().getRealPath("/images")+"/"+imageFileName);
+        request.setAttribute("chart", imageFile.getName());
+    FileOutputStream fos = new FileOutputStream(imageFile);
         if (datasource.equalsIgnoreCase("UploadedData")) {
 
             log.info("datasource=" + datasource);
