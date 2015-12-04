@@ -63,35 +63,20 @@ public class PieChartServlet extends HttpServlet {
 
         String preset = request.getParameter("preset");
         String datasource = request.getParameter("datasource");
-           String imageFileName = datasource.concat("_").concat(preset).concat(".png");
+           String imageFileName = datasource.concat("_").concat(preset).concat("_pie.png");
             File imageFile = new File(getServletContext().getRealPath("/images")+"/"+imageFileName);
         request.setAttribute("chart", imageFile.getName());
     FileOutputStream fos = new FileOutputStream(imageFile);
-        if (datasource.equalsIgnoreCase("UploadedData")) {
-
-            log.info("datasource=" + datasource);
-
-            try {
-                CSVParser.parseIntoPOJO(request.getPart("file").getInputStream());
-                log.info(request.getPart("file").getSubmittedFileName().concat(" file parsed successfully!"));
-            } catch (Exception ex) {
-                Logger.getLogger(PieChartServlet.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-        } else if (request.getParameter("preset").contains("_")) {
-
-            ServletOutputStream os = response.getOutputStream();
-            Logger.getLogger(PieChartServlet.class.getName()).log(Level.INFO, "complex chart");
-            ChartUtilities.writeChartAsPNG(os, getComplexChart(request), 800, 600);
-            os.close();
-
-        } else {
-            ServletOutputStream os = response.getOutputStream();
-            ChartUtilities.writeChartAsPNG(os, getChart(request), 800, 600);
-
-            request.setAttribute("contextPath", getServletContext().getContextPath());
-
-        }
+       if (request.getParameter("preset").contains("_")){
+           Logger.getLogger(BarChartServlet.class.getName()).log(Level.INFO, "complex chart");
+           ChartUtilities.writeChartAsPNG(fos, getComplexChart(request), 800, 600);
+           fos.close();
+       }
+       else {
+            Logger.getLogger(BarChartServlet.class.getName()).log(Level.INFO,  "simple chart");
+           ChartUtilities.writeChartAsPNG(fos, getChart(request), 800, 600);
+           fos.close();
+       }
         //JSON Response from Servlet
         JSONObject json = new JSONObject();
         json.put("chart", getServletContext().getContextPath() + "/images" + "/" + imageFileName);
