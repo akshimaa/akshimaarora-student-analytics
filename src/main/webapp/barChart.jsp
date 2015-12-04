@@ -140,10 +140,12 @@
     function addToReport()
     {
         console.log('add to report');
+         datasource = $('#datasourceDropdown').val();
+        preset = $('#presetDropdown').val();
         $.ajax({
             type: "POST",
-            url: "AddToReport",
-            data: "",
+            url: "PDFReportCreator",
+             data: {datasource:datasource, preset:preset},
             cache: false,
             datatype: "application/json",
             success: function (data, textStatus, request) {

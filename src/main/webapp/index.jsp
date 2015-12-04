@@ -242,16 +242,6 @@
                                                 }
                                             });
                                         });
-<<<<<<< HEAD
-                                        
-function logout(){
- comsole.log("in logout func");
-FB.logout(function(response) {
-            // user is now logged out
-            var url = $(this).attr('href');
-            window.location= url;
-window.location.href = 'http://www.example.com'
-=======
 
                                         function logout() {
                                             comsole.log("in logout func");
@@ -259,7 +249,7 @@ window.location.href = 'http://www.example.com'
                                                 // user is now logged out
                                                 var url = $(this).attr('href');
                                                 window.location = url;
->>>>>>> e24ed7cc3f5126a91e8b5052f52096c128dee721
+
 
 
                                             });
