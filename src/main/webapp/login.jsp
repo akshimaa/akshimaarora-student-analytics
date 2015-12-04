@@ -104,8 +104,8 @@
   the FB.login() function when clicked.
 -->
 
-<img src="images/cmulogo.jpg" height="30%" width="30%" style="margin-left: 5%;margin-top: 5%;min-height:78px;min-width:309px; "/>
-<div  class="container" style="margin: auto; display: block;margin-top: 15%;width: 22%;min-width: 300px">
+<img src="images/WebAppLogin.png" height="30%" width="30%" align="middle" style="margin-left: 5%;margin-top: 5%;min-height:78px; "/>
+<div  class="container" style="margin: auto; display: block;margin-top: 5%;width: 22%;min-width: 300px">
     <a id="fb_login" class="btn btn-block btn-social btn-lg btn-facebook" style="text-align: center;" >
     <span class="fa fa-facebook"></span>Sign in with Facebook
 </a>
