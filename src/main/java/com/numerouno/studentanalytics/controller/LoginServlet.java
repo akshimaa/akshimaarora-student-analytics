@@ -5,7 +5,6 @@
  */
 package com.numerouno.studentanalytics.controller;
 
-
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.logging.Logger;
@@ -17,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
+ * LoginServlet is used to login to the application
  *
  * @author madan
  */
@@ -26,10 +26,12 @@ public class LoginServlet extends HttpServlet {
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
      *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @param request servlet request the user to login their facebook id
+     * @param response servlet response responds by logging in using this id as
+     * credential
+     * @throws ServletException is thrown if a servlet-specific error occurs
+     * @throws IOException is thrown if an I/O error occurs during the execution
+     * of the code
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -47,10 +49,14 @@ public class LoginServlet extends HttpServlet {
     /**
      * Handles the HTTP <code>GET</code> method.
      *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @param request servlet requests for the login information of the user to
+     * allow it to sign using facebook
+     * @param response servlet response responds by logging in using the
+     * credentials performed by the user
+     * @throws ServletException is thrown if a servlet-specific error occurs
+     * during the execution of the code
+     * @throws IOException is thrown if an I/O error occurs during the execution
+     * of the code
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -61,17 +67,17 @@ public class LoginServlet extends HttpServlet {
     /**
      * Handles the HTTP <code>POST</code> method.
      *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @param request servlet request is processes the user inputted data
+     * @param response servlet responds by processing the request of servlet and
+     * logging in
+     * @throws ServletException is thrown if a servlet-specific error occurs
+     * @throws IOException is thrown if an I/O error occurs
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-        
-        
+
     }
 
     /**
