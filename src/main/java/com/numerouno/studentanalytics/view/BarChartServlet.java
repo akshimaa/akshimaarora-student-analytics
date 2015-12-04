@@ -50,7 +50,7 @@ import org.json.JSONObject;
  * @author madan
  */
 public class BarChartServlet extends HttpServlet {
-
+ArrayList<Student> studentList = null;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -80,9 +80,7 @@ public class BarChartServlet extends HttpServlet {
             Logger.getLogger(BarChartServlet.class.getName()).log(Level.INFO,  "simple chart");
            ChartUtilities.writeChartAsPNG(fos, getChart(request), 800, 600);
            fos.close();
-       }
-
-           
+       }     
         //JSON Response from Servlet
         JSONObject json = new JSONObject();
         json.put("chart", getServletContext().getContextPath()+"/images"+"/"+imageFileName);
@@ -131,23 +129,15 @@ public class BarChartServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
     
+    
+    
     private JFreeChart getChart(HttpServletRequest request) throws FileNotFoundException {
         String preset= request.getParameter("preset");
           
-        String datasource= request.getParameter("datasource");
+         String datasource= request.getParameter("datasource");
         
-        ArrayList<Student> studentList=new ArrayIndexList<>();
-      
-     try {
-          
-      FileInputStream fis = new FileInputStream(getServletContext().getRealPath("/STUDENT.dat"));
-      ObjectInputStream in = new ObjectInputStream(fis);
-         studentList= (ArrayList<Student> )in.readObject();
-     } catch (IOException ex) {
-         Logger.getLogger(BarChartServlet.class.getName()).log(Level.SEVERE, null, ex);
-     } catch (ClassNotFoundException ex) {
-         Logger.getLogger(BarChartServlet.class.getName()).log(Level.SEVERE, null, ex);
-     }
+        studentList = getStudentListFromDataSource(datasource);
+        
     
 
      HashMap<Object, Integer> map = new HashMap<>();
@@ -284,19 +274,7 @@ public class BarChartServlet extends HttpServlet {
    
         String datasource= request.getParameter("datasource");
         
-         ArrayList<Student> studentList=new ArrayIndexList<>();
-        switch(datasource){
-            case "OriginalData":
-                readFromS3("student-alpha", "STUDENT.dat", getServletContext().getRealPath("/Temp")+"/"+"original.dat");
-                studentList = getDataSource("/Temp/original.dat");
-                break;
-            case "UploadedData":
-                studentList = StudentList.getList();
-                break;
-            case "MergedData":
-                
-                break;
-        }
+        studentList = getStudentListFromDataSource(datasource);
         
         for(Student student : studentList)
         {
@@ -454,4 +432,23 @@ public class BarChartServlet extends HttpServlet {
             return o.toString();
         }
     }
+
+    private ArrayList<Student> getStudentListFromDataSource(String datasource) {
+         studentList = new ArrayIndexList<>();
+        switch(datasource){
+            case "OriginalData":
+                readFromS3("student-alpha", "STUDENT.dat", getServletContext().getRealPath("/Temp")+"/"+"original.dat");
+                studentList = getDataSource("/Temp/original.dat");
+                break;
+            case "UploadedData":
+                studentList = StudentList.getList();
+                break;
+            case "MergedData":
+                readFromS3("student-gamma", "student-merged.csv", getServletContext().getRealPath("/Temp")+"/"+"merged.dat");
+                studentList = getDataSource("/Temp/merged.dat");
+                break;
+        }   
+        return studentList;
+    }
+    
 }
