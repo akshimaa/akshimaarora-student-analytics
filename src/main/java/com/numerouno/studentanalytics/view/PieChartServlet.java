@@ -134,7 +134,6 @@ public class PieChartServlet extends HttpServlet {
         String datasource = request.getParameter("datasource");
 
         studentList = getStudentListFromDataSource(datasource);
-
         DefaultPieDataset dataset = new DefaultPieDataset();
 
         HashMap<Object, Integer> map = processObjects(studentList, preset);
@@ -166,18 +165,7 @@ public class PieChartServlet extends HttpServlet {
         plot.setStartAngle(270);
         plot.setForegroundAlpha(0.60f);
         plot.setInteriorGap(0.02);
-        int width = 1200; /* Width of the image */
 
-        int height = 1200; /* Height of the image */
-
-        File pieChart3D = new File(getServletContext().getRealPath("/Temp") + "/pie_Chart3D.png");
-
-        try {
-            ChartUtilities.saveChartAsPNG(pieChart3D, chart, width, height);
-
-        } catch (IOException ex) {
-            Logger.getLogger(PieChartServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
         return chart;
 
     }
@@ -194,7 +182,6 @@ public class PieChartServlet extends HttpServlet {
         Set argumentThreeSet = new HashSet<>();
         Set argumentFourSet = new HashSet<>();
         String datasource = request.getParameter("datasource");
-        //ArrayList<Student> studentList = new ArrayIndexList<>();
 
         studentList = getStudentListFromDataSource(datasource);
 
@@ -227,18 +214,7 @@ public class PieChartServlet extends HttpServlet {
         plot.setStartAngle(270);
         plot.setForegroundAlpha(0.60f);
         plot.setInteriorGap(0.02);
-        int width = 1200; /* Width of the image */
 
-        int height = 1200; /* Height of the image */
-
-        File pieChart3D = new File(getServletContext().getRealPath("/Temp") + "/pie_Chart3D.png");
-
-        try {
-            ChartUtilities.saveChartAsPNG(pieChart3D, chart, width, height);
-
-        } catch (IOException ex) {
-            Logger.getLogger(PieChartServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
         return chart;
 
     }

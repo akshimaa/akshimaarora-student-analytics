@@ -87,7 +87,7 @@
                             <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
                             </li>
                             <li class="divider"></li>
-                            <li><a href="login.jsp" onclick="logout();"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                            <li><a href="/StudentAnalytics" onclick="logout();"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                             </li>
                         </ul>
                         <!-- /.dropdown-user -->
@@ -172,6 +172,9 @@
                     <c:when test="${content eq 'pieChart'}">
                         <jsp:include page="pieChart.jsp"></jsp:include>
                     </c:when>
+                    <c:when test="${content eq 'reportGenerator'}">
+                        <jsp:include page="pieChart.jsp"></jsp:include>
+                    </c:when>
                     <c:otherwise>
                         <jsp:include page="overview.jsp"></jsp:include>
                     </c:otherwise>
@@ -243,6 +246,7 @@
                                             });
                                         });
 
+
                                         function logout() {
                                             comsole.log("in logout func");
                                             FB.logout(function (response) {
@@ -251,9 +255,11 @@
                                                 window.location = url;
 
 
+
                                             });
 
                                         }
+
     </script>
 
 </body>
