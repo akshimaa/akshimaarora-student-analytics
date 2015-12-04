@@ -5,6 +5,7 @@
  */
 package com.numerouno.studentanalytics.view;
 
+import static com.numerouno.studentanalytics.controller.CSVFileProcessor.readFromS3;
 import java.awt.Color;
 import java.awt.GradientPaint;
 import java.io.FileInputStream;
@@ -80,14 +81,13 @@ public class BarChartServlet extends HttpServlet {
        }
 
            
-//JSON Response from Servlet
+        //JSON Response from Servlet
         JSONObject json = new JSONObject();
         json.put("chart", getServletContext().getContextPath()+"/images"+"/"+imageFileName);
         PrintWriter out = response.getWriter();
         response.setContentType("application/json"); 
         response.setCharacterEncoding("utf-8"); 
         out.println(json);
-
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -284,8 +284,9 @@ public class BarChartServlet extends HttpServlet {
         
          ArrayList<Student> studentList=new ArrayIndexList<>();
         switch(datasource){
-            case "OriginalData":               
-                studentList = getDataSource("/STUDENT.DAT");
+            case "OriginalData":
+                readFromS3("student-alpha", "STUDENT.dat", request.getContextPath() + "/remote.dat");
+                studentList = getDataSource("/STUDENT.dat");
                 break;
             case "UploadedData":
                 break;
