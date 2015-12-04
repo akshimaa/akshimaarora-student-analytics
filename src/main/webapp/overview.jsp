@@ -59,8 +59,8 @@
                             <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu pull-right" role="menu">
-                            <li id="pieChoiceOne" value="gender"><a href="javascript:;" onclick = "generateOveriewPie('gender');">Enrollment by gender</a></li>
-                            <li id="pieChoiceTwo" value="entranceExam"><a href="javascript:;" onclick = "generateOveriewPie('entranceExam');">Enrollment by entrance exam</a></li>
+                            <li id="pieChoiceOne" value="disability_regionalRemote_womenNonTraditionalRole_lowIncome"><a href="javascript:;" onclick = "generateOveriewPie('disability_regionalRemote_womenNonTraditionalRole_lowIncome');">Enrollment by equity data</a></li>
+                            <li id="pieChoiceTwo" value="gender"><a href="javascript:;" onclick = "generateOveriewPie('gender');">Enrollment by gender</a></li>
                
                             <li class="divider"></li>
                             
@@ -110,11 +110,12 @@
                     console.log(thrownError);
                 }
                  });
-            //pie chart ajax     
+            //pie chart ajax  
+            presetPie = $('#pieChoiceOne').attr('value');
             $.ajax({
                 type: "POST",
                 url: "/StudentAnalytics/PieChart",
-                data: {datasource: 'OriginalData', preset: preset},
+                data: {datasource: 'OriginalData', preset: presetPie},
                 cache: false,
                 datatype: "application/json",
                 success: function (data, textStatus, request) {
