@@ -68,7 +68,15 @@
 
      </div>
 
-
+<div class="row" id = "progressBarOverview">
+    <div class="col-md-6 col-md-offset-3" style="margin-top: 50px">
+        <div class="progress">
+            <div class="progress-bar progress-bar-striped active" role="progressbar"
+                 aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:100%">
+                Loading
+            </div>
+        </div>
+    </div></div>
 <div  id="chartPanel" class="row">
     <div class="col-lg-12">
         <div class="panel panel-default">
@@ -102,9 +110,11 @@
 
 <script>
     $( document ).ready(function() {
+         $('#progressBarOverview').hide();
         $('#chartPanel').hide();
         $('.selectpicker').selectpicker();
     $('#generatePie').click(function(){
+         $('#progressBarOverview').show();
         $('#pieChartDiv').html('');
         $('#chartPanel').hide();
         console.log("generate button clicked!");
@@ -120,12 +130,13 @@
             cache: false,
             datatype: "application/json",
             success: function(data, textStatus, request){
-               
+                $('#progressBarOverview').hide();
                         $('#chartPanel').fadeIn("slow", function () {
                         $(this).show();
                     });
                     $('#pieChartDiv').html('<img src="' + data.chart + '" id="pieChart" />');},
             error: function (xhr, ajaxOptions, thrownError) {
+                 $('#progressBarOverview').hide();
                 console.log(xhr.status);
                 console.log(thrownError);
          }
