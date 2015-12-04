@@ -42,7 +42,7 @@ public class CSVFileUploadServlet extends HttpServlet {
 
             try {
 
-                log.info("MERGE? : " + req.getParameter("merge"));
+                log.info("MERGE: " + req.getParameter("merge"));
                 CSVParser.parseIntoPOJO(req.getPart("file").getInputStream(), "upload");
                 log.info(req.getPart("file").getSubmittedFileName().concat(" file parsed successfully!"));
 

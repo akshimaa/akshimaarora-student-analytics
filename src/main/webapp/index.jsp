@@ -143,14 +143,14 @@
                 </nav>
             <c:set var="status" scope="request" value="${requestScope.status}" />     
 
-            <div class="alert alert-danger" id="noFileSelectedError" style="display:none;margin-left: 300px">
-                <button type="button" class="close">×</button>
-                <strong>ERROR!</strong> No file was selected in the file upload box.
+            <div class="alert alert-danger" id="fileUploadFailureDisplay" style="display:none;margin-left: 300px">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <div id="uploadErrorMessage"></div>
             </div>
 
-            <div class="alert alert-success" id="successMessageBanner" style="display:none;margin-left: 300px">
-                <button type="button" class="close">×</button>
-                <strong>Success!</strong> Indicates a successful or positive action.
+            <div class="alert alert-success" id="fileUploadSuccessDisplay" style="display:none;margin-left: 300px">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <div id="uploadSuccessMessage"></div>
             </div>
 
             <div id="page-wrapper" style="margin:0 0 0 300px">
@@ -224,11 +224,12 @@
                                             $('#uploadToS3Button').click(function () {
 
                                                 var uploadFileName = $("#uploadToS3Input").val();
-
                                                 console.log(uploadFileName);
                                                 if (uploadFileName == "") { // returns true if the string is not empty
-                                                    $('#noFileSelectedError').show();
-
+                                                    $('#fileUploadFailureDisplay').fadeIn("slow", function () {
+                                                        $('#uploadErrorMessage').html("<strong>ERROR!</strong> No file has been selected.");
+                                                        $(this).show();
+                                                    });
                                                 } else {
 
                                                     console.log($('#uploadMergeCheckbox').is(":checked"));
@@ -237,10 +238,44 @@
                                                     } else {
                                                         $('#hiddenMergeFlag').val("0");
                                                     }
-                                                    $('#uploadForm').submit();
 
+                                                    console.log($('#uploadToS3Input').val());
+                                                    console.log($('#hiddenMergeFlag').val());
+                                                    uploadDatasource = $('#uploadToS3Input').val();
+                                                    uploadPreset = $('#hiddenMergeFlag').val();
+
+                                                    $('#hiddenMergeFlag').val(uploadPreset);
+                                                    console.log(uploadPreset);
+                                                    var uploadForm = $('#uploadForm')[0];
+                                                    var uploadFormData = new FormData(uploadForm);
+
+                                                    $.ajax({
+                                                        type: "POST",
+                                                        url: "/StudentAnalytics/upload",
+                                                        data: uploadFormData,
+                                                        cache: false,
+                                                        contentType: false,
+                                                        processData: false,
+                                                        success: function (data, textStatus, request) {
+                                                            $('#fileUploadSuccessDisplay').fadeIn("slow", function () {
+                                                                $('#uploadSuccessMessage').html("<strong>SUCCESS!</strong> File uploaded to S3 bucket.");
+                                                                $(this).show();
+                                                            });
+                                                        },
+                                                        error: function (xhr, ajaxOptions, thrownError) {
+                                                            $('#fileUploadFailureDisplay').fadeIn("slow", function () {
+                                                                $('#uploadErrorMessage').html("<strong>ERROR!</strong> File failed to upload to S3 bucket.");
+                                                                $(this).show();
+                                                            });
+                                                        }
+                                                    });
+
+
+//                                                    $('#uploadForm').submit();
                                                 }
+
                                             });
+
                                         });
 
                                         function logout() {
@@ -249,10 +284,7 @@
                                                 // user is now logged out
                                                 var url = $(this).attr('href');
                                                 window.location = url;
-
-
                                             });
-
                                         }
     </script>
 
