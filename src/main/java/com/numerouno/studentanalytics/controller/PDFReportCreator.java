@@ -7,9 +7,11 @@ package com.numerouno.studentanalytics.controller;
 
 
 import com.numerouno.studentanalytics.model.PDFReportItemList;
+import com.numerouno.studentanalytics.view.BarChartServlet;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -22,6 +24,8 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class PDFReportCreator extends HttpServlet {
  Logger log = Logger.getLogger(PDFReportCreator.class.getName());
+ 
+ public static ArrayList<String> pdfList= PDFReportItemList.getItemList();
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -46,7 +50,7 @@ public class PDFReportCreator extends HttpServlet {
 //            out.println("</body>");
 //            out.println("</html>");
             
-            log.info("In servlet----------");
+            log.info("In servlet");
         String datasource = request.getParameter("datasource");
         String preset = request.getParameter("preset");
         String imageFileName = datasource.concat("_").concat(preset).concat("_bar.png");
@@ -94,7 +98,8 @@ public class PDFReportCreator extends HttpServlet {
     }// </editor-fold>
     
     public ArrayList<String> createReportList(String imageFileName){
-        PDFReportItemList.getItemList().add(imageFileName);
+        pdfList.add(imageFileName);
+      log.info(pdfList.get(0));
     return PDFReportItemList.getItemList();
     }
 
