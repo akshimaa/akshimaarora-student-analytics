@@ -63,7 +63,7 @@ public class BarChartServlet extends HttpServlet {
         request.setAttribute("content", "barChart");
         String datasource = request.getParameter("datasource");
         String preset = request.getParameter("preset");
-        String imageFileName = datasource.concat("_").concat(preset).concat(".png");
+        String imageFileName = datasource.concat("_").concat(preset).concat("_bar.png");
         request.setAttribute("contextPath", getServletContext().getContextPath());
         File imageFile = new File(getServletContext().getRealPath("/images")+"/"+imageFileName);
         request.setAttribute("chart", imageFile.getName());
