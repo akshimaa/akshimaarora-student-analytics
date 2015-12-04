@@ -30,18 +30,27 @@ public class Student implements Serializable {
     private static final long serialVersionUID = 611625980304671996L;
     public int studentID;
 
+    /**
+     * Contains information regarding courses.
+     */
     public enum Course {
 
         ARCHITECTURE, ART, BIOLOGY, BUSINESS, CHEMICAL_ENGINEERING, CHEMISTRY, DESIGN, DRAMA, ELECTRICAL_ENGINEERING, ENGLISH, HISTORY, INFORMATION_SYSTEMS_MANAGEMENT, INFORMATION_TECHNOLOGY, LANGUAGE, MATHEMATHICS, MECHANICAL_ENGINEERING, MUSIC, PHILOSOPHY, PHYSICS, PSYCHOLOGY, PUBLIC_POLICY, PUBLIC_POLICY_MANAGEMENT, STATISTICS
     }; //awaiting final  
     private Course courseInformation;
 
+    /**
+     * Contains information regarding degree level.
+     */
     public enum Degree {
 
         UNDERGRADUATE, POSTGRADUATE, PHD
     };
     private Degree degreeLevel;
 
+    /**
+     * Contains information regarding the field of study.
+     */
     public enum Field {
 
         ARCHITECTURE, ART, BUSINESS, DESIGN, DRAMA, ENGINEERING, ENGLISH, HISTORY, INFORMATION_SYSTEMS_MANAGEMENT, INFORMATION_TECHNOLOGY, LANGUAGE, MATHEMATHICS, MUSIC, PHILOSOPHY, PSYCHOLOGY, PUBLIC_POLICY, PUBLIC_POLICY_MANAGEMENT, SCIENCE, STATISTICS
@@ -49,6 +58,9 @@ public class Student implements Serializable {
     private Field fieldEducation;
     private Date dOb;
 
+    /**
+     * Contains information regarding the gender of the student.
+     */
     public enum Sex {
 
         M, F
@@ -62,18 +74,27 @@ public class Student implements Serializable {
     private int zipCode;
     private Locale country;
 
+    /**
+     * Contains information regarding the student's basis of admission.
+     */
     public enum BasisAdmission {
 
         ACADEMICS, AUDITION, EQUITY, PARENTAL, RESIDENT, PORTFOLIO, SPORTS
     };
     private BasisAdmission basisAdmission;
 
+    /**
+     * Contains information regarding the full-time status of the student.
+     */
     public enum AttendanceType {
 
         FULLTIME, PARTTIME
     };
     private AttendanceType attendanceType;
 
+    /**
+     * Contains information regarding the student's mode of attendance.
+     */
     public enum ModeAttendance {
 
         INTERNAL, EXTERNAL, MULTIMODAL
@@ -84,6 +105,9 @@ public class Student implements Serializable {
     private int yearOfArrivalInUSA;
     private int enrollmentYear;
 
+    /**
+     * Contains information regarding the type of entrance exam taken by the student.
+     */
     public enum Type {
 
         SAT, GRE, GMAT
@@ -97,6 +121,9 @@ public class Student implements Serializable {
     private int womenNontraditionalRole;
     private int lowIncome;
 
+    /**
+     * Contains information regarding the highest education level achieved prior to admission.
+     */
     public enum HighestEducationLevel {
 
         HS_DIPLOMA, UNDERGRADUATE, POSTGRADUATE
