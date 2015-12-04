@@ -29,17 +29,17 @@
 
 <script>
     $(document).ready(function () {
-    $('#uploadButton').click(function () {
-        alert("TEST");
-        console.log($('#checkbox').attr("checked"));
-        console.log("BUTTON PRESSED! YAY!");
-        if ($('#checkbox').attr("checked")) {
-            $('#merge').val("1");
-        } else {
-            $('#merge').val("0");
-        }
-        $('#uploadForm').submit();
-    });
+        $('#uploadButton').click(function () {
+            alert("TEST");
+            console.log($('#checkbox').attr("checked"));
+            console.log("BUTTON PRESSED! YAY!");
+            if ($('#checkbox').attr("checked")) {
+                $('#merge').val("1");
+            } else {
+                $('#merge').val("0");
+            }
+            $('#uploadForm').submit();
+        });
     });
 </script>
 
