@@ -86,11 +86,8 @@
                             <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu pull-right" role="menu">
-<<<<<<< 801391dfced39ab6389e09c703337dd40f704ab8
-                            <li><a href="#">Add to Report</a>
-=======
+
                             <li><a href="javascript:;" onclick="addToReport();">Add to Report</a>
->>>>>>> ADD: error messages and success messages for barchart, TODO: add servlet url in ajax and pass img src
                             </li>
 
                         </ul>
@@ -141,8 +138,7 @@
         });
 
     });
-<<<<<<< 801391dfced39ab6389e09c703337dd40f704ab8
-=======
+
     function addToReport()
     {
         console.log('add to report');
@@ -166,7 +162,7 @@
             }
         });
     }
->>>>>>> ADD: error messages and success messages for barchart, TODO: add servlet url in ajax and pass img src
+
 </script>
 <!-- /.row -->
 
