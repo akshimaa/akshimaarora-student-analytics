@@ -1,7 +1,7 @@
 <%-- 
     Document   : index
     Created on : Nov 3, 2015, 5:23:33 PM
-    Author     : madan
+    Author     : madan, akshima
 --%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -31,8 +31,8 @@
         <!-- Custom CSS -->
         <link href="css/sb-admin-2.css" rel="stylesheet">
 
-          <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-            <link rel="stylesheet" href="css/bootstrap-select.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/bootstrap-select.css">
         <!-- Custom Fonts -->
         <link href="css/font-awesome.css" rel="stylesheet" type="text/css">
 
@@ -56,13 +56,15 @@
                 js.src = "//connect.facebook.net/en_US/sdk.js";
                 fjs.parentNode.insertBefore(js, fjs);
             }(document, 'script', 'facebook-jssdk'));
+            
+             
         </script>
         <div id="userId" style="display: none;">${userID}</div>
         <div id="wrapper">
 
             <!-- Navigation -->
             <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0;min-height: 101px">
-                <div class="navbar-header">
+                <div class="navbar-header" style="max-height: 15px" >
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                         <span class="sr-only">Toggle navigation</span>
                         <span class="icon-bar"></span>
@@ -85,7 +87,7 @@
                             <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
                             </li>
                             <li class="divider"></li>
-                            <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                            <li><a href="login.jsp" onclick="logout();"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                             </li>
                         </ul>
                         <!-- /.dropdown-user -->
@@ -101,11 +103,11 @@
                             <li class="sidebar-search">
                                 <div class="input-group custom-search-form">
                                     <jsp:include page="upload.jsp"></jsp:include>
-                                </div>
-                                <!-- /input-group -->
-                            </li>
+                                    </div>
+                                    <!-- /input-group -->
+                                </li>
 
-                            
+
 
                                 <li>
                                     <a href="index"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
@@ -141,6 +143,21 @@
                 </nav>
             <c:set var="status" scope="request" value="${requestScope.status}" />           
             <div id="page-wrapper" style="margin:0 0 0 300px">
+
+                <div id="bootstrapMessageHolder">
+
+                </div>
+
+                <div class="alert alert-danger" id="errorMessageBanner" >
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <strong>ERROR!</strong> Indicates a dangerous or potentially negative action.
+                </div>
+
+                <div class="alert alert-success" id="successMessageBanner">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <strong>Success!</strong> Indicates a successful or positive action.
+                </div>
+
                 <choose:when test="${status == null}">
                     <choose:otherwise>
                         <div> <c:out value="${status}"/></div>
@@ -200,11 +217,17 @@
                                             $('#page-wrapper').load('generateReport.jsp');
                                         }
 
+                                        bootstrapAlert = function () {
+                                        }
+                                        bootstrapAlert.warning = function (message) {
+                                            $('#bootstrapMessageHolder').html('<div class="alert"><a class="close" data-dismiss="alert">×</a><span>' + message + '</span></div>')
+                                        }
+
                                         $(document).ready(function () {
-                                            
-                                           
+
+
                                             $('#uploadToS3Button').click(function () {
-                                                alert("TEST");
+
                                                 console.log($('#uploadMergeCheckbox').is(":checked"));
                                                 console.log("BUTTON PRESSED! YAY!");
                                                 if ($('#uploadMergeCheckbox').is(":checked")) {
@@ -215,6 +238,18 @@
                                                 $('#uploadForm').submit();
                                             });
                                         });
+                                        
+function logout(){
+ comsole.log("in logout func");
+FB.logout(function(response) {
+            // user is now logged out
+            var url = $(this).attr('href');
+            window.location= url;
+
+
+        });
+
+  }
     </script>
 
 </body>
