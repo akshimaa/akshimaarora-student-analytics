@@ -48,6 +48,12 @@ public class CSVFileProcessor {
 
     }
 
+    /**
+     *
+     * @param bucket the data is written into the bucket
+     * @param key determines the model that is used for the data mining
+     * @param file data from the file is written into the bucket
+     */
     public static void writeIntoS3(String bucket, String key, File file) {
 
         AWSCredentials credentials = new ProfileCredentialsProvider().getCredentials();
@@ -63,7 +69,7 @@ public class CSVFileProcessor {
 
     /**
      * Merges the remote and local .csv files and saves it as a temp file.
-     * 
+     *
      * @param filePath The file path of the local .csv file
      */
     public static void mergeCSV(InputStream inputStream, String path) {
