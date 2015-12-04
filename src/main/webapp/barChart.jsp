@@ -17,7 +17,7 @@
     </div>
     <!-- /.col-lg-12 -->
 </div>
- <script src="js/barChart.js"></script>
+
  
 <div class="row">
     <div class="btn-toolbar" role="toolbar">
@@ -52,20 +52,10 @@
  </div>
 
 <div id ="chartDiv" class="row" >
- <!-- <c:set var="chart" scope="request" value="${requestScope.chart}" /> 
-    <c:set var="contextPath" scope="request" value="${requestScope.contextPath}"/>
-    <c:choose>
-        <c:when test="${chart != null}">
-            <img src="${contextPath}/images/${chart}">
-        </c:when>
-    </c:choose> -->
+
            
 </div>
 
-<form id="barChartForm" action="BarChart" name="BarChart" method="POST" style="display:none;">
-  <input type="hidden" name="datasource" id="datasource" />
-<input type="hidden" name="preset" id="preset" />
-</form>
 <script>
     
     $( document ).ready(function() {

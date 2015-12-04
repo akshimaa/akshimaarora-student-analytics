@@ -60,7 +60,7 @@ public class PieChartServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+    request.setAttribute("content", "pieChart");
         String preset = request.getParameter("preset");
         String datasource = request.getParameter("datasource");
            String imageFileName = datasource.concat("_").concat(preset).concat("_pie.png");
