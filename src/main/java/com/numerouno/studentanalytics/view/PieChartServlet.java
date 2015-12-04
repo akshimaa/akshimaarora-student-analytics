@@ -63,13 +63,16 @@ public class PieChartServlet extends HttpServlet {
         String datasource = request.getParameter("datasource");
 
         if (datasource.equalsIgnoreCase("UploadedData")) {
+
             log.info("datasource=" + datasource);
+
             try {
                 CSVParser.parseIntoPOJO(request.getPart("file").getInputStream());
                 log.info(request.getPart("file").getSubmittedFileName().concat(" file parsed successfully!"));
             } catch (Exception ex) {
                 Logger.getLogger(PieChartServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
+
 
         } else if (request.getParameter("preset").contains("_")) {
 
@@ -80,7 +83,8 @@ public class PieChartServlet extends HttpServlet {
 
         } else {
             ServletOutputStream os = response.getOutputStream();
-            ChartUtilities.writeChartAsPNG(os, getChart(request), 800, 800);
+            ChartUtilities.writeChartAsPNG(os, getChart(request), 800, 600);
+
             request.setAttribute("contextPath", getServletContext().getContextPath());
 
         }
@@ -155,6 +159,9 @@ public class PieChartServlet extends HttpServlet {
         for (Object key : map.keySet()) {
 
             Object val = map.get(key);
+
+            String kvpMap = key + ": " + val;
+
             dataset.setValue(key.toString(), (Integer) val);
             //log.info(kvpMap);
         }
@@ -177,6 +184,7 @@ public class PieChartServlet extends HttpServlet {
 
         try {
             ChartUtilities.saveChartAsPNG(pieChart3D, chart, width, height);
+
         } catch (IOException ex) {
             Logger.getLogger(PieChartServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -201,7 +209,7 @@ public class PieChartServlet extends HttpServlet {
         switch (datasource) {
             case "OriginalData":
                 
-                //request.getContextPath()+ "/STUDENT.DAT")
+                
                 studentList = getDataSource("/STUDENT.DAT");
                 break;
             case "UploadedData":
@@ -226,56 +234,6 @@ public class PieChartServlet extends HttpServlet {
         Object valFour = mapFour.get(1);
         dataset.setValue(argumentFour, (Integer) valFour);
 
-//        for (Object key : mapOne.keySet()) {
-//            
-//            Object val = mapOne.get(key);
-//            dataset.setValue(key.toString(), (Integer) val);
-//            
-//        }
-//
-//        for (Student student : studentList) {
-//
-//            argumentOneSet.add(student.getParameter(argumentOne));
-//            argumentTwoSet.add(student.getParameter(argumentTwo));
-//            argumentThreeSet.add(student.getParameter(argumentThree));
-//            argumentFourSet.add(student.getParameter(argumentFour));
-//        }
-//
-//        int count = 0;
-//
-//        for (Object argOne : argumentOneSet) {
-//            for (Object argTwo : argumentTwoSet) {
-//                for (Object argThree : argumentThreeSet) {
-//                    for (Object argFour : argumentFourSet) {
-//                        for (Student student : studentList) {
-//                            if (getStringValue(student.getParameter(argumentOne)).equals(getStringValue(argOne)) && getStringValue(student.getParameter(argumentTwo)).equals(getStringValue(argTwo))) {
-//                                count++;
-//                            }
-//
-//                        }
-//                        String status = String.valueOf(count) + " " + getStringValue(argOne) + " " + getStringValue(argTwo) + " " + getStringValue(argThree) + " " + getStringValue(argFour);
-//                        Logger.getLogger(PieChartServlet.class.getName()).log(Level.INFO, status);
-//
-//                        count = 0;
-//                    }
-//                }
-//            }
-//        }
-//
-//        double[] value = new double[100];
-//        Random generator = new Random();
-//        for (int i = 1; i < 100; i++) {
-//
-//            value[i] = generator.nextDouble();
-//            int number = 10;
-//        }
-//        for (Object key : map.keySet()) {
-//
-//            Object val = map.get(key);
-//            String kvpMap = key + ": " + val;
-//            dataset.setValue(key.toString(), (Integer) val);
-//            //log.info(kvpMap);
-//        }
         JFreeChart chart = ChartFactory.createPieChart3D(
                 "Pie Charts", // chart title                   
                 dataset, // data 
@@ -295,6 +253,7 @@ public class PieChartServlet extends HttpServlet {
 
         try {
             ChartUtilities.saveChartAsPNG(pieChart3D, chart, width, height);
+
         } catch (IOException ex) {
             Logger.getLogger(PieChartServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -305,11 +264,9 @@ public class PieChartServlet extends HttpServlet {
     public static HashMap<Object, Integer> processObjects(ArrayList<Student> studentList, String preset) {
 
         Logger log = Logger.getLogger(PieChartServlet.class.getName());
-        // log.info(studentList.get(5).getCourseInformation().name());
+
         HashMap<Object, Integer> map = new HashMap<>();
         for (Student student : studentList) {
-            //  log.info(student.getParameter(preset).toString());
-
             if (map.containsKey(student.getParameter(preset))) {
                 int count = map.get(student.getParameter(preset));
                 map.put(student.getParameter(preset), count + 1);
@@ -327,6 +284,7 @@ public class PieChartServlet extends HttpServlet {
         return map;
 
     }
+
 
     private ArrayList<Student> getDataSource(String source) {
         try {
@@ -354,4 +312,5 @@ public class PieChartServlet extends HttpServlet {
 
         }
     }
+
 }
