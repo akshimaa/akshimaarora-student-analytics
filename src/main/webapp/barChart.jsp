@@ -71,21 +71,15 @@
                                         <span class="caret"></span>
                                     </button>
                                     <ul class="dropdown-menu pull-right" role="menu">
-                                        <li><a href="#">Action</a>
+                                        <li><a href="#">Add to Report</a>
                                         </li>
-                                        <li><a href="#">Another action</a>
-                                        </li>
-                                        <li><a href="#">Something else here</a>
-                                        </li>
-                                        <li class="divider"></li>
-                                        <li><a href="#">Separated link</a>
-                                        </li>
+                                       
                                     </ul>
                                 </div>
                             </div>
             </div>
             <div class="panel-body">
-                <div id ="chartDiv" class="row" >
+                <div id ="chartDiv" class="row" style="margin-left: 8%;">
                 </div>
             </div>
         </div>
