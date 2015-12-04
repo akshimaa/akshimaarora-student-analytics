@@ -152,7 +152,22 @@
                 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                 <div id="uploadSuccessMessage"></div>
             </div>
+    <!-- jQuery -->
+    <script src="js/jquery-2.1.4.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="js/metisMenu.min.js"></script>
+
+    <!-- Morris Charts JavaScript -->
+    <script src="js/raphael-min.js"></script>
+
+    <script src="js/bootstrap-select.js"></script>
+    <!-- Custom Theme JavaScript -->
+    <script src="js/sb-admin-2.js"></script>
             <div id="page-wrapper" style="margin:0 0 0 300px">
 
                 <choose:when test="${status == null}">
@@ -187,22 +202,7 @@
     </div>
     <!-- /#wrapper -->
 
-    <!-- jQuery -->
-    <script src="js/jquery-2.1.4.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 
-    <!-- Bootstrap Core JavaScript -->
-    <script src="js/bootstrap.min.js"></script>
-
-    <!-- Metis Menu Plugin JavaScript -->
-    <script src="js/metisMenu.min.js"></script>
-
-    <!-- Morris Charts JavaScript -->
-    <script src="js/raphael-min.js"></script>
-
-    <script src="js/bootstrap-select.js"></script>
-    <!-- Custom Theme JavaScript -->
-    <script src="js/sb-admin-2.js"></script>
 
     <script>
                                         function pie(placeholder) {
@@ -288,12 +288,7 @@
                                                 // user is now logged out
                                                 var url = $(this).attr('href');
                                                 window.location = url;
-<<<<<<< HEAD
-=======
 
-
-
->>>>>>> 2cbf5737772e48680d1e60470328994e9e59462a
                                             });
                                         }
 
