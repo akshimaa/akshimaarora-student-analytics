@@ -1,3 +1,4 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -6,8 +7,10 @@
 package com.numerouno.studentanalytics.view;
 
 import java.awt.image.BufferedImage;
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -23,6 +26,7 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.edit.PDPageContentStream;
+import org.apache.pdfbox.pdmodel.graphics.xobject.PDJpeg;
 import org.apache.pdfbox.pdmodel.graphics.xobject.PDPixelMap;
 import org.apache.pdfbox.pdmodel.graphics.xobject.PDXObjectImage;
 
@@ -65,7 +69,7 @@ public class ReportGeneratorServlet extends HttpServlet {
                 document.addPage(page);
                 PDXObjectImage img = new PDPixelMap(document, bimg);
                 try (PDPageContentStream contentStream = new PDPageContentStream(document, page)) {
-
+                    
                     contentStream.drawImage(img, 0, 0);
                     contentStream.close();
                     in.close();
@@ -78,7 +82,7 @@ public class ReportGeneratorServlet extends HttpServlet {
 
         File saveFile = null;
         try {
-            saveFile = new File(getServletContext().getRealPath("/Temp") + "/test.pdf");
+            saveFile = new File(getServletContext().getRealPath("/Temp") + "/report.pdf");
             Logger.getLogger(ReportGeneratorServlet.class.getName()).log(Level.INFO, saveFile.getAbsolutePath());
             document.save(saveFile);
             document.close();
@@ -87,7 +91,7 @@ public class ReportGeneratorServlet extends HttpServlet {
         }
 
         response.setContentType("application/pdf");
-        //response.addHeader("Content-Disposition", "attachment; filename=" + "report.pdf");
+        response.addHeader("Content-Disposition", "attachment; filename=" + "report.pdf");
         response.setContentLength((int) saveFile.length());
 
         FileInputStream fileInputStream = new FileInputStream(saveFile);
@@ -141,3 +145,4 @@ public class ReportGeneratorServlet extends HttpServlet {
     }
 
 }
+
