@@ -22,7 +22,7 @@ import weka.core.converters.CSVLoader;
 
 /**
  *
- * @author Dell
+ * @author Teck
  */
 public class CSVParser implements Serializable {
 
