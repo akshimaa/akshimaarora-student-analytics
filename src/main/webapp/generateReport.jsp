@@ -75,7 +75,7 @@ var selectedList="";
 $('.ads_Checkbox:checked').each(function(index){   
     console.log("index====="+index);
         var values=$('#listImage'+index).attr('src');
-        selectedList =selectedList+","+ values;
+        selectedList = values+","+selectedList;
         console.log("final===="+selectedList);
     });
         
