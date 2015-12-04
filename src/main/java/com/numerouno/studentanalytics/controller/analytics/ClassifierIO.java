@@ -17,11 +17,16 @@ import weka.classifiers.Classifier;
 import weka.classifiers.functions.LinearRegression;
 
 /**
- *
- * @author Dell
+ * classifies the IO path depending upon the parameter to which it is an instance of
+ * @author Teck Jan Low
  */
 public class ClassifierIO {
-
+/**
+ * to divide into the classifier depending upon the instance of the classifier
+ * @param classifier decides what the file should be
+ * @param path decides where the file is stored
+ * @throws Exception while writing on the corresponding file
+ */
     public static void writeClassifier(Classifier classifier, String path) throws Exception {
 
         String fileName = "";
@@ -39,7 +44,13 @@ public class ClassifierIO {
         oos.close();
 
     }
-
+/**
+ * readClassifier is used to read the key value to decide the model to be used
+ * @param modelPath describes the location of the file
+ * @param key key decides the model name to be used
+ * @return returns the classifier object which is read
+ * @throws Exception IO exception is thrown during the execution of the code
+ */
     public static Classifier readClassifier(String modelPath, String key) throws Exception {
 
         String modelName = "";

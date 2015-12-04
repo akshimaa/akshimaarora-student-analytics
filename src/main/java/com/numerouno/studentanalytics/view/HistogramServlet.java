@@ -49,8 +49,10 @@ import javax.servlet.annotation.MultipartConfig;
 import org.json.JSONObject;
 
 /**
+ * HistogramServlet generates the histogram as response for the request of the
+ * data
  *
- * @author Dell
+ * @author Teck Jan Low
  */
 @MultipartConfig
 public class HistogramServlet extends HttpServlet {
@@ -59,10 +61,11 @@ public class HistogramServlet extends HttpServlet {
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
      *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @param request servlet request requests the data using which the
+     * resultant chart should be generated
+     * @param response servlet response produces histogram as the response
+     * @throws ServletException to notify if a servlet-specific error occurs
+     * @throws IOException to notify if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -72,26 +75,24 @@ public class HistogramServlet extends HttpServlet {
         request.setAttribute("content", "analytics");
         request.setAttribute("status", getServletContext().getRealPath("/models"));
         String imageFileName = request.getParameter("classifier").concat("_analysisChart.png");
-        File imageFile = new File(getServletContext().getRealPath("/images") + "/"+imageFileName);
-        
+        File imageFile = new File(getServletContext().getRealPath("/images") + "/" + imageFileName);
+
         // Diagnostics
-        log.info("File:"+request.getPart("file").getSubmittedFileName());
-        log.info("Classifier: "+ request.getParameter("classifier"));
-        
+        log.info("File:" + request.getPart("file").getSubmittedFileName());
+        log.info("Classifier: " + request.getParameter("classifier"));
+
         FileOutputStream fos = new FileOutputStream(imageFile);
         ChartUtilities.writeChartAsPNG(fos, getChart(request), 300, 300);
         request.setAttribute("contextPath", getServletContext().getContextPath());
-        
-    
+
         JSONObject json = new JSONObject();
-        json.put("chart", getServletContext().getContextPath()+"/images"+"/"+imageFileName);
+        json.put("chart", getServletContext().getContextPath() + "/images" + "/" + imageFileName);
         PrintWriter out = response.getWriter();
-        response.setContentType("application/json"); 
-        response.setCharacterEncoding("utf-8"); 
+        response.setContentType("application/json");
+        response.setCharacterEncoding("utf-8");
         out.println(json);
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -109,10 +110,11 @@ public class HistogramServlet extends HttpServlet {
     /**
      * Handles the HTTP <code>POST</code> method.
      *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @param request servlet request is used to get the data
+     * @param response servlet response is generated once the response request
+     * is processed.
+     * @throws ServletException handles if a servlet-specific error occurs
+     * @throws IOException handles if an I/O error occurs
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -130,6 +132,12 @@ public class HistogramServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
+    /**
+     * generates the required chart from the information selected
+     *
+     * @param request requests the data from which the chart will be generated
+     * @return returns the chart generated
+     */
     protected JFreeChart getChart(HttpServletRequest request) {
 
         JFreeChart chart;

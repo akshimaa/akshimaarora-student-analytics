@@ -8,6 +8,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 
+ <link href="css/cmu-dropdowns.css" rel="stylesheet" type="text/css">
     <div class="row">
     <div class="col-lg-12">
         <h1 class="page-header">Pie Chart</h1>
@@ -16,11 +17,26 @@
   
 </div>
 
- <link href="css/cmu-dropdowns.css" rel="stylesheet" type="text/css">
+<div class="row">
+    <div class="col-lg-12">
+                <div class="alert alert-danger" id="errorMessageOuterDiv" style="display:none;">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <div id="errorStatusDiv"></div>
+                </div>
+                <div class="alert alert-success" id="successMessageOuterDiv" style="display:none">
+                    <a href="#" class="close"  data-dismiss="alert" aria-label="close">&times;</a>
+                    <div id="successStatusDiv"></div>
+
+                </div>
+
+    </div>
+    <!-- /.col-lg-12 -->
+</div> 
+ 
 <div class="row">
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
-            <div class="dropdown">
+            <div class="dropdown" style="margin-bottom: 24px" >
                 
                 <select class="selectpicker cmu-dropdown" style="width: 123px;" name=""  id="datasourceDropdown">
                    
@@ -51,20 +67,45 @@
 
      </div>
 
-<div id ="pieChartDiv" class="row" >
 
-           
+<div  id="chartPanel" class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Generated Pie Chart
+                <div class="pull-right">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                            Actions
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu pull-right" role="menu">
+
+                            <li><a href="javascript:;" onclick="addToReport();">Add to Report</a>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div id ="pieChartDiv" class="row" style="margin-left: 8%;">
+                </div>
+            </div>
+        </div>
+
+    </div>
 </div>
 
-<form id="pieChartForm" action="PieChart" name="PieChart" method="POST" style="display:none;">
-  <input type="hidden" name="datasource" id="datasource" />
-<input type="hidden" name="preset" id="preset" />
-</form>
+
+
 <script>
     $( document ).ready(function() {
+        $('#chartPanel').hide();
         $('.selectpicker').selectpicker();
     $('#generatePie').click(function(){
         $('#pieChartDiv').html('');
+        $('#chartPanel').hide();
         console.log("generate button clicked!");
         console.log($('#datasourceDropdown').val());
         console.log($('#presetDropdown').val());
@@ -78,8 +119,11 @@
             cache: false,
             datatype: "application/json",
             success: function(data, textStatus, request){
-                console.log(data);
-                        $('#pieChartDiv').html('<img src="'+data.chart+'" />');},
+               
+                        $('#chartPanel').fadeIn("slow", function () {
+                        $(this).show();
+                    });
+                    $('#pieChartDiv').html('<img src="' + data.chart + '" />');},
             error: function (xhr, ajaxOptions, thrownError) {
                 console.log(xhr.status);
                 console.log(thrownError);
@@ -89,6 +133,29 @@
     }); 
      
   }); 
+  function addToReport()
+    {
+        console.log('add to report');
+        $.ajax({
+            type: "POST",
+            url: "AddToReport",
+            data: "",
+            cache: false,
+            datatype: "application/json",
+            success: function (data, textStatus, request) {
+                $('#successMessageOuterDiv').fadeIn("slow", function () {
+                    $('#successStatusDiv').html("<strong>SUCCESS!</strong>Sucessfully added the chart to report!");
+                    $(this).show();
+                });
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                $('#errorMessageOuterDiv').fadeIn("slow", function () {
+                    $('#errorStatusDiv').html("<strong>ERROR!</strong> Error adding the chart to report!");
+                    $(this).show();
+                });
+            }
+        });
+    }
 </script>
 <!-- /.row -->
 

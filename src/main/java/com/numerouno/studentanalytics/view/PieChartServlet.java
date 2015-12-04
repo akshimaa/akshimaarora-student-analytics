@@ -45,7 +45,7 @@ import org.json.JSONObject;
 import org.ujmp.core.collections.list.ArrayIndexList;
 
 /**
- *
+ * PieChartServlet generates the pie chart with the inputs as given by the user.
  * @author Melissa, Akshima
  */
 public class PieChartServlet extends HttpServlet {
@@ -57,30 +57,29 @@ public class PieChartServlet extends HttpServlet {
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
      *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @param request servlet request requests the input of the pie chart
+     * @param response servlet response generates the response pie chart
+     * @throws ServletException handles if a servlet-specific error occurs
+     * @throws IOException handles if an I/O error occurs in the program.
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-    request.setAttribute("content", "pieChart");
+        request.setAttribute("content", "pieChart");
         String preset = request.getParameter("preset");
         String datasource = request.getParameter("datasource");
-           String imageFileName = datasource.concat("_").concat(preset).concat("_pie.png");
-            File imageFile = new File(getServletContext().getRealPath("/images")+"/"+imageFileName);
+        String imageFileName = datasource.concat("_").concat(preset).concat("_pie.png");
+        File imageFile = new File(getServletContext().getRealPath("/images") + "/" + imageFileName);
         request.setAttribute("chart", imageFile.getName());
-    FileOutputStream fos = new FileOutputStream(imageFile);
-       if (request.getParameter("preset").contains("_")){
-           Logger.getLogger(BarChartServlet.class.getName()).log(Level.INFO, "complex chart");
-           ChartUtilities.writeChartAsPNG(fos, getComplexChart(request), 800, 600);
-           fos.close();
-       }
-       else {
-            Logger.getLogger(BarChartServlet.class.getName()).log(Level.INFO,  "simple chart");
-           ChartUtilities.writeChartAsPNG(fos, getChart(request), 800, 600);
-           fos.close();
-       }
+        FileOutputStream fos = new FileOutputStream(imageFile);
+        if (request.getParameter("preset").contains("_")) {
+            Logger.getLogger(BarChartServlet.class.getName()).log(Level.INFO, "complex chart");
+            ChartUtilities.writeChartAsPNG(fos, getComplexChart(request), 800, 600);
+            fos.close();
+        } else {
+            Logger.getLogger(BarChartServlet.class.getName()).log(Level.INFO, "simple chart");
+            ChartUtilities.writeChartAsPNG(fos, getChart(request), 800, 600);
+            fos.close();
+        }
         //JSON Response from Servlet
         JSONObject json = new JSONObject();
         json.put("chart", getServletContext().getContextPath() + "/images" + "/" + imageFileName);
@@ -92,14 +91,13 @@ public class PieChartServlet extends HttpServlet {
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-
     /**
      * Handles the HTTP <code>GET</code> method.
      *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @param request servlet request for the input data to generate the pie chart
+     * @param response servlet response for the generation of the pie chart
+     * @throws ServletException handles if a servlet-specific error occurs 
+     * @throws IOException handles if an I/O error occurs
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -110,10 +108,10 @@ public class PieChartServlet extends HttpServlet {
     /**
      * Handles the HTTP <code>POST</code> method.
      *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @param request servlet requests the input to generate the pie chart
+     * @param response servlet response is the generated chart
+     * @throws ServletException handles if a servlet-specific error occurs
+     * @throws IOException handles if an I/O error occurs
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -130,25 +128,17 @@ public class PieChartServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
+/**
+ * this method creates the chart from the input data values
+ * @param request is the servlet request for the data
+ * @return returns the chart generated
+ * @throws FileNotFoundException which might occur on execution of the code
+ */
     private JFreeChart getChart(HttpServletRequest request) throws FileNotFoundException {
         String preset = request.getParameter("preset");
         String datasource = request.getParameter("datasource");
-        
+
         studentList = getStudentListFromDataSource(datasource);
-        //ArrayList<Student> studentList = new ArrayIndexList<>();
-
-//        try {
-//
-//            FileInputStream fis = new FileInputStream(getServletContext().getRealPath("STUDENT.dat"));
-//            ObjectInputStream in = new ObjectInputStream(fis);
-//            studentList = (ArrayList<Student>) in.readObject();
-//        } catch (IOException ex) {
-//            Logger.getLogger(PieChartServlet.class.getName()).log(Level.SEVERE, null, ex);
-//        } catch (ClassNotFoundException ex) {
-//            Logger.getLogger(PieChartServlet.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-
         DefaultPieDataset dataset = new DefaultPieDataset();
 
         HashMap<Object, Integer> map = processObjects(studentList, preset);
@@ -180,22 +170,16 @@ public class PieChartServlet extends HttpServlet {
         plot.setStartAngle(270);
         plot.setForegroundAlpha(0.60f);
         plot.setInteriorGap(0.02);
-        int width = 1200; /* Width of the image */
 
-        int height = 1200; /* Height of the image */
-
-        File pieChart3D = new File(getServletContext().getRealPath("/Temp") + "/pie_Chart3D.png");
-
-        try {
-            ChartUtilities.saveChartAsPNG(pieChart3D, chart, width, height);
-
-        } catch (IOException ex) {
-            Logger.getLogger(PieChartServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
         return chart;
 
     }
-
+/**
+ * gets the complex chart from the inputted data
+ * @param request is the servlet request to generate complex charts
+ * @return returns the generated complex chart
+ * @throws FileNotFoundException  if the following code is executed, then there may be FileNotFoundException
+ */
     private JFreeChart getComplexChart(HttpServletRequest request) throws FileNotFoundException {
         String preset = request.getParameter("preset");
         String[] presetArguments = preset.split("_");
@@ -208,19 +192,8 @@ public class PieChartServlet extends HttpServlet {
         Set argumentThreeSet = new HashSet<>();
         Set argumentFourSet = new HashSet<>();
         String datasource = request.getParameter("datasource");
-        //ArrayList<Student> studentList = new ArrayIndexList<>();
 
         studentList = getStudentListFromDataSource(datasource);
-//        switch (datasource) {
-//            case "OriginalData":
-//
-//                studentList = getDataSource("/STUDENT.dat");
-//                break;
-//            case "UploadedData":
-//                break;
-//            case "MergedData":
-//                break;
-//        }
 
         DefaultPieDataset dataset = new DefaultPieDataset();
 
@@ -231,14 +204,15 @@ public class PieChartServlet extends HttpServlet {
 
         Object valOne = mapOne.get(1);
         dataset.setValue(argumentOne, (Integer) valOne);
-        log.info(argumentOne);
+        //log.info(argumentOne);
         Object valTwo = mapTwo.get(1);
+        //log.info(((Integer) valOne).toString());
         dataset.setValue(argumentTwo, (Integer) valTwo);
         Object valThree = mapThree.get(1);
         dataset.setValue(argumentThree, (Integer) valThree);
         Object valFour = mapFour.get(1);
-        dataset.setValue(argumentFour, (Integer) valFour);
-        //logger.
+        dataset.setValue(argumentThree, (Integer) valFour);
+        
         JFreeChart chart = ChartFactory.createPieChart3D(
                 "Pie Charts", // chart title                   
                 dataset, // data 
@@ -250,22 +224,16 @@ public class PieChartServlet extends HttpServlet {
         plot.setStartAngle(270);
         plot.setForegroundAlpha(0.60f);
         plot.setInteriorGap(0.02);
-        int width = 1200; /* Width of the image */
 
-        int height = 1200; /* Height of the image */
-
-        File pieChart3D = new File(getServletContext().getRealPath("/Temp") + "/pie_Chart3D.png");
-
-        try {
-            ChartUtilities.saveChartAsPNG(pieChart3D, chart, width, height);
-
-        } catch (IOException ex) {
-            Logger.getLogger(PieChartServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
         return chart;
 
     }
-
+/**
+ * HashMap is used for the processing objects
+ * @param studentList contains the list of the students on which the chart is generated
+ * @param preset describes the index of the students in th elist
+ * @return returns the map
+ */
     public static HashMap<Object, Integer> processObjects(ArrayList<Student> studentList, String preset) {
 
         Logger log = Logger.getLogger(PieChartServlet.class.getName());
@@ -288,7 +256,11 @@ public class PieChartServlet extends HttpServlet {
         return map;
 
     }
-
+/**
+ * gets the student list as the data source
+ * @param source the list of students 
+ * @return It does not return any thing
+ */
     private ArrayList<Student> getDataSource(String source) {
         try {
 
@@ -303,7 +275,11 @@ public class PieChartServlet extends HttpServlet {
         }
         return null;
     }
-
+/**
+ * Gets the string value of the object
+ * @param o is the instance of the object
+ * @return returns the string representation of the object
+ */
     private Object getStringValue(Object o) {
         {
             if (o instanceof Enum) {
@@ -315,7 +291,7 @@ public class PieChartServlet extends HttpServlet {
 
         }
     }
-    
+
     private ArrayList<Student> getStudentListFromDataSource(String datasource) {
         studentList = new ArrayIndexList<>();
         switch (datasource) {
@@ -339,7 +315,7 @@ public class PieChartServlet extends HttpServlet {
 
         try (InputStream stream = new FileInputStream(mergedFile);) {
 
-            CSVParser.parseIntoPOJO(stream,"merged");
+            CSVParser.parseIntoPOJO(stream, "merged");
             studentList = StudentList.getMergedList();
 
         } catch (Exception ex) {

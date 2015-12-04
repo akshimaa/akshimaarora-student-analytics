@@ -1,5 +1,3 @@
-
-
 <%-- 
     Document   : pieChart
     Created on : Nov 24, 2015, 8:44:41 PM
@@ -11,6 +9,7 @@
 <!DOCTYPE html>
 
 <link href="css/cmu-dropdowns.css" rel="stylesheet" type="text/css">
+
 <div class="row">
     <div class="col-lg-12">
         <h1 class="page-header">Bar Chart</h1>
@@ -87,7 +86,9 @@
                         </button>
                         <ul class="dropdown-menu pull-right" role="menu">
 
+
                             <li><a href="javascript:;" onclick="addToReport();">Add to Report</a>
+
                             </li>
 
                         </ul>
@@ -139,13 +140,16 @@
 
     });
 
+
     function addToReport()
     {
         console.log('add to report');
+         datasource = $('#datasourceDropdown').val();
+        preset = $('#presetDropdown').val();
         $.ajax({
             type: "POST",
-            url: "AddToReport",
-            data: "",
+            url: "PDFReportCreator",
+             data: {datasource:datasource, preset:preset},
             cache: false,
             datatype: "application/json",
             success: function (data, textStatus, request) {
@@ -162,6 +166,7 @@
             }
         });
     }
+
 
 </script>
 <!-- /.row -->
