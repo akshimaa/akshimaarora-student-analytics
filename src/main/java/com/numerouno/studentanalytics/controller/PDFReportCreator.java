@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONObject;
 
 /**
+ * PDFReportCreator creates the PDF report from the given data
  *
  * @author Akshima
  */
@@ -32,10 +33,12 @@ public class PDFReportCreator extends HttpServlet {
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
      *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @param request servlet requests to generate pdf report of the analysis of
+     * the given data
+     * @param response servlet response responds and generate the PDF report
+     * using the image from the image file name
+     * @throws ServletException is thrown if a servlet-specific error occurs
+     * @throws IOException is thrown if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -73,10 +76,11 @@ public class PDFReportCreator extends HttpServlet {
     /**
      * Handles the HTTP <code>GET</code> method.
      *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @param request servlet request gets the request to generate PDF report
+     * from the data
+     * @param response servlet responds to the request and processes the request
+     * @throws ServletException is notified if a servlet-specific error occurs
+     * @throws IOException is thrown if an I/O error occurs
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -87,10 +91,10 @@ public class PDFReportCreator extends HttpServlet {
     /**
      * Handles the HTTP <code>POST</code> method.
      *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @param request servlet request to create PDF report
+     * @param response servlet response creates the PDF report to the request
+     * @throws ServletException handles if a servlet-specific error occurs
+     * @throws IOException notifies if an I/O error occurs
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -108,6 +112,13 @@ public class PDFReportCreator extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
+    /**
+     * creates an array list of the image files that are being added
+     *
+     * @param imageFileName is the name of the file being added to the array
+     * list to be generated as a PDF
+     * @return returns the list which are generated as PDF
+     */
     public ArrayList<String> createReportList(String imageFileName) {
         pdfList.add(imageFileName);
         log.info(pdfList.get(0));
