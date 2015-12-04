@@ -86,7 +86,7 @@ $('.ads_Checkbox:checked').each(function(index){
             cache: false,
             datatype: "application/json",
             success: function (data, textStatus, request) {
-               window.open('ReportGenerator');
+               
                 
             },
             error: function (xhr, ajaxOptions, thrownError) {
