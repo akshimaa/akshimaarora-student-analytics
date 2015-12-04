@@ -288,7 +288,6 @@ public class PieChartServlet extends HttpServlet {
 
             Object value = map.get(key);
             String kvpMap = key + ": " + value;
-            // log.info(kvpMap);
         }
         return map;
 
