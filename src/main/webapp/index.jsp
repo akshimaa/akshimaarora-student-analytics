@@ -31,8 +31,6 @@
         <!-- Custom CSS -->
         <link href="css/sb-admin-2.css" rel="stylesheet">
 
-        <!-- Morris Charts CSS -->
-        <link href="css/morris.css" rel="stylesheet">
 
         <!-- Custom Fonts -->
         <link href="css/font-awesome.css" rel="stylesheet" type="text/css">
@@ -95,18 +93,18 @@
                 </ul>
                 <!-- /.navbar-top-links -->
 
-                <div class="navbar-default sidebar" style="margin-top: 101px" role="navigation">
+                <div class="navbar-default sidebar" style="margin-top: 101px; width: 300px" role="navigation">
                     <div class="sidebar-nav navbar-collapse">
                         <ul class="nav" id="side-menu">
 
                             <li class="sidebar-search">
                                 <div class="input-group custom-search-form">
-
+                                    <jsp:include page="upload.jsp"></jsp:include>
                                 </div>
                                 <!-- /input-group -->
                             </li>
 
-                            <jsp:include page="upload.jsp"></jsp:include>
+                            
 
                                 <li>
                                     <a href="index"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
@@ -141,7 +139,7 @@
                         <!-- /.navbar-static-side -->
                 </nav>
             <c:set var="status" scope="request" value="${requestScope.status}" />           
-            <div id="page-wrapper">
+            <div id="page-wrapper" style="margin:0 0 0 300px">
                 <choose:when test="${status == null}">
                     <choose:otherwise>
                         <div> <c:out value="${status}"/></div>
@@ -182,8 +180,7 @@
 
     <!-- Morris Charts JavaScript -->
     <script src="js/raphael-min.js"></script>
-    <script src="js/morris.min.js"></script>
-    <script src="js/morris-data.js"></script>
+
 
     <!-- Custom Theme JavaScript -->
     <script src="js/sb-admin-2.js"></script>
@@ -202,7 +199,20 @@
                                             $('#page-wrapper').load('generateReport.jsp');
                                         }
 
-
+                                        $(document).ready(function () {
+                                            console.log("upload.jsp is ready!");
+                                            $('#uploadToS3Button').click(function () {
+                                                alert("TEST");
+                                                console.log($('#uploadMergeCheckbox').is(":checked"));
+                                                console.log("BUTTON PRESSED! YAY!");
+                                                if ($('#uploadMergeCheckbox').is(":checked")) {
+                                                    $('#hiddenMergeFlag').val("1");
+                                                } else {
+                                                    $('#hiddenMergeFlag').val("0");
+                                                }
+                                                $('#uploadForm').submit();
+                                            });
+                                        });
     </script>
 
 </body>
