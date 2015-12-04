@@ -20,18 +20,18 @@
 </div>
 <div class="input-group custom-search-form">
     <form id="analysisInput" action="" method="post" enctype="multipart/form-data">
-    <input id="upload-input" class="form-control" value="file" type="file" name="file" accept=".csv" style="width: 250px"/>
-    <input type="hidden" name="classifier" id="classifier" />
-    <select style="width: 180px;" name=""  value="1" id="dropmenu">
-        <option value="1"><a href="#">MultilayerPerceptron</a></option>
-        <option value="2"><a href="#">LinearRegression</a></option>
-    </select>
-    <span class="input-group-btn">
-        <button class="btn btn-default" id="analyseData" value="analyze">
-            <i class="fa fa-upload"></i>
-        </button>
-    </span>
-</form>
+        <input id="upload-input" class="form-control" value="file" type="file" name="file" accept=".csv" style="width: 250px"/>
+        <input type="hidden" name="classifier" id="classifier" />
+        <select style="width: 180px;" name=""  value="1" id="dropmenu">
+            <option value="1"><a href="#">MultilayerPerceptron</a></option>
+            <option value="2"><a href="#">LinearRegression</a></option>
+        </select>
+        <span class="input-group-btn">
+            <button class="btn btn-default" id="analyseData" value="analyze" type="button">
+                <i class="fa fa-upload"></i>
+            </button>
+        </span>
+    </form>
 </div>
 
 <p></p>
@@ -49,34 +49,43 @@
 
 
 <script>
-$( document ).ready(function() {
-    $('#analyseData').click(function(){
-        $('#chartDiv').html('');
-        console.log("analyze button clicked!");
-        
-        classifier = $('#dropmenu').val();
-        $('#classifier').val(classifier);
-        console.log(classifier);
-        var form = $('#analysisInput')[0]; 
-        var formData = new FormData(form);
-        $.ajax({
-  type: "POST",
-  url: "/StudentAnalytics/Histogram",
-  data: formData,
-  cache: false,
-  contentType: false,
-  processData: false,
-  success: function(data, textStatus, request){
-      
-      $('#chartDiv').html('<img src="'+data.chart+'" />');},
-  error: function (xhr, ajaxOptions, thrownError) {
-        console.log(xhr.status);
-        console.log(thrownError);
-      }
-});
-         
-    }); 
-     
-  }); 
+    $(document).ready(function () {
+        $('#analyseData').click(function () {
+            $('#chartDiv').html('');
+            console.log("analyze button clicked!");
+
+            var uploadFileName = $("#upload-input").val();
+            console.log(uploadFileName);
+            if (uploadFileName == "") { // returns true if the string is not empty
+                $('#noFileSelectedError').show();
+            } else {
+
+                classifier = $('#dropmenu').val();
+                $('#classifier').val(classifier);
+                console.log(classifier);
+                var form = $('#analysisInput')[0];
+                var formData = new FormData(form);
+                $.ajax({
+                    type: "POST",
+                    url: "/StudentAnalytics/Histogram",
+                    data: formData,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success: function (data, textStatus, request) {
+
+                        $('#chartDiv').html('<img src="' + data.chart + '" />');
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        console.log(xhr.status);
+                        console.log(thrownError);
+                    }
+                });
+            }
+
+
+        });
+
+    });
 </script>
 

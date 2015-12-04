@@ -11,7 +11,7 @@
 
 
         <form id="uploadForm" action="upload" method="post" enctype="multipart/form-data">
-            <input id="upload-input" class="form-control" type="file" name="file" accept=".csv" style="width: 231px"/>
+            <input id="uploadToS3Input" class="form-control" type="file" name="file" accept=".csv" style="width: 231px"/>
             <span class="input-group-btn">
                 <button class="btn btn-default" id="uploadToS3Button" value="upload" type="button">
                     <i class="fa fa-upload"></i>
