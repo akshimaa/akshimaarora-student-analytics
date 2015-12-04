@@ -11,11 +11,16 @@ import weka.core.Instance;
 import weka.core.Instances;
 
 /**
- *
- * @author Dell
+ * Predictor is used to predict the inferences from the data
+ * @author Teck Jan Low
  */
 public class Predictor {
-
+/**
+ * Predicts from the data set
+ * @param dataSet predicts from the instances of data
+ * @param classifier classifies the data according to various models
+ * @return returns the predictions
+ */
     public static double[] predict(Instances dataSet, Classifier classifier) {
 
         double[] output = new double[dataSet.numInstances()];
@@ -29,7 +34,7 @@ public class Predictor {
 
             }
         } catch (Exception e) {
-            // Exception handling here
+            System.out.println("Exception:"+e.toString());
         }
 
         return output;
