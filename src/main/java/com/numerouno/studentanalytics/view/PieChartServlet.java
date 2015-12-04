@@ -42,7 +42,7 @@ import org.json.JSONObject;
 import org.ujmp.core.collections.list.ArrayIndexList;
 
 /**
- * PieChartServlet generates the pie chart with the required inputs.
+ * PieChartServlet generates the pie chart with the inputs as given by the user.
  * @author Melissa, Akshima
  */
 public class PieChartServlet extends HttpServlet {
