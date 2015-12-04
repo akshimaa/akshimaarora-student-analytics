@@ -42,7 +42,7 @@ import org.json.JSONObject;
 import org.ujmp.core.collections.list.ArrayIndexList;
 
 /**
- *
+ * PieChartServlet generates the pie chart with the required inputs.
  * @author Melissa, Akshima
  */
 public class PieChartServlet extends HttpServlet {
@@ -53,10 +53,10 @@ public class PieChartServlet extends HttpServlet {
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
      *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @param request servlet request requests the input of the pie chart
+     * @param response servlet response generates the response pie chart
+     * @throws ServletException handles if a servlet-specific error occurs
+     * @throws IOException handles if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -92,10 +92,10 @@ public class PieChartServlet extends HttpServlet {
     /**
      * Handles the HTTP <code>GET</code> method.
      *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @param request servlet request for the input data to generate the pie chart
+     * @param response servlet response for the generation of the pie chart
+     * @throws ServletException handles if a servlet-specific error occurs 
+     * @throws IOException handles if an I/O error occurs
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -106,10 +106,10 @@ public class PieChartServlet extends HttpServlet {
     /**
      * Handles the HTTP <code>POST</code> method.
      *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @param request servlet requests the input to generate the pie chart
+     * @param response servlet response is the generated chart
+     * @throws ServletException handles if a servlet-specific error occurs
+     * @throws IOException handles if an I/O error occurs
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -126,7 +126,12 @@ public class PieChartServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
+/**
+ * this method creates the chart from the input data values
+ * @param request is the servlet request for the data
+ * @return returns the chart generated
+ * @throws FileNotFoundException which might occur on execution of the code
+ */
     private JFreeChart getChart(HttpServletRequest request) throws FileNotFoundException {
         String preset = request.getParameter("preset");
         String datasource = request.getParameter("datasource");
@@ -189,7 +194,12 @@ public class PieChartServlet extends HttpServlet {
         return chart;
 
     }
-
+/**
+ * gets the complex chart from the inputted data
+ * @param request is the servlet request to generate complex charts
+ * @return returns the generated complex chart
+ * @throws FileNotFoundException  if the following code is executed, then there may be FileNotFoundException
+ */
     private JFreeChart getComplexChart(HttpServletRequest request) throws FileNotFoundException {
         String preset = request.getParameter("preset");
         String[] presetArguments = preset.split("_");
@@ -257,7 +267,12 @@ public class PieChartServlet extends HttpServlet {
         return chart;
 
     }
-
+/**
+ * HashMap is used for the processing objects
+ * @param studentList contains the list of the students on which the chart is generated
+ * @param preset describes the index of the students in th elist
+ * @return returns the map
+ */
     public static HashMap<Object, Integer> processObjects(ArrayList<Student> studentList, String preset) {
 
         Logger log = Logger.getLogger(PieChartServlet.class.getName());
@@ -280,7 +295,11 @@ public class PieChartServlet extends HttpServlet {
         return map;
 
     }
-
+/**
+ * gets the student list as the data source
+ * @param source the list of students 
+ * @return It does not return any thing
+ */
     private ArrayList<Student> getDataSource(String source) {
         try {
 
@@ -295,7 +314,11 @@ public class PieChartServlet extends HttpServlet {
         }
         return null;
     }
-
+/**
+ * Gets the string value of the object
+ * @param o is the instance of the object
+ * @return returns the string representation of the object
+ */
     private Object getStringValue(Object o) {
         {
             if (o instanceof Enum) {
