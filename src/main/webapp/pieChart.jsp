@@ -4,6 +4,7 @@
     Author     : Melissa, Akshima
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 
@@ -29,34 +30,70 @@
                 </select>
             </div>
            
-            
-              
                 <select style="width: 123px;" name="" value="Select2" id="presetDropdown">
-                   
+                   <option value="attendanceType"><a href="#">Attendance Type</a></option>
+                    <option value="courseInformation"><a href="#">Course Information</a></option>
+                    <option value="degreeLevel"><a href="#">Degree Level</a></option>
                     <option value="gender" ><a href="#">Gender</a></option>
+                    <option value="highestEducationLevel"><a href="#">Degree Earned</a></option>
                     <option value="languageSpokenAtHome"><a href="#">Language</a></option>
-                    <option value="courseInformation"><a href="#">Course</a></option>
+                    <option value="entranceExam"><a href="#">Entrance Exam</a></option>
+                    <option value="disability_regionalRemote_womenNonTraditionalRole_lowIncome"><a href="#">Equity Data</a></option>
+                             
                 </select>
             </div>
          </div>
     </div>
-</div>
+
  <div class="row">
      <button id="generatePie"  class="btn btn-default">Generate Pie!</button>
  </div>
 
- 
-  
-<div class="row" id="uploadDiv" style="display:none">
- <jsp:include page="upload.jsp"></jsp:include>
+<div id ="chartDiv" class="row" >
+ <!-- <c:set var="chart" scope="request" value="${requestScope.chart}" /> 
+    <c:set var="contextPath" scope="request" value="${requestScope.contextPath}"/>
+    <c:choose>
+        <c:when test="${chart != null}">
+            <img src="${contextPath}/images/${chart}">
+        </c:when>
+    </c:choose> -->
+           
 </div>
 
 <form id="pieChartForm" action="PieChart" name="PieChart" method="POST" style="display:none;">
   <input type="hidden" name="datasource" id="datasource" />
 <input type="hidden" name="preset" id="preset" />
 </form>
+<script>
+    $( document ).ready(function() {
+    $('#generatePie').click(function(){
+        $('#chartDiv').html('');
+        console.log("generate button clicked!");
+        console.log($('#datasourceDropdown').val());
+        console.log($('#presetDropdown').val());
+        datasource = $('#datasourceDropdown').val();
+        preset = $('#presetDropdown').val();
 
-
+        $.ajax({
+  type: "POST",
+  url: "/StudentAnalytics/PieChart",
+  data: {datasource:datasource, preset:preset},
+  cache: false,
+  datatype: "application/json",
+  success: function(data, textStatus, request){
+      
+      $('#chartDiv').html('<img src="'+data.chart+'" />');},
+  error: function (xhr, ajaxOptions, thrownError) {
+        console.log(xhr.status);
+        console.log(thrownError);
+      }
+});
+         
+    }); 
+     
+  }); 
+</script>
+<!-- /.row -->
 
 
 

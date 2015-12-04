@@ -80,7 +80,7 @@ public class BarChartServlet extends HttpServlet {
        }
 
            
-
+//JSON Response from Servlet
         JSONObject json = new JSONObject();
         json.put("chart", getServletContext().getContextPath()+"/images"+"/"+imageFileName);
         PrintWriter out = response.getWriter();

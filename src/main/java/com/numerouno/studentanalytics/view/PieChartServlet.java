@@ -31,12 +31,14 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 import javax.servlet.RequestDispatcher;
+import org.json.JSONObject;
 import org.ujmp.core.collections.list.ArrayIndexList;
 
 /**
@@ -73,11 +75,10 @@ public class PieChartServlet extends HttpServlet {
                 Logger.getLogger(PieChartServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
 
-
         } else if (request.getParameter("preset").contains("_")) {
 
             ServletOutputStream os = response.getOutputStream();
-            Logger.getLogger(BarChartServlet.class.getName()).log(Level.INFO, "complex chart");
+            Logger.getLogger(PieChartServlet.class.getName()).log(Level.INFO, "complex chart");
             ChartUtilities.writeChartAsPNG(os, getComplexChart(request), 800, 600);
             os.close();
 
@@ -88,9 +89,18 @@ public class PieChartServlet extends HttpServlet {
             request.setAttribute("contextPath", getServletContext().getContextPath());
 
         }
+        //JSON Response from Servlet
+        JSONObject json = new JSONObject();
+        json.put("chart", getServletContext().getContextPath() + "/images" + "/" + imageFileName);
+        PrintWriter out = response.getWriter();
+        response.setContentType("application/json");
+        response.setCharacterEncoding("utf-8");
+        out.println(json);
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -208,8 +218,7 @@ public class PieChartServlet extends HttpServlet {
 
         switch (datasource) {
             case "OriginalData":
-                
-                
+
                 studentList = getDataSource("/STUDENT.DAT");
                 break;
             case "UploadedData":
@@ -285,7 +294,6 @@ public class PieChartServlet extends HttpServlet {
 
     }
 
-
     private ArrayList<Student> getDataSource(String source) {
         try {
 
@@ -294,9 +302,9 @@ public class PieChartServlet extends HttpServlet {
 
             return (ArrayList<Student>) in.readObject();
         } catch (IOException ex) {
-            Logger.getLogger(BarChartServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PieChartServlet.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(BarChartServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PieChartServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
