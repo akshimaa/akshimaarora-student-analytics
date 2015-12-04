@@ -5,7 +5,6 @@
  */
 package com.numerouno.studentanalytics.controller;
 
-
 import com.numerouno.studentanalytics.model.PDFReportItemList;
 import com.numerouno.studentanalytics.view.BarChartServlet;
 import java.io.IOException;
@@ -17,15 +16,18 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.json.JSONObject;
 
 /**
  *
  * @author Akshima
  */
 public class PDFReportCreator extends HttpServlet {
- Logger log = Logger.getLogger(PDFReportCreator.class.getName());
- 
- public static ArrayList<String> pdfList= PDFReportItemList.getItemList();
+
+    Logger log = Logger.getLogger(PDFReportCreator.class.getName());
+
+    public static ArrayList<String> pdfList = PDFReportItemList.getItemList();
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -37,24 +39,33 @@ public class PDFReportCreator extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        ArrayList<String> reportList = new ArrayList<>();
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-//            out.println("<!DOCTYPE html>");
-//            out.println("<html>");
-//            out.println("<head>");
-//            out.println("<title>Servlet PDFReportItemCreator</title>");            
-//            out.println("</head>");
-//            out.println("<body>");
-//            out.println("<h1>Servlet PDFReportItemCreator at " + request.getContextPath() + "</h1>");
-//            out.println("</body>");
-//            out.println("</html>");
-            
+
             log.info("In servlet");
-        String datasource = request.getParameter("datasource");
-        String preset = request.getParameter("preset");
-        String imageFileName = datasource.concat("_").concat(preset).concat("_bar.png");
-            ArrayList<String> reportList= createReportList(imageFileName);
+            String datasource = request.getParameter("datasource");
+            String preset = request.getParameter("preset");
+            String generatePage = request.getParameter("showChart");
+            int length = pdfList.size();
+            if (generatePage.equals("showChart") && generatePage != null) {
+                log.info("In LOOP");
+                reportList = PDFReportItemList.getItemList();
+            } else {
+                log.info("In ELSE");
+                String imageFileName = datasource.concat("_").concat(preset).concat("_bar.png");
+                reportList = createReportList(imageFileName);
+            }
+
+            JSONObject json = new JSONObject();
+            json.put("charts", reportList);
+//             for(int i=0; i< reportList.size();i++){
+//        json.put("charts_"+i,"<img src='"+ getServletContext().getContextPath() + "/images" + "/" + reportList.get(i)+"'>");
+//              }
+
+            response.setContentType("application/json");
+            response.setCharacterEncoding("utf-8");
+            out.println(json);
         }
     }
 
@@ -96,11 +107,11 @@ public class PDFReportCreator extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-    
-    public ArrayList<String> createReportList(String imageFileName){
+
+    public ArrayList<String> createReportList(String imageFileName) {
         pdfList.add(imageFileName);
-      log.info(pdfList.get(0));
-    return PDFReportItemList.getItemList();
+        log.info(pdfList.get(0));
+        return PDFReportItemList.getItemList();
     }
 
 }
