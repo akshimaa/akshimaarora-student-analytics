@@ -51,10 +51,9 @@ import org.jfree.data.category.DefaultCategoryDataset;
  * A utility class for reading {@link CategoryDataset} data from a CSV file.
  * This initial version is very basic, and won't handle errors in the data file
  * very gracefully.
- */
-/**
  *
- * @author Akshima Arora
+ * @author Akshima
+ * @version 1.0
  */
 public class CSV {
 

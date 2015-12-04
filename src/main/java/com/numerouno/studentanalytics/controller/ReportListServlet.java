@@ -4,9 +4,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-/**
- * Controller package processes and produces the required results
- */
 package com.numerouno.studentanalytics.controller;
 
 import java.io.IOException;
@@ -19,13 +16,17 @@ import javax.servlet.http.HttpServletResponse;
 import com.numerouno.studentanalytics.model.PDFReportItemList;
 import java.util.logging.Logger;
 import org.json.JSONObject;
+
 /**
+ * Controller package processes and produces the required results
  *
  * @author Madan Parameswaran
  */
 @WebServlet(name = "ReportListServlet", urlPatterns = {"/ReportList"})
 public class ReportListServlet extends HttpServlet {
-Logger log = Logger.getLogger(this.getClass().getName());
+
+    Logger log = Logger.getLogger(this.getClass().getName());
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -37,9 +38,9 @@ Logger log = Logger.getLogger(this.getClass().getName());
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        log.info((String)PDFReportItemList.getItemList().toArray()[0]);
-        
+
+        log.info((String) PDFReportItemList.getItemList().toArray()[0]);
+
         JSONObject json = new JSONObject();
         json.put("pdfChartList", PDFReportItemList.getItemList().toArray());
         PrintWriter out = response.getWriter();
