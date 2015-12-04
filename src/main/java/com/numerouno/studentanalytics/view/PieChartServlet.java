@@ -56,7 +56,7 @@ public class PieChartServlet extends HttpServlet {
      * @param request servlet request requests the input of the pie chart
      * @param response servlet response generates the response pie chart
      * @throws ServletException handles if a servlet-specific error occurs
-     * @throws IOException handles if an I/O error occurs
+     * @throws IOException handles if an I/O error occurs in the program.
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
