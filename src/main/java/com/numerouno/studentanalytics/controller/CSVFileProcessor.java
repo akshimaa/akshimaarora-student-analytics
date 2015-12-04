@@ -49,6 +49,7 @@ public class CSVFileProcessor {
     }
 
     /**
+     * writeIntoS3 method is used to write the data into the S3 bucket
      *
      * @param bucket the data is written into the bucket
      * @param key determines the model that is used for the data mining
@@ -81,7 +82,7 @@ public class CSVFileProcessor {
         File mergedFile = new File(path + "/merge.csv");
 
         try {
-//            FileUtils.copyInputStreamToFile(inputStream, localFile);
+            //FileUtils.copyInputStreamToFile(inputStream, localFile);
             // Import .csv as matrices
             Matrix local = Matrix.Factory.importFrom().stream(inputStream).asDenseCSV();
             Matrix temp = local.deleteRows(Calculation.Ret.NEW, 0);

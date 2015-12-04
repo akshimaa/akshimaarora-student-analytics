@@ -78,4 +78,9 @@
         <servlet-name>ReportGeneratorServlet</servlet-name>
         <url-pattern>/ReportGenerator</url-pattern>
     </servlet-mapping>
+        <servlet>
+        <servlet-name>ReportListServlet</servlet-name>
+        <servlet-class>com.numerouno.studentanalytics.controller.ReportListServlet</servlet-class>
+    </servlet>
+
 </web-app>

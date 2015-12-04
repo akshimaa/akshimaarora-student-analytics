@@ -78,7 +78,7 @@ public class HistogramServlet extends HttpServlet {
         File imageFile = new File(getServletContext().getRealPath("/images") + "/" + imageFileName);
 
         // Diagnostics
-        log.info("File:" + request.getPart("file").getSubmittedFileName());
+        log.info("File:" + request.getPart("analysisFile").getSubmittedFileName());
         log.info("Classifier: " + request.getParameter("classifier"));
 
         FileOutputStream fos = new FileOutputStream(imageFile);
@@ -145,7 +145,7 @@ public class HistogramServlet extends HttpServlet {
 
         try {
             String classifierKey = request.getParameter("classifier");
-            InputStream inputStream = request.getPart("file").getInputStream();
+            InputStream inputStream = request.getPart("analysisFile").getInputStream();
             String modelsPath = getServletContext().getRealPath("/models");
             System.out.println(modelsPath);
             Classifier classifier = ClassifierIO.readClassifier(modelsPath, classifierKey);

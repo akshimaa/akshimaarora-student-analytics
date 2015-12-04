@@ -21,11 +21,19 @@ import weka.core.Instances;
 import weka.core.converters.CSVLoader;
 
 /**
+ * To parse data into CSV type of files and it implements Serializable
  *
  * @author Teck
  */
 public class CSVParser implements Serializable {
 
+    /**
+     *
+     * @param fileStream file stream used to parse into POJO
+     * @param source source from where data is parsed into POJO
+     * @throws Exception is thrown if the errors occurs during the execution of
+     * the code
+     */
     public static void parseIntoPOJO(InputStream fileStream, String source) throws Exception {
 
         try (ICsvBeanReader beanReader = new CsvBeanReader(new InputStreamReader(fileStream, "UTF8"), CsvPreference.STANDARD_PREFERENCE)) {
@@ -43,19 +51,22 @@ public class CSVParser implements Serializable {
                 studentList.add(student);
 
             }
-            if(source.equals("merged"))
-            {
+            if (source.equals("merged")) {
                 StudentList.setMergedList((ArrayList<Student>) studentList);
-            }
-            else
-            {
+            } else {
                 StudentList.setList((ArrayList<Student>) studentList);
             }
-            
 
         }
     }
 
+    /**
+     * parseIntoInstances method loads the data from the dataset in instances.
+     *
+     * @param inputStream is used for setting the source from the input stream.
+     * @return returns the data that is parsed into the CSVloader
+     * @throws Exception is thrown while the execution of this code
+     */
     public static Instances parseIntoInstances(InputStream inputStream) throws Exception {
 
         CSVLoader loader = new CSVLoader();
@@ -63,9 +74,9 @@ public class CSVParser implements Serializable {
         Instances data = loader.getDataSet();
         data.setClassIndex(data.numAttributes() - 1);
         loader.reset();
-        
+
         return data;
-        
+
     }
 
 }

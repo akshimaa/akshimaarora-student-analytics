@@ -24,25 +24,20 @@
 </div>
 <script>
  $(document).ready(function () {
-        $('#showChart').click(function () {
-          
+
             console.log("showChart button clicked!");
-           
-           
+
             showChart = "showChart";
             $.ajax({
                 type: "POST",
-                url: "/StudentAnalytics/PDFReportCreator",
-                data: {showChart: showChart},
+                url: "/StudentAnalytics/ReportListServlet",
+                data: {},
                 dataType:'json',
                 cache: false,
                 datatype: "application/json",
                 success: function (data) {
-                   // alert(data.itemList.length);
-                     
-                     alert("in success");
-                     alert(data);
-                   
+                  console.log(data);
+                  
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     console.log(xhr.status);
@@ -50,8 +45,7 @@
                 }
             });
 
-        });
-
+        
     });
 
    
