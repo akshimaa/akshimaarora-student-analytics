@@ -87,7 +87,7 @@
                             <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
                             </li>
                             <li class="divider"></li>
-                            <li><a href="login.jsp" onclick="logout();"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                            <li><a href="/StudentAnalytics" onclick="logout();"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                             </li>
                         </ul>
                         <!-- /.dropdown-user -->
@@ -242,7 +242,7 @@
                                                 }
                                             });
                                         });
-<<<<<<< HEAD
+
                                         
 function logout(){
  comsole.log("in logout func");
@@ -251,20 +251,8 @@ FB.logout(function(response) {
             var url = $(this).attr('href');
             window.location= url;
 window.location.href = 'http://www.example.com'
-=======
-
-                                        function logout() {
-                                            comsole.log("in logout func");
-                                            FB.logout(function (response) {
-                                                // user is now logged out
-                                                var url = $(this).attr('href');
-                                                window.location = url;
->>>>>>> e24ed7cc3f5126a91e8b5052f52096c128dee721
-
-
-                                            });
-
-                                        }
+  });
+ }
     </script>
 
 </body>
