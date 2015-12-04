@@ -106,7 +106,8 @@ public class Student implements Serializable {
     private int enrollmentYear;
 
     /**
-     * Contains information regarding the type of entrance exam taken by the student.
+     * Contains information regarding the type of entrance exam taken by the
+     * student.
      */
     public enum Type {
 
@@ -122,7 +123,8 @@ public class Student implements Serializable {
     private int lowIncome;
 
     /**
-     * Contains information regarding the highest education level achieved prior to admission.
+     * Contains information regarding the highest education level achieved prior
+     * to admission.
      */
     public enum HighestEducationLevel {
 
@@ -952,8 +954,8 @@ public class Student implements Serializable {
         /**
          * Parses the value of basis of admission of the student
          *
-         * @param value value of the parsed basis of the admission of the student is
-         * stored
+         * @param value value of the parsed basis of the admission of the
+         * student is stored
          * @param context contains the stored value of the parsed data of the
          * basis of admission of the student
          * @return returns the object value of the basis of admission
@@ -1029,7 +1031,8 @@ public class Student implements Serializable {
          * Parsed the data of mode of attendance of the student
          *
          * @param value contains the parsed value of the mode of attendance
-         * @param context context stores the parsed value of the mode of attendance
+         * @param context context stores the parsed value of the mode of
+         * attendance
          * @return returns the object which contains the parsed data with mode
          * of the attendance
          */

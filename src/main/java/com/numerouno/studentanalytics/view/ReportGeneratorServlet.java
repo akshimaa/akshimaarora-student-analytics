@@ -68,7 +68,7 @@ public class ReportGeneratorServlet extends HttpServlet {
                 document.addPage(page);
                 PDXObjectImage img = new PDPixelMap(document, bimg);
                 try (PDPageContentStream contentStream = new PDPageContentStream(document, page)) {
-                    
+
                     contentStream.drawImage(img, 0, 0);
                     contentStream.close();
                     in.close();
