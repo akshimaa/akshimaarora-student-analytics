@@ -135,7 +135,6 @@ public class BarChartServlet extends HttpServlet {
 
     private JFreeChart getChart(HttpServletRequest request) throws FileNotFoundException {
         String preset = request.getParameter("preset");
-
         String datasource = request.getParameter("datasource");
 
         studentList = getStudentListFromDataSource(datasource);
