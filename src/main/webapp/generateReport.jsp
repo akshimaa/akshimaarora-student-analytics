@@ -28,6 +28,14 @@
             </div>
        
     </div></div>
+<div class="row" >
+    <div class="col-md-6 col-md-offset-3" style="margin-top: 50px">
+        
+            <div id = "generateReport">
+               
+            </div>
+       
+    </div></div>
 <script>
  $(document).ready(function () {
 
@@ -43,6 +51,7 @@
                       $('#reportList').append(imageElem);
                       
                   });
+                  $('#generateReport').html('<button id="generateReportButton" onclick="generateReport();" class="btn btn-default"><span><img src="images/glyphicons-151-edit.png" height="15px" width="15px" style="margin-right: 6px"></span>  Generate Report!</button>')
                   $('#progressBarOverview').hide();
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
@@ -54,6 +63,12 @@
 
         
     });
+    
 
-   
+    
+    function generateReport()
+    {
+        console.log("Pass selected checkbox images to the report generator pdf");
+    }
+
 </script>
