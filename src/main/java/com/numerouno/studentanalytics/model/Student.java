@@ -15,15 +15,13 @@ import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.exception.SuperCsvCellProcessorException;
 import org.supercsv.util.CsvContext;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 import org.supercsv.cellprocessor.ParseDate;
 
 /**
  * Student contains details about the student like course, degree, field, gender
  * etc.
  *
- * @author Madan Parameswaran
+ * @author Madan Parameswaran and Melissa Burns
  */
 public class Student implements Serializable {
 
@@ -1093,9 +1091,7 @@ public class Student implements Serializable {
 
             throw new SuperCsvCellProcessorException(
                     String.format("Could not parse '%s' as a locale-language", value), context, this);
-
         }
-
     }
 
     /**
