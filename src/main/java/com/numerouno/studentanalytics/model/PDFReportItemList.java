@@ -16,7 +16,7 @@ public class PDFReportItemList {
     private static ArrayList<String> itemList = new ArrayList<>();
 /**
  * gets the item list to generate as pdf
- * @return 
+ * @return returns the list of items as pdf
  */
     public static ArrayList<String> getItemList() {
         return itemList;
