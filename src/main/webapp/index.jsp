@@ -1,7 +1,7 @@
 <%-- 
     Document   : index
     Created on : Nov 3, 2015, 5:23:33 PM
-    Author     : madan
+    Author     : madan, akshima
 --%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -56,6 +56,8 @@
                 js.src = "//connect.facebook.net/en_US/sdk.js";
                 fjs.parentNode.insertBefore(js, fjs);
             }(document, 'script', 'facebook-jssdk'));
+            
+             
         </script>
         <div id="userId" style="display: none;">${userID}</div>
         <div id="wrapper">
@@ -85,7 +87,7 @@
                             <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
                             </li>
                             <li class="divider"></li>
-                            <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                            <li><a href="login.jsp" onclick="logout();"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                             </li>
                         </ul>
                         <!-- /.dropdown-user -->
@@ -204,7 +206,7 @@
                                             
                                            
                                             $('#uploadToS3Button').click(function () {
-                                                alert("TEST");
+                                                console.log("TEST");
                                                 console.log($('#uploadMergeCheckbox').is(":checked"));
                                                 console.log("BUTTON PRESSED! YAY!");
                                                 if ($('#uploadMergeCheckbox').is(":checked")) {
@@ -215,6 +217,18 @@
                                                 $('#uploadForm').submit();
                                             });
                                         });
+                                        
+function logout(){
+ comsole.log("in logout func");
+FB.logout(function(response) {
+            // user is now logged out
+            var url = $(this).attr('href');
+            window.location= url;
+
+
+        });
+
+  }
     </script>
 
 </body>
