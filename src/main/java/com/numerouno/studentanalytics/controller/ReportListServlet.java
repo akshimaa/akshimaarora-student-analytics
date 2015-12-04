@@ -13,8 +13,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.numerouno.studentanalytics.model.PDFReportItemList;
+
 /**
- *
+ *ReportListServlet is used to generate the PDF report list
  * @author madan
  */
 @WebServlet(name = "ReportListServlet", urlPatterns = {"/ReportList"})
@@ -24,10 +25,10 @@ public class ReportListServlet extends HttpServlet {
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
      *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @param request servlet request requests for the list to generate the pdf
+     * @param response servlet response responds by generating the list
+     * @throws ServletException is thrown if a servlet-specific error occurs
+     * @throws IOException is thrown if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -54,10 +55,11 @@ public class ReportListServlet extends HttpServlet {
     /**
      * Handles the HTTP <code>POST</code> method.
      *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @param request servlet request is used to get the list for request
+     * @param response servlet response responds to the request by generating
+     * the list
+     * @throws ServletException is thrown if a servlet-specific error occurs
+     * @throws IOException is thrown if an I/O error occurs
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
