@@ -56,8 +56,8 @@
                 js.src = "//connect.facebook.net/en_US/sdk.js";
                 fjs.parentNode.insertBefore(js, fjs);
             }(document, 'script', 'facebook-jssdk'));
-            
-             
+
+
         </script>
         <div id="userId" style="display: none;">${userID}</div>
         <div id="wrapper">
@@ -141,26 +141,24 @@
                         </div>
                         <!-- /.navbar-static-side -->
                 </nav>
-            <c:set var="status" scope="request" value="${requestScope.status}" />           
+            <c:set var="status" scope="request" value="${requestScope.status}" />     
+
+            <div class="alert alert-danger" id="noFileSelectedError" style="display:none;margin-left: 300px">
+                <button type="button" class="close">×</button>
+                <strong>ERROR!</strong> No file was selected in the file upload box.
+            </div>
+
+            <div class="alert alert-success" id="successMessageBanner" style="display:none;margin-left: 300px">
+                <button type="button" class="close">×</button>
+                <strong>Success!</strong> Indicates a successful or positive action.
+            </div>
+
             <div id="page-wrapper" style="margin:0 0 0 300px">
-
-                <div id="bootstrapMessageHolder">
-
-                </div>
-
-                <div class="alert alert-danger" id="errorMessageBanner" >
-                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                    <strong>ERROR!</strong> Indicates a dangerous or potentially negative action.
-                </div>
-
-                <div class="alert alert-success" id="successMessageBanner">
-                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                    <strong>Success!</strong> Indicates a successful or positive action.
-                </div>
 
                 <choose:when test="${status == null}">
                     <choose:otherwise>
-                        <div> <c:out value="${status}"/></div>
+                        <div> <c:out value="${status}"/>
+                        </div>
                     </choose:otherwise>
                 </choose:when>
                 <c:set var="content" scope="request" value="${requestScope.content}" />  
@@ -217,39 +215,45 @@
                                             $('#page-wrapper').load('generateReport.jsp');
                                         }
 
-                                        bootstrapAlert = function () {
-                                        }
-                                        bootstrapAlert.warning = function (message) {
-                                            $('#bootstrapMessageHolder').html('<div class="alert"><a class="close" data-dismiss="alert">×</a><span>' + message + '</span></div>')
-                                        }
+                                        $('.alert .close').on('click', function (e) {
+                                            $(this).parent().hide();
+                                        });
 
                                         $(document).ready(function () {
 
-
                                             $('#uploadToS3Button').click(function () {
 
-                                                console.log($('#uploadMergeCheckbox').is(":checked"));
-                                                console.log("BUTTON PRESSED! YAY!");
-                                                if ($('#uploadMergeCheckbox').is(":checked")) {
-                                                    $('#hiddenMergeFlag').val("1");
+                                                var uploadFileName = $("#uploadToS3Input").val();
+
+                                                console.log(uploadFileName);
+                                                if (uploadFileName == "") { // returns true if the string is not empty
+                                                    $('#noFileSelectedError').show();
+
                                                 } else {
-                                                    $('#hiddenMergeFlag').val("0");
+
+                                                    console.log($('#uploadMergeCheckbox').is(":checked"));
+                                                    if ($('#uploadMergeCheckbox').is(":checked")) {
+                                                        $('#hiddenMergeFlag').val("1");
+                                                    } else {
+                                                        $('#hiddenMergeFlag').val("0");
+                                                    }
+                                                    $('#uploadForm').submit();
+
                                                 }
-                                                $('#uploadForm').submit();
                                             });
                                         });
-                                        
-function logout(){
- comsole.log("in logout func");
-FB.logout(function(response) {
-            // user is now logged out
-            var url = $(this).attr('href');
-            window.location= url;
+
+                                        function logout() {
+                                            comsole.log("in logout func");
+                                            FB.logout(function (response) {
+                                                // user is now logged out
+                                                var url = $(this).attr('href');
+                                                window.location = url;
 
 
-        });
+                                            });
 
-  }
+                                        }
     </script>
 
 </body>
