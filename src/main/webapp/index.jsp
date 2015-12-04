@@ -87,7 +87,7 @@
                             <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
                             </li>
                             <li class="divider"></li>
-                            <li><a href="login.jsp" onclick="logout();"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                            <li><a href="/StudentAnalytics" onclick="logout();"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                             </li>
                         </ul>
                         <!-- /.dropdown-user -->
@@ -243,6 +243,7 @@
                                             });
                                         });
 
+
                                         function logout() {
                                             comsole.log("in logout func");
                                             FB.logout(function (response) {
@@ -255,6 +256,7 @@
                                             });
 
                                         }
+
     </script>
 
 </body>
