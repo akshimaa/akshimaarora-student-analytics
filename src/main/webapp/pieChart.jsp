@@ -22,15 +22,15 @@
         <div class="btn-group">
             <div class="dropdown">
                 
-                <select class="selectpicker" style="width: 123px;" name=""  id="datasourceDropdown">
+                <select class="selectpicker cmu-dropdown" style="width: 123px;" name=""  id="datasourceDropdown">
                    
-                    <option value="OriginalData"><a href="#">OriginalData</a></option>
-                    <option value="UploadedData"><a href="#">UploadedData</a></option>
-                    <option value="MergedData"><a href="#">MergedData</a></option>
+                    <option value="OriginalData"><a href="#">Original Data</a></option>
+                    <option value="UploadedData"><a href="#">Uploaded Data</a></option>
+                    <option value="MergedData"><a href="#">Merged Data</a></option>
                 </select>
-            </div>
+            
            
-                <select class="selectpicker" style="width: 123px;" name="" id="presetDropdown">
+                <select class="selectpicker cmu-dropdown" style="width: 123px;" name="" id="presetDropdown">
                    <option value="attendanceType"><a href="#">Attendance Type</a></option>
                     <option value="courseInformation"><a href="#">Course Information</a></option>
                     <option value="degreeLevel"><a href="#">Degree Level</a></option>
@@ -41,13 +41,14 @@
                     <option value="disability_regionalRemote_womenNonTraditionalRole_lowIncome"><a href="#">Equity Data</a></option>
                              
                 </select>
+                <div class="btn-group bootstrap-select cmu-dropdown">
+                    <button id="generatePie"  class="btn btn-default">Generate Pie!</button>
+
+                </div>
+                </div>
             </div>
          </div>
-   
 
- <div class="row">
-     <button id="generatePie"  class="btn btn-default">Generate Pie!</button>
- </div>
      </div>
 
 <div id ="pieChartDiv" class="row" >

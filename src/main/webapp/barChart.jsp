@@ -17,24 +17,24 @@
     </div>
     <!-- /.col-lg-12 -->
 </div>
-
+<link href="css/cmu-dropdowns.css" rel="stylesheet" type="text/css">
 
 <div class="row">
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
             <div class="dropdown">
                 
-                <select class="selectpicker" style="width: 123px;" name=""  id="datasourceDropdown">
+                <select class="selectpicker cmu-dropdown" style="width: 123px;" name=""  id="datasourceDropdown">
                    
-                    <option value="OriginalData"><a href="#">OriginalData</a></option>
-                    <option value="UploadedData"><a href="#">UploadedData</a></option>
-                    <option value="MergedData"><a href="#">MergedData</a></option>
+                    <option value="OriginalData"><a href="#">Original Data</a></option>
+                    <option value="UploadedData"><a href="#">Uploaded Data</a></option>
+                    <option value="MergedData"><a href="#">Merged Data</a></option>
                 </select>
-            </div>
+            
            
             
               
-                <select  class="selectpicker" style="width: 123px;" name="" value="Select2" id="presetDropdown">
+                <select  class="selectpicker cmu-dropdown" style="width: 123px;" name="" value="Select2" id="presetDropdown">
                    
                     <option value="attendanceType" ><a href="#">Attendance Type</a></option>
                 <option value="courseInformation"><a href="#">Course Information</a></option>
@@ -43,13 +43,18 @@
                             <option value="degreeLevel_gender"><a href="#">Degree by Gender</a></option>
                              <option value="modeOfAttendance_attendanceType"><a href="#">Mode of Attendance by Type Attendance</a></option>
                 </select>
+                <div class="btn-group bootstrap-select cmu-dropdown">
+                <button id="generateBar"  class="btn btn-default">Generate Bar!</button>
+                </div>
+                </div>
+            
+     
+
             </div>
          </div>
     </div>
 
- <div>
-     <button id="generateBar"  class="btn btn-default">Generate Bar!</button>
- </div>
+
 </div>
 
 <div id ="chartDiv" class="row" >
@@ -61,6 +66,7 @@
     
     $( document ).ready(function() {
         $('.selectpicker').selectpicker();
+        
     $('#generateBar').click(function(){
         $('#chartDiv').html('');
         console.log("generate button clicked!");
