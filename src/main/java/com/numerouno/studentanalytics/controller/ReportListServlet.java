@@ -4,9 +4,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-/**
- * Controller package processes and produces the required results
- */
+
+
 package com.numerouno.studentanalytics.controller;
 
 import java.io.IOException;
@@ -20,8 +19,8 @@ import com.numerouno.studentanalytics.model.PDFReportItemList;
 import java.util.logging.Logger;
 import org.json.JSONObject;
 /**
- *
- * @author madan
+ * Controller package processes and produces the required results
+ * @author Madan
  */
 @WebServlet(name = "ReportListServlet", urlPatterns = {"/ReportList"})
 public class ReportListServlet extends HttpServlet {
