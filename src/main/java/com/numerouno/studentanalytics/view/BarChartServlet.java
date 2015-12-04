@@ -285,6 +285,7 @@ public class BarChartServlet extends HttpServlet {
                 count = 0;
             }
         }
+        
 
         final JFreeChart chart = ChartFactory.createBarChart(
                 Student.getLegend(preset), // chart title
@@ -369,15 +370,18 @@ public class BarChartServlet extends HttpServlet {
         renderer.setSeriesPaint(9, gp9);
 
         if (argumentTwoSet.size() < 10) {
-            renderer.setSeriesItemLabelGenerator(0, new StandardCategoryItemLabelGenerator("{2}", NumberFormat.getInstance()));
-            renderer.setSeriesItemLabelsVisible(0, true);
+            for (int x = 0; x < 5; x++) {
+                renderer.setSeriesItemLabelGenerator(x, new StandardCategoryItemLabelGenerator("{2}", NumberFormat.getInstance()));
+                renderer.setSeriesItemLabelsVisible(x, true);
+            }
         }
+
         final CategoryAxis domainAxis = plot.getDomainAxis();
         domainAxis.setCategoryLabelPositions(
                 CategoryLabelPositions.createUpRotationLabelPositions(Math.PI / 4.0)
         );
-        // OPTIONAL CUSTOMISATION COMPLETED.
 
+        // OPTIONAL CUSTOMISATION COMPLETED.
         return chart;
 
     }
@@ -429,7 +433,7 @@ public class BarChartServlet extends HttpServlet {
 
         try (InputStream stream = new FileInputStream(mergedFile);) {
 
-            CSVParser.parseIntoPOJO(stream,"merged");
+            CSVParser.parseIntoPOJO(stream, "merged");
             studentList = StudentList.getMergedList();
 
         } catch (Exception ex) {

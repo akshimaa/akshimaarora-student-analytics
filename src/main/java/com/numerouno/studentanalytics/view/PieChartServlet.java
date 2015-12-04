@@ -160,7 +160,7 @@ public class PieChartServlet extends HttpServlet {
             log.info(kvpMap);
         }
         JFreeChart chart = ChartFactory.createPieChart3D(
-                "Pie Charts", // chart title                   
+                Student.getLegend(preset), // chart title                   
                 dataset, // data 
                 true, // include legend                   
                 true,
@@ -203,18 +203,16 @@ public class PieChartServlet extends HttpServlet {
         HashMap<Object, Integer> mapFour = processObjects(studentList, argumentFour);
 
         Object valOne = mapOne.get(1);
-        dataset.setValue(argumentOne, (Integer) valOne);
-        //log.info(argumentOne);
+        dataset.setValue(argumentOne, ((Integer) valOne));
         Object valTwo = mapTwo.get(1);
-        //log.info(((Integer) valOne).toString());
         dataset.setValue(argumentTwo, (Integer) valTwo);
         Object valThree = mapThree.get(1);
         dataset.setValue(argumentThree, (Integer) valThree);
         Object valFour = mapFour.get(1);
-        dataset.setValue(argumentThree, (Integer) valFour);
+        dataset.setValue(argumentFour, (Integer) valFour);
         
         JFreeChart chart = ChartFactory.createPieChart3D(
-                "Pie Charts", // chart title                   
+                "Equity Data", // chart title                   
                 dataset, // data 
                 true, // include legend                   
                 true,
