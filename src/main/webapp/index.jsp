@@ -56,8 +56,8 @@
                 js.src = "//connect.facebook.net/en_US/sdk.js";
                 fjs.parentNode.insertBefore(js, fjs);
             }(document, 'script', 'facebook-jssdk'));
-            
-             
+
+
         </script>
         <div id="userId" style="display: none;">${userID}</div>
         <div id="wrapper">
@@ -148,19 +148,20 @@
 
                 </div>
 
-                <div class="alert alert-danger" id="errorMessageBanner" >
+                <div class="alert alert-danger" id="errorMessageBanner" style="display:none">
                     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                    <strong>ERROR!</strong> Indicates a dangerous or potentially negative action.
+                    <strong>ERROR!</strong> No file was selected in the file upload box.
                 </div>
 
-                <div class="alert alert-success" id="successMessageBanner">
+                <div class="alert alert-success" id="successMessageBanner" style="display:none">
                     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                     <strong>Success!</strong> Indicates a successful or positive action.
                 </div>
 
                 <choose:when test="${status == null}">
                     <choose:otherwise>
-                        <div> <c:out value="${status}"/></div>
+                        <div> <c:out value="${status}"/>
+                        </div>
                     </choose:otherwise>
                 </choose:when>
                 <c:set var="content" scope="request" value="${requestScope.content}" />  
@@ -225,19 +226,28 @@
 
                                         $(document).ready(function () {
 
-
                                             $('#uploadToS3Button').click(function () {
 
-                                                console.log($('#uploadMergeCheckbox').is(":checked"));
-                                                console.log("BUTTON PRESSED! YAY!");
-                                                if ($('#uploadMergeCheckbox').is(":checked")) {
-                                                    $('#hiddenMergeFlag').val("1");
+                                                var uploadFileName = $("#upload-input").val();
+
+                                                console.log(uploadFileName);
+                                                if (uploadFileName == "") { // returns true if the string is not empty
+                                                    $('#errorMessageBanner').show();
+
                                                 } else {
-                                                    $('#hiddenMergeFlag').val("0");
+
+                                                    console.log($('#uploadMergeCheckbox').is(":checked"));
+                                                    if ($('#uploadMergeCheckbox').is(":checked")) {
+                                                        $('#hiddenMergeFlag').val("1");
+                                                    } else {
+                                                        $('#hiddenMergeFlag').val("0");
+                                                    }
+                                                    $('#uploadForm').submit();
+
                                                 }
-                                                $('#uploadForm').submit();
                                             });
                                         });
+<<<<<<< HEAD
                                         
 function logout(){
  comsole.log("in logout func");
@@ -246,10 +256,20 @@ FB.logout(function(response) {
             var url = $(this).attr('href');
             window.location= url;
 window.location.href = 'http://www.example.com'
+=======
 
-        });
+                                        function logout() {
+                                            comsole.log("in logout func");
+                                            FB.logout(function (response) {
+                                                // user is now logged out
+                                                var url = $(this).attr('href');
+                                                window.location = url;
+>>>>>>> e24ed7cc3f5126a91e8b5052f52096c128dee721
 
-  }
+
+                                            });
+
+                                        }
     </script>
 
 </body>
