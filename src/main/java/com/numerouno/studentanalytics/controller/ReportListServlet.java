@@ -21,7 +21,7 @@ import java.util.logging.Logger;
 import org.json.JSONObject;
 /**
  *
- * @author madan
+ * @author Madan Parameswaran
  */
 @WebServlet(name = "ReportListServlet", urlPatterns = {"/ReportList"})
 public class ReportListServlet extends HttpServlet {

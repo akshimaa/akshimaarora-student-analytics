@@ -6,9 +6,7 @@
 package com.numerouno.studentanalytics.controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.logging.Logger;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -18,7 +16,7 @@ import javax.servlet.http.HttpSession;
 /**
  * LoginServlet is used to login to the application
  *
- * @author madan
+ * @author Madan Parameswaran 
  */
 public class LoginServlet extends HttpServlet {
 
@@ -77,7 +75,6 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-
     }
 
     /**
