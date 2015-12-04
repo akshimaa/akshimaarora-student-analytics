@@ -5,7 +5,6 @@
  */
 package com.numerouno.studentanalytics.view;
 
-
 import java.awt.image.BufferedImage;
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -29,8 +28,9 @@ import org.apache.pdfbox.pdmodel.edit.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.graphics.xobject.PDJpeg;
 import org.apache.pdfbox.pdmodel.graphics.xobject.PDXObjectImage;
 
-
 /**
+ * ReportGeneratorServlet processes the requests and generates the report as
+ * response
  *
  * @author madan
  */
@@ -40,76 +40,64 @@ public class ReportGeneratorServlet extends HttpServlet {
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
      *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @param request servlet request data to process the request
+     * @param response servlet responds by generating the application
+     * @throws ServletException handles if a servlet-specific error occurs by
+     * the throw statement
+     * @throws IOException handles if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("application/pdf");
-//        try (PrintWriter out = response.getWriter()) {
-//            /* TODO output your page here. You may use following sample code. */
-//            out.println("<!DOCTYPE html>");
-//            out.println("<html>");
-//            out.println("<head>");
-//            out.println("<title>Servlet ReportGeneratorServlet</title>");            
-//            out.println("</head>");
-//            out.println("<body>");
-//            out.println("<h1>Servlet ReportGeneratorServlet at " + request.getContextPath() + "</h1>");
-//            out.println("</body>");
-//            out.println("</html>");
-//        }
 
-
-PDDocument document = new PDDocument();
-File imageFile = new File(getServletContext().getRealPath("/Temp/grumpy_cat.jpg"));
-InputStream in = new FileInputStream(imageFile);
-BufferedImage bimg = ImageIO.read(in);
-float width = bimg.getWidth();
-float height = bimg.getHeight();
-PDPage page = new PDPage(new PDRectangle(width, height));
-document.addPage(page); 
-PDXObjectImage img = new PDJpeg(document, new FileInputStream(imageFile));
-PDPageContentStream contentStream = new PDPageContentStream(document, page);
-contentStream.drawImage(img, 0, 0);
-contentStream.close();
-in.close();
-File saveFile = null;
+        PDDocument document = new PDDocument();
+        File imageFile = new File(getServletContext().getRealPath("/Temp/grumpy_cat.jpg"));
+        InputStream in = new FileInputStream(imageFile);
+        BufferedImage bimg = ImageIO.read(in);
+        float width = bimg.getWidth();
+        float height = bimg.getHeight();
+        PDPage page = new PDPage(new PDRectangle(width, height));
+        document.addPage(page);
+        PDXObjectImage img = new PDJpeg(document, new FileInputStream(imageFile));
+        PDPageContentStream contentStream = new PDPageContentStream(document, page);
+        contentStream.drawImage(img, 0, 0);
+        contentStream.close();
+        in.close();
+        File saveFile = null;
         try {
-            saveFile = new File(getServletContext().getRealPath("/Temp")+"/test.pdf");
+            saveFile = new File(getServletContext().getRealPath("/Temp") + "/test.pdf");
             Logger.getLogger(ReportGeneratorServlet.class.getName()).log(Level.INFO, saveFile.getAbsolutePath());
             document.save(saveFile);
             document.close();
         } catch (COSVisitorException ex) {
             Logger.getLogger(ReportGeneratorServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         String pdfFileName = getServletContext().getRealPath("/Temp/test.pdf");
-		String contextPath = getServletContext().getRealPath(File.separator);
-		//File pdfFile = new File(contextPath + pdfFileName);
+        String contextPath = getServletContext().getRealPath(File.separator);
+        //File pdfFile = new File(contextPath + pdfFileName);
 
-		response.setContentType("application/pdf");
-		//response.addHeader("Content-Disposition", "attachment; filename=" + "report.pdf");
-		response.setContentLength((int) saveFile.length());
+        response.setContentType("application/pdf");
+        //response.addHeader("Content-Disposition", "attachment; filename=" + "report.pdf");
+        response.setContentLength((int) saveFile.length());
 
-		FileInputStream fileInputStream = new FileInputStream(saveFile);
-		OutputStream responseOutputStream = response.getOutputStream();
-		int bytes;
-		while ((bytes = fileInputStream.read()) != -1) {
-			responseOutputStream.write(bytes);
-		}
-
+        FileInputStream fileInputStream = new FileInputStream(saveFile);
+        OutputStream responseOutputStream = response.getOutputStream();
+        int bytes;
+        while ((bytes = fileInputStream.read()) != -1) {
+            responseOutputStream.write(bytes);
+        }
 
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
+     * @param request servlet requests the information to generate the report
+     * @param response servlet response gives the generated report as the
+     * response
+     * @throws ServletException if a servlet-specific error occurs indicates if
+     * servlet exception occurs
      * @throws IOException if an I/O error occurs
      */
     @Override
@@ -121,10 +109,10 @@ File saveFile = null;
     /**
      * Handles the HTTP <code>POST</code> method.
      *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @param request servlet request requests the information to work on
+     * @param response servlet response generates the required response
+     * @throws ServletException handles if a servlet-specific error occurs
+     * @throws IOException handles if an I/O error occurs
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -133,13 +121,14 @@ File saveFile = null;
     }
 
     /**
-     * Returns a short description of the servlet.
+     * Returns a short description of the servlet that gives information about
+     * report generated.
      *
      * @return a String containing servlet description
      */
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
+    }
 
 }
