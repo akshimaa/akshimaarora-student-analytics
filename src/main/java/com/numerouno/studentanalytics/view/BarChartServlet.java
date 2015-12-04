@@ -32,6 +32,7 @@ import org.jfree.chart.renderer.category.BarRenderer;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.ujmp.core.collections.list.ArrayIndexList;
 import com.numerouno.studentanalytics.model.Student;
+import com.numerouno.studentanalytics.model.StudentList;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
@@ -286,13 +287,14 @@ public class BarChartServlet extends HttpServlet {
          ArrayList<Student> studentList=new ArrayIndexList<>();
         switch(datasource){
             case "OriginalData":
-                readFromS3("student-alpha", "STUDENT.dat", request.getServletContext() + "/remote.dat");
-                studentList = getDataSource("/remote.dat");
+                readFromS3("student-alpha", "STUDENT.dat", getServletContext().getRealPath("/Temp")+"/"+"original.dat");
+                studentList = getDataSource("/Temp/original.dat");
                 break;
             case "UploadedData":
-                
+                studentList = StudentList.getList();
                 break;
             case "MergedData":
+                
                 break;
         }
         
