@@ -123,7 +123,7 @@
                         $('#chartPanel').fadeIn("slow", function () {
                         $(this).show();
                     });
-                    $('#pieChartDiv').html('<img src="' + data.chart + '" />');},
+                    $('#pieChartDiv').html('<img src="' + data.chart + '" id="pieChart" />');},
             error: function (xhr, ajaxOptions, thrownError) {
                 console.log(xhr.status);
                 console.log(thrownError);
@@ -136,10 +136,12 @@
   function addToReport()
     {
         console.log('add to report');
+         var filePath = document.getElementById('pieChart').getAttribute('src');
+         console.log("File Path ="+ filePath);
         $.ajax({
             type: "POST",
-            url: "AddToReport",
-            data: "",
+            url: "PDFReportCreator",
+           data: {filePath:filePath},
             cache: false,
             datatype: "application/json",
             success: function (data, textStatus, request) {
