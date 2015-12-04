@@ -128,7 +128,7 @@
                     $('#chartPanel').fadeIn("slow", function () {
                         $(this).show();
                     });
-                    $('#chartDiv').html('<img src="' + data.chart + '" />');
+                    $('#chartDiv').html('<img src="' + data.chart + '" id="barChart" />');
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     console.log(xhr.status);
@@ -146,10 +146,12 @@
         console.log('add to report');
          datasource = $('#datasourceDropdown').val();
         preset = $('#presetDropdown').val();
+         var filePath = document.getElementById('barChart').getAttribute('src');
+         console.log("File Path ="+ filePath);
         $.ajax({
             type: "POST",
             url: "PDFReportCreator",
-             data: {datasource:datasource, preset:preset},
+             data: {filePath:filePath},
             cache: false,
             datatype: "application/json",
             success: function (data, textStatus, request) {

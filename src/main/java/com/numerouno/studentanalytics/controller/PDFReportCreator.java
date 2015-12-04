@@ -47,28 +47,15 @@ public class PDFReportCreator extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
 
             log.info("In servlet");
-            String datasource = request.getParameter("datasource");
-            String preset = request.getParameter("preset");
-            String generatePage = request.getParameter("showChart");
-            int length = pdfList.size();
-            if (generatePage.equals("showChart") && generatePage != null) {
-                log.info("In LOOP");
-                reportList = PDFReportItemList.getItemList();
-            } else {
+            String filePath = request.getParameter("filePath");
+          
                 log.info("In ELSE");
-                String imageFileName = datasource.concat("_").concat(preset).concat("_bar.png");
-                reportList = createReportList(imageFileName);
-            }
+               
+                reportList = createReportList(filePath);
+           for(int i=0; i < reportList.size();i++){
+        log.info("List elements"+reportList.get(i));
+        }
 
-            JSONObject json = new JSONObject();
-            json.put("charts", reportList);
-//             for(int i=0; i< reportList.size();i++){
-//        json.put("charts_"+i,"<img src='"+ getServletContext().getContextPath() + "/images" + "/" + reportList.get(i)+"'>");
-//              }
-
-            response.setContentType("application/json");
-            response.setCharacterEncoding("utf-8");
-            out.println(json);
         }
     }
 
@@ -120,9 +107,9 @@ public class PDFReportCreator extends HttpServlet {
      * @return returns the list which are generated as PDF
      */
     public ArrayList<String> createReportList(String imageFileName) {
+        log.info("in createReportList");
         pdfList.add(imageFileName);
-        log.info(pdfList.get(0));
-        return PDFReportItemList.getItemList();
+        return pdfList;
     }
 
 }
