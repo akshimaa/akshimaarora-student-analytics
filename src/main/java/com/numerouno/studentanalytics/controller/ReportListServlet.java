@@ -4,6 +4,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+/**
+ * Controller package processes and produces the required results
+ */
 package com.numerouno.studentanalytics.controller;
 
 import java.io.IOException;
@@ -27,10 +30,10 @@ Logger log = Logger.getLogger(this.getClass().getName());
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
      *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @param request servlet request requests for the list of students
+     * @param response servlet response responds by generating the list
+     * @throws ServletException is thrown if a servlet-specific error occurs
+     * @throws IOException is thrown if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

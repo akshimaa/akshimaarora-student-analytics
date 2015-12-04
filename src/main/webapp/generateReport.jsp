@@ -9,6 +9,7 @@
 <div class="row">
     <div class="col-lg-12">
         <h1 class="page-header">Report Generator</h1>
+        <p>Below is a list of charts that will be exported when the 'Generate Report' button is pressed.</p>
     </div>
 </div>
 <div class="row" id = "progressBarOverview">
@@ -37,6 +38,7 @@
        
     </div></div>
 <script>
+
  $(document).ready(function () {
 
             $.ajax({
@@ -47,12 +49,13 @@
                 success: function (data, textStatus, request) {
                   console.log("This is the response "+data['pdfChartList']);
                   $.each(data['pdfChartList'],function(index, value){
-                      imageElem = '<div class="row"><input type="checkbox" id="listCheckBox'+index+'"><img src="'+value+'" id="listImage'+index+'" height="40%" width="40%"></div>';
+                      imageElem = '<div class="row"><input type="checkbox" class="ads_Checkbox" id="listCheckBox'+index+'"><img src="'+value+'" id="listImage'+index+'" height="40%" width="40%"></div>';
                       $('#reportList').append(imageElem);
-                      
+                   
                   });
                   $('#generateReport').html('<button id="generateReportButton" onclick="generateReport();" class="btn btn-default"><span><img src="images/glyphicons-151-edit.png" height="15px" width="15px" style="margin-right: 6px"></span>  Generate Report!</button>')
                   $('#progressBarOverview').hide();
+                 
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     $('#progressBarOverview').hide();
@@ -63,12 +66,33 @@
 
         
     });
-    
-
-    
+   
     function generateReport()
     {
-        console.log("Pass selected checkbox images to the report generator pdf");
+console.log("Pass selected checkbox images to the report generator pdf");
+
+var selectedList="";
+$('.ads_Checkbox:checked').each(function(index){   
+    console.log("index====="+index);
+        var values=$('#listImage'+index).attr('src');
+        selectedList = values+","+selectedList;
+        console.log("final===="+selectedList);
+    });
+        
+        $.ajax({
+            type: "POST",
+            url: "ReportGenerator",
+           data: {selectedList:selectedList},
+            cache: false,
+            datatype: "application/json",
+            success: function (data, textStatus, request) {
+               window.open('ReportGenerator');
+                
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+               
+            }
+        });
     }
 
 </script>
