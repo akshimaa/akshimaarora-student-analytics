@@ -10,6 +10,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 
+<link href="css/cmu-dropdowns.css" rel="stylesheet" type="text/css">
 <div class="row">
     <div class="col-lg-12">
         <h1 class="page-header">Bar Chart</h1>
@@ -17,8 +18,22 @@
     </div>
     <!-- /.col-lg-12 -->
 </div>
-<link href="css/cmu-dropdowns.css" rel="stylesheet" type="text/css">
 
+<div class="row">
+    <div class="col-lg-12">
+                <div class="alert alert-danger" id="errorMessageOuterDiv" style="display:none;">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <div id="errorStatusDiv"></div>
+                </div>
+                <div class="alert alert-success" id="successMessageOuterDiv" style="display:none">
+                    <a href="#" class="close"  data-dismiss="alert" aria-label="close">&times;</a>
+                    <div id="successStatusDiv"></div>
+
+                </div>
+
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
 <div class="row">
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
@@ -71,7 +86,11 @@
                             <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu pull-right" role="menu">
+<<<<<<< 801391dfced39ab6389e09c703337dd40f704ab8
                             <li><a href="#">Add to Report</a>
+=======
+                            <li><a href="javascript:;" onclick="addToReport();">Add to Report</a>
+>>>>>>> ADD: error messages and success messages for barchart, TODO: add servlet url in ajax and pass img src
                             </li>
 
                         </ul>
@@ -122,6 +141,32 @@
         });
 
     });
+<<<<<<< 801391dfced39ab6389e09c703337dd40f704ab8
+=======
+    function addToReport()
+    {
+        console.log('add to report');
+        $.ajax({
+            type: "POST",
+            url: "AddToReport",
+            data: "",
+            cache: false,
+            datatype: "application/json",
+            success: function (data, textStatus, request) {
+                $('#successMessageOuterDiv').fadeIn("slow", function () {
+                    $('#successStatusDiv').html("<strong>SUCCESS!</strong>Sucessfully added the chart to report!");
+                    $(this).show();
+                });
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                $('#errorMessageOuterDiv').fadeIn("slow", function () {
+                    $('#errorStatusDiv').html("<strong>ERROR!</strong> Error adding the chart to report!");
+                    $(this).show();
+                });
+            }
+        });
+    }
+>>>>>>> ADD: error messages and success messages for barchart, TODO: add servlet url in ajax and pass img src
 </script>
 <!-- /.row -->
 
