@@ -5,26 +5,28 @@
  */
 package com.numerouno.studentanalytics.controller.analytics;
 
-import java.util.ArrayList;
 import weka.classifiers.Classifier;
 import weka.core.Instance;
 import weka.core.Instances;
 
 /**
  * Predictor is used to predict the inferences from the data
+ *
  * @author Teck Jan Low
  */
 public class Predictor {
-/**
- * Predicts from the data set
- * @param dataSet predicts from the instances of data
- * @param classifier classifies the data according to various models
- * @return returns the predictions
- */
+
+    /**
+     * Predicts from the data set
+     *
+     * @param dataSet predicts from the instances of data
+     * @param classifier classifies the data according to various models
+     * @return returns the predictions
+     */
     public static double[] predict(Instances dataSet, Classifier classifier) {
 
         double[] output = new double[dataSet.numInstances()];
-        
+
         try {
             for (int i = 0; i < dataSet.numInstances(); i++) {
 
@@ -34,11 +36,11 @@ public class Predictor {
 
             }
         } catch (Exception e) {
-            System.out.println("Exception:"+e.toString());
+            System.out.println("Exception:" + e.toString());
         }
 
         return output;
-        
+
     }
 
 }

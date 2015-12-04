@@ -5,14 +5,13 @@
  */
 package com.numerouno.studentanalytics.model;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
 
 /**
  *PDFReportItemList generates the pdf report of the bar and pie charts
- * @author Akshima
+ * @author Akshima Arora
  */
 public class PDFReportItemList {
     private static Set<String> itemList = new HashSet<>();

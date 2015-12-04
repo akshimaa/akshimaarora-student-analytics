@@ -10,7 +10,7 @@ import java.util.ArrayList;
 /**
  * Creates the list of students both existing as well as merged
  *
- * @author madan
+ * @author Madan Parameswaran
  */
 public class StudentList {
 
@@ -52,5 +52,4 @@ public class StudentList {
     public static void setMergedList(ArrayList<Student> mergedList) {
         StudentList.mergedList = mergedList;
     }
-
 }

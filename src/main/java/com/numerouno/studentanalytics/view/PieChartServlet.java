@@ -20,7 +20,6 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PiePlot3D;
 import org.jfree.data.general.DefaultPieDataset;
 import com.numerouno.studentanalytics.controller.CSVParser;
-import com.numerouno.studentanalytics.model.Student.*;
 import com.numerouno.studentanalytics.model.Student;
 import com.numerouno.studentanalytics.model.StudentList;
 import java.io.FileInputStream;
@@ -34,14 +33,17 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
-import javax.servlet.RequestDispatcher;
 import org.json.JSONObject;
 import org.ujmp.core.collections.list.ArrayIndexList;
 
 /**
  * PieChartServlet generates the pie chart with the inputs as given by the user.
  *
+<<<<<<< HEAD
  * @author Melissa, Akshima
+=======
+ * @author Melissa Burns and Akshima Arora
+>>>>>>> ed9c7c15508e8e634f993994fa8c81e1ca82e995
  */
 public class PieChartServlet extends HttpServlet {
 

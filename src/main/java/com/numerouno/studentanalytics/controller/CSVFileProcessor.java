@@ -16,17 +16,10 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.GetObjectRequest;
 import com.amazonaws.services.s3.model.PutObjectRequest;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.apache.commons.io.FileUtils;
-import org.ujmp.core.util.io.FileUtil;
-import weka.core.Instances;
-import weka.core.converters.ArffSaver;
-import weka.core.converters.CSVLoader;
 
 /**
  * Used to perform all Weka file parsing and data analytics functionality.
@@ -48,7 +41,6 @@ public class CSVFileProcessor {
         AmazonS3 s3client = new AmazonS3Client(credentials);
         s3client.getObject(new GetObjectRequest(bucket, key),
                 new File(filePath));
-
     }
 
     /**
@@ -68,7 +60,6 @@ public class CSVFileProcessor {
         } catch (AmazonClientException ex) {
             Logger.getLogger(CSVFileProcessor.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
 
     /**

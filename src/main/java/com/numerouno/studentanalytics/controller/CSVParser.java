@@ -76,7 +76,5 @@ public class CSVParser implements Serializable {
         loader.reset();
 
         return data;
-
     }
-
 }
