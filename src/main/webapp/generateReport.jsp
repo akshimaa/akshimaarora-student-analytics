@@ -24,7 +24,7 @@
 </div>
 <script>
  $(document).ready(function () {
-        $('#showChart').click(function () {
+       
           
             console.log("showChart button clicked!");
            
@@ -38,11 +38,8 @@
                 cache: false,
                 datatype: "application/json",
                 success: function (data) {
-                   // alert(data.itemList.length);
-                     
-                     alert("in success");
-                     alert(data);
-                   
+                  console.log(data);
+                  
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     console.log(xhr.status);
@@ -50,8 +47,7 @@
                 }
             });
 
-        });
-
+        
     });
 
    
