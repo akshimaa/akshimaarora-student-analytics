@@ -123,7 +123,7 @@
                         $('#chartPanel').fadeIn("slow", function () {
                         $(this).show();
                     });
-                    $('#chartDiv').html('<img src="' + data.chart + '" />');},
+                    $('#pieChartDiv').html('<img src="' + data.chart + '" />');},
             error: function (xhr, ajaxOptions, thrownError) {
                 console.log(xhr.status);
                 console.log(thrownError);
