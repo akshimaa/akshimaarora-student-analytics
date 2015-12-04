@@ -61,6 +61,7 @@ public class CSVParser implements Serializable {
     }
 
     /**
+     * parseIntoInstances method loads the data from the dataset in instances.
      *
      * @param inputStream is used for setting the source from the input stream.
      * @return returns the data that is parsed into the CSVloader
