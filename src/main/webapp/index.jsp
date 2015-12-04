@@ -31,7 +31,8 @@
         <!-- Custom CSS -->
         <link href="css/sb-admin-2.css" rel="stylesheet">
 
-
+          <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+            <link rel="stylesheet" href="css/bootstrap-select.css">
         <!-- Custom Fonts -->
         <link href="css/font-awesome.css" rel="stylesheet" type="text/css">
 
@@ -181,7 +182,7 @@
     <!-- Morris Charts JavaScript -->
     <script src="js/raphael-min.js"></script>
 
-
+    <script src="js/bootstrap-select.js"></script>
     <!-- Custom Theme JavaScript -->
     <script src="js/sb-admin-2.js"></script>
 
@@ -200,7 +201,8 @@
                                         }
 
                                         $(document).ready(function () {
-                                            console.log("upload.jsp is ready!");
+                                            
+                                           
                                             $('#uploadToS3Button').click(function () {
                                                 alert("TEST");
                                                 console.log($('#uploadMergeCheckbox').is(":checked"));

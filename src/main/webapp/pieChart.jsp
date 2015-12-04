@@ -22,7 +22,7 @@
         <div class="btn-group">
             <div class="dropdown">
                 
-                <select style="width: 123px;" name=""  id="datasourceDropdown">
+                <select class="selectpicker" style="width: 123px;" name=""  id="datasourceDropdown">
                    
                     <option value="OriginalData"><a href="#">OriginalData</a></option>
                     <option value="UploadedData"><a href="#">UploadedData</a></option>
@@ -30,7 +30,7 @@
                 </select>
             </div>
            
-                <select style="width: 123px;" name="" value="Select2" id="presetDropdown">
+                <select class="selectpicker" style="width: 123px;" name="" id="presetDropdown">
                    <option value="attendanceType"><a href="#">Attendance Type</a></option>
                     <option value="courseInformation"><a href="#">Course Information</a></option>
                     <option value="degreeLevel"><a href="#">Degree Level</a></option>
@@ -43,11 +43,12 @@
                 </select>
             </div>
          </div>
-    </div>
+   
 
  <div class="row">
      <button id="generatePie"  class="btn btn-default">Generate Pie!</button>
  </div>
+     </div>
 
 <div id ="pieChartDiv" class="row" >
 
@@ -60,6 +61,7 @@
 </form>
 <script>
     $( document ).ready(function() {
+        $('.selectpicker').selectpicker();
     $('#generatePie').click(function(){
         $('#pieChartDiv').html('');
         console.log("generate button clicked!");
