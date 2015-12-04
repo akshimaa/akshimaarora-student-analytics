@@ -263,13 +263,12 @@ public class BarChartServlet extends HttpServlet {
     private JFreeChart getComplexChart(HttpServletRequest request) throws FileNotFoundException {
           String preset= request.getParameter("preset");
           String[] presetArguments = preset.split("_");
-          String argumentOne = presetArguments[0];//degee evel
+          String argumentOne = presetArguments[0];
           String argumentTwo = presetArguments[1];
           Set argumentOneSet = new HashSet<>();
           Set argumentTwoSet = new HashSet<>();
           
-          //if(argumentOne.equals(UNDERGRADUATE)){
-       
+   
         String datasource= request.getParameter("datasource");
         
          ArrayList<Student> studentList=new ArrayIndexList<>();
