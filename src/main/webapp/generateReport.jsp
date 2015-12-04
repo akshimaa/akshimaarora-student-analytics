@@ -6,40 +6,34 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
-    </head>
-    <body>
-        <h1>Generate PDF Report!</h1>
-        <form action="ReportGenerator" method="POST">
-            <input type="button" value="Show Added Charts" id="showChart" name="showChart">
-        </form>
-    </body>
-   </html>
-
-<div id="chartDiv">
-    
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">Report Generator</h1>
+    </div>
 </div>
+<div class="row" id = "progressBarOverview">
+    <div class="col-md-6 col-md-offset-3" style="margin-top: 50px">
+        <div class="progress">
+            <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar"
+                 aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:100%">
+                Loading
+            </div>
+        </div>
+    </div></div>
 <script>
  $(document).ready(function () {
 
-            console.log("showChart button clicked!");
-
-            showChart = "showChart";
             $.ajax({
                 type: "POST",
-                url: "/StudentAnalytics/ReportListServlet",
-                data: {},
-                dataType:'json',
-                cache: false,
-                datatype: "application/json",
+                url: "/StudentAnalytics/ReportList",
+                data: "",
+                dataType:'application/json',
                 success: function (data) {
-                  console.log(data);
-                  
+                  console.log("This is the response "+data);
+                  $('#progressBarOverview').hide();
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
+                    $('#progressBarOverview').hide();
                     console.log(xhr.status);
                     console.log(thrownError);
                 }
