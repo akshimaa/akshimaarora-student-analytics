@@ -37,7 +37,10 @@ import weka.core.converters.CSVLoader;
 public class CSVFileProcessor {
 
     /**
-     * Reads from the Amazon AWS S3 bucket and saves the file as a temp file.
+     * reads the data from amazon S3 into the file
+     * @param bucket data is written from the bucket to the file 
+     * @param key key is used to compare the value
+     * @param filePath stores the location of file
      */
     public static void readFromS3(String bucket, String key, String filePath) {
         //student-alpha, STUDENT.dat, 
@@ -69,9 +72,9 @@ public class CSVFileProcessor {
     }
 
     /**
-     * Merges the remote and local .csv files and saves it as a temp file.
-     *
-     * @param filePath The file path of the local .csv file
+     * merges the uploaded data and original data and processes the data
+     * @param inputStream input stream gives the data to be processed. 
+     * @param path path defines the location of the file
      */
     public static void mergeCSV(InputStream inputStream, String path) {
 
