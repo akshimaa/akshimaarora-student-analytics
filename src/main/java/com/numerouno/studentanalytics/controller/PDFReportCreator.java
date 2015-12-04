@@ -10,6 +10,8 @@ import com.numerouno.studentanalytics.view.BarChartServlet;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -27,7 +29,7 @@ public class PDFReportCreator extends HttpServlet {
 
     Logger log = Logger.getLogger(PDFReportCreator.class.getName());
 
-    public static ArrayList<String> pdfList = PDFReportItemList.getItemList();
+    public static Set<String> pdfList = PDFReportItemList.getItemList();
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,7 +44,7 @@ public class PDFReportCreator extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ArrayList<String> reportList = new ArrayList<>();
+        Set<String> reportList = new HashSet<>();
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
 
@@ -53,7 +55,7 @@ public class PDFReportCreator extends HttpServlet {
                
                 reportList = createReportList(filePath);
            for(int i=0; i < reportList.size();i++){
-        log.info("List elements"+reportList.get(i));
+        log.info("List elements: "+reportList);
         }
 
         }
@@ -106,7 +108,7 @@ public class PDFReportCreator extends HttpServlet {
      * list to be generated as a PDF
      * @return returns the list which are generated as PDF
      */
-    public ArrayList<String> createReportList(String imageFileName) {
+    public Set<String> createReportList(String imageFileName) {
         log.info("in createReportList");
         pdfList.add(imageFileName);
         return pdfList;

@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.numerouno.studentanalytics.model.PDFReportItemList;
+import java.util.logging.Logger;
 import org.json.JSONObject;
 /**
  *
@@ -21,7 +22,7 @@ import org.json.JSONObject;
  */
 @WebServlet(name = "ReportListServlet", urlPatterns = {"/ReportList"})
 public class ReportListServlet extends HttpServlet {
-
+Logger log = Logger.getLogger(this.getClass().getName());
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -34,7 +35,7 @@ public class ReportListServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        
+        log.info((String)PDFReportItemList.getItemList().toArray()[0]);
         
         JSONObject json = new JSONObject();
         json.put("pdfChartList", PDFReportItemList.getItemList().toArray());
