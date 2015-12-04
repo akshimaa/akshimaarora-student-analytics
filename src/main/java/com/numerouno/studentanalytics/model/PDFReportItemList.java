@@ -23,7 +23,4 @@ public class PDFReportItemList {
         PDFReportItemList.itemList = itemList;
     }
 
-   
-
-    
 }
