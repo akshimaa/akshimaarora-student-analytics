@@ -14,9 +14,9 @@
                     <h1 class="page-header">Dashboard</h1>
                 </div>
             </div>
-
-<div  id="chartPanel" class="row">
-    <div class="col-lg-6">
+<div class="row"><div class="col-lg-12">
+    <div  id="chartPanel">
+         <div class="col-lg-6">
         <div class="panel panel-default">
             <div class="panel-heading">
                 Bar Chart Visualization
@@ -45,11 +45,46 @@
         </div>
 
     </div>
-</div>
+    </div>
+
+    <div  id="pieChartPanel" >
+        <div class="col-lg-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Generated Pie Chart
+                <div class="pull-right">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                            Actions
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu pull-right" role="menu">
+                            <li id="pieChoiceOne" value="gender"><a href="javascript:;" onclick = "generateOveriewPie('gender');">Enrollment by gender</a></li>
+                            <li id="pieChoiceTwo" value="entranceExam"><a href="javascript:;" onclick = "generateOveriewPie('entranceExam');">Enrollment by entrance exam</a></li>
+               
+                            <li class="divider"></li>
+                            
+                            <li><a href="javascript:;" onclick="addToReport();">Add to Report</a>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div id ="pieChartDiv" class="row" style="margin-left: 8%;">
+                </div>
+            </div>
+        </div>
+
+    </div>
+    </div>
+</div></div>        
 <script>
 
     $(document).ready(function () {
         $('#chartPanel').hide();
+         $('#pieChartPanel').hide();
         $('.selectpicker').selectpicker();
         console.log();
         
@@ -57,6 +92,7 @@
            
             preset = $('#barChoiceOne').attr('value');
 
+            //bar chart ajax
             $.ajax({
                 type: "POST",
                 url: "/StudentAnalytics/BarChart",
@@ -73,10 +109,28 @@
                     console.log(xhr.status);
                     console.log(thrownError);
                 }
+                 });
+            //pie chart ajax     
+            $.ajax({
+                type: "POST",
+                url: "/StudentAnalytics/PieChart",
+                data: {datasource: 'OriginalData', preset: preset},
+                cache: false,
+                datatype: "application/json",
+                success: function (data, textStatus, request) {
+                    $('#pieChartPanel').fadeIn("fast", function () {
+                        $(this).show();
+                    });
+                    $('#pieChartDiv').html('<img src="' + data.chart + '" height="300" width="400" />');
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    console.log(xhr.status);
+                    console.log(thrownError);
+                }
          
         });
 
-    });
+});
 
     function generateOveriewBar(value)
     {
@@ -90,7 +144,7 @@
                 datatype: "application/json",
                 success: function (data, textStatus, request) {
                     $('#chartDiv').fadeTo("slow",1.0);
-                    $('#chartDiv').html('<img src="' + data.chart + '" height="95%" width="95%" />');
+                    $('#chartDiv').html('<img src="' + data.chart + '" height="300" width="400" />');
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     console.log(xhr.status);
@@ -99,5 +153,52 @@
          
         });
     }
-
+    
+        function generateOveriewPie(value)
+    {
+        $('#pieChartDiv').fadeTo("fast",0.0);
+        console.log(value);
+                    $.ajax({
+                type: "POST",
+                url: "PieChart",
+                data: {datasource: 'OriginalData', preset: value},
+                cache: false,
+                datatype: "application/json",
+                success: function (data, textStatus, request) {
+                    $('#pieChartDiv').fadeTo("slow",1.0);
+                    $('#pieChartDiv').html('<img src="' + data.chart + '" height="300" width="400" />');
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    console.log(xhr.status);
+                    console.log(thrownError);
+                }
+         
+        });
+    }
+    
+    function addToReport()
+    {
+        console.log('add to report');
+         datasource = $('#datasourceDropdown').val();
+        preset = $('#presetDropdown').val();
+        $.ajax({
+            type: "POST",
+            url: "PDFReportCreator",
+             data: {datasource:datasource, preset:preset},
+            cache: false,
+            datatype: "application/json",
+            success: function (data, textStatus, request) {
+                $('#successMessageOuterDiv').fadeIn("slow", function () {
+                    $('#successStatusDiv').html("<strong>SUCCESS!</strong>Sucessfully added the chart to report!");
+                    $(this).show();
+                });
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                $('#errorMessageOuterDiv').fadeIn("slow", function () {
+                    $('#errorStatusDiv').html("<strong>ERROR!</strong> Error adding the chart to report!");
+                    $(this).show();
+                });
+            }
+        });
+    }
 </script>
