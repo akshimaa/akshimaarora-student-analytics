@@ -172,6 +172,9 @@
                     <c:when test="${content eq 'pieChart'}">
                         <jsp:include page="pieChart.jsp"></jsp:include>
                     </c:when>
+                    <c:when test="${content eq 'reportGenerator'}">
+                        <jsp:include page="pieChart.jsp"></jsp:include>
+                    </c:when>
                     <c:otherwise>
                         <jsp:include page="overview.jsp"></jsp:include>
                     </c:otherwise>
@@ -243,16 +246,20 @@
                                             });
                                         });
 
-                                        
-function logout(){
- comsole.log("in logout func");
-FB.logout(function(response) {
-            // user is now logged out
-            var url = $(this).attr('href');
-            window.location= url;
-window.location.href = 'http://www.example.com'
-  });
- }
+
+                                        function logout() {
+                                            comsole.log("in logout func");
+                                            FB.logout(function (response) {
+                                                // user is now logged out
+                                                var url = $(this).attr('href');
+                                                window.location = url;
+
+
+
+                                            });
+
+                                        }
+
     </script>
 
 </body>
