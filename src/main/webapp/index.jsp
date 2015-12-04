@@ -245,7 +245,7 @@ FB.logout(function(response) {
             // user is now logged out
             var url = $(this).attr('href');
             window.location= url;
-
+window.location.href = 'http://www.example.com'
 
         });
 
