@@ -14,7 +14,7 @@
 <div class="row" id = "progressBarOverview">
     <div class="col-md-6 col-md-offset-3" style="margin-top: 50px">
         <div class="progress">
-            <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar"
+            <div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar"
                  aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:100%">
                 Loading
             </div>
