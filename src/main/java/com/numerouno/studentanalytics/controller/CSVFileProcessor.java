@@ -78,22 +78,17 @@ public class CSVFileProcessor {
      */
     public static void mergeCSV(InputStream inputStream, String path) {
 
-        // Specify import file format
         FileFormat csv = FileFormat.CSV;
-        // create new File objects
         File remoteFile = new File(path + "/remote.csv");
         File mergedFile = new File(path + "/merge.csv");
 
         try {
-            //FileUtils.copyInputStreamToFile(inputStream, localFile);
-            // Import .csv as matrices
             Matrix local = Matrix.Factory.importFrom().stream(inputStream).asDenseCSV();
             Matrix temp = local.deleteRows(Calculation.Ret.NEW, 0);
             readFromS3("student-alpha", "STUDENT.csv", path + "/remote.csv");
             Matrix remote = Matrix.Factory.importFrom().file(remoteFile).asDenseCSV();
             Matrix merged = remote.appendVertically(Calculation.Ret.NEW, temp);
 
-            // Export merged matrix as .csv
             merged.exportTo().file(mergedFile).asDenseCSV(',');
             writeIntoS3("student-gamma", "student-merged.csv", mergedFile);
 

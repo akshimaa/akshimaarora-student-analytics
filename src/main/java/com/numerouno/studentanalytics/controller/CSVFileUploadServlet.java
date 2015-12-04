@@ -46,7 +46,6 @@ public class CSVFileUploadServlet extends HttpServlet {
 
             Logger log = Logger.getLogger(CSVFileUploadServlet.class.getName());
             log.info(req.getPart("file").getSubmittedFileName().concat(" file uploaded successfully!"));
-            // CSVFileProcessor.writeIntosS3(req.getPart("file").getInputStream());
             RequestDispatcher requestDispatcher = req.getRequestDispatcher("/index");
 
             try {
@@ -64,19 +63,15 @@ public class CSVFileUploadServlet extends HttpServlet {
                 if (req.getParameter("merge").equals("0")) {
                     req.setAttribute("status", req.getPart("file").getSubmittedFileName() + " has been parsed and uploaded successfully");
                 } else if (req.getParameter("merge").equals("1")) {
-//                if (req.getParameter("merge").equals("1")) {
+
                     CSVFileProcessor.mergeCSV(req.getPart("file").getInputStream(), getServletContext().getRealPath("/Temp")); //merge to exsiting data
                     log.info("File merge successful!");
                     req.setAttribute("status", req.getPart("file").getSubmittedFileName() + " has been parsed, merged and uploaded successfully");
                 }
-//                } else {
-//                    req.setAttribute("status", req.getPart("file").getSubmittedFileName() + " has been parsed and uploaded successfully");
-//                }
 
             } catch (Exception ex) {
                 Logger.getLogger(CSVFileUploadServlet.class.getName()).log(Level.SEVERE, null, ex);
                 req.setAttribute("status", "Oops something went wrong! Server side error while attempting to parse and upload");
-
             }
 
             requestDispatcher.forward(req, resp);
