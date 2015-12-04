@@ -53,7 +53,7 @@
                       $('#reportList').append(imageElem);
                    
                   });
-                  $('#generateReport').html('<button id="generateReportButton" onclick="generateReport();" class="btn btn-default"><span><img src="images/glyphicons-151-edit.png" height="15px" width="15px" style="margin-right: 6px"></span>  Generate Report!</button>')
+                  $('#generateReport').html('<form id="reportForm" action="ReportGenerator" method="POST"><input type="hidden" id="selectedList" name="selectedList"><input type="button" onClick="generateReport();" value="Generate Report"  class="btn btn-default"></form>');
                   $('#progressBarOverview').hide();
                  
                 },
@@ -78,21 +78,23 @@ $('.ads_Checkbox:checked').each(function(index){
         selectedList = values+","+selectedList;
         console.log("final===="+selectedList);
     });
+    $('#selectedList').val(selectedList);
+    $('#reportForm').submit();
         
-        $.ajax({
-            type: "POST",
-            url: "ReportGenerator",
-           data: {selectedList:selectedList},
-            cache: false,
-            datatype: "application/json",
-            success: function (data, textStatus, request) {
-               
-                
-            },
-            error: function (xhr, ajaxOptions, thrownError) {
-               
-            }
-        });
+//        $.ajax({
+//            type: "POST",
+//            url: "ReportGenerator",
+//           data: {selectedList:selectedList},
+//            cache: false,
+//            datatype: "application/json",
+//            success: function (data, textStatus, request) {
+//               
+//                
+//            },
+//            error: function (xhr, ajaxOptions, thrownError) {
+//               
+//            }
+//        });
     }
 
 </script>

@@ -93,8 +93,6 @@ public class ReportGeneratorServlet extends HttpServlet {
 
         response.setContentType("application/pdf");
 
-        response.addHeader("Content-Disposition", "attachment; filename=" + "report.pdf");
-
         response.setContentLength((int) saveFile.length());
 
         FileInputStream fileInputStream = new FileInputStream(saveFile);
