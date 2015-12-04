@@ -33,12 +33,12 @@
                     <!--</div>-->
 
                     <input type="hidden" name="classifier" id="classifier" />
-                    <input id="upload-input" class="form-control" value="file" type="file" name="file" accept=".csv" style="width: 250px;float: left;margin-right: 16px"/>
+                    <input id="upload-input" class="form-control" value="file" type="file" name="analysisFile" accept=".csv" style="width: 250px;float: left;margin-right: 16px"/>
                     <select class="selectpicker cmu-dropdown" style="width: 123px;float: left;" name="" value="1" id="dropmenu">
                         <option value="1"><a href="#">MultilayerPerceptron</a></option>
                         <option value="2"><a href="#">LinearRegression</a></option>
                     </select>
-                    
+
 
                     <div class="btn-group bootstrap-select cmu-dropdown">
                         <button id="analyseData"  class="btn btn-default" style="float: left;margin-left: 14px"><span><img src="images/glyphicons-42-charts.png" height="15px" width="15px" style="margin-right: 6px;"></span>  Analyze Data!</button>
@@ -51,46 +51,48 @@
 </div>
 
 
+<div  id="analysisChartPanel" class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Generated Bar Chart
+                <div class="pull-right">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                            Actions
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu pull-right" role="menu">
 
 
+                            <li><a href="javascript:;" onclick="addToReport();">Add to Report</a>
 
+                            </li>
 
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div id ="analysisChartDiv" class="row" style="margin-left: 8%;">
+                </div>
+            </div>
+        </div>
 
-
-<div class="input-group custom-search-form">
-    <form id="analysisInput" action="" method="post" enctype="multipart/form-data">
-        <input id="upload-input" class="form-control" value="file" type="file" name="file" accept=".csv" style="width: 250px"/>
-        <input type="hidden" name="classifier" id="classifier" />
-        <select style="width: 180px;" name=""  value="1" id="dropmenu">
-            <option value="1"><a href="#">MultilayerPerceptron</a></option>
-            <option value="2"><a href="#">LinearRegression</a></option>
-        </select>
-        <span class="input-group-btn">
-            <button class="btn btn-default" id="analyseData" value="analyze" type="button">
-                <i class="fa fa-upload"></i>
-            </button>
-        </span>
-    </form>
+    </div>
 </div>
+
 
 <p></p>
 
-<div id="analysisChartDiv" class="row">
-    <c:set var="chart" scope="request" value="${requestScope.chart}" /> 
-    <c:set var="contextPath" scope="request" value="${requestScope.contextPath}"/>
-    <c:choose>
-        <c:when test="${chart != null}">
-            <img src="${contextPath}/images/${chart}">
-        </c:when>
-    </c:choose>
-</div>
+
 
 
 
 <script>
     $(document).ready(function () {
 
-        $('#chartPanel').hide();
+        $('#analysisChartPanel').hide();
         $('.selectpicker').selectpicker();
 
         $('#analyseData').click(function () {
@@ -100,7 +102,10 @@
             var uploadFileName = $("#upload-input").val();
             console.log(uploadFileName);
             if (uploadFileName == "") { // returns true if the string is not empty
-                $('#noFileSelectedError').show();
+                $('#fileUploadFailureDisplay').fadeIn("slow", function () {
+                    $('#uploadErrorMessage').html("<strong>ERROR!</strong> No file has been selected.");
+                    $(this).show();
+                });
             } else {
 
                 classifier = $('#dropmenu').val();
@@ -116,8 +121,10 @@
                     contentType: false,
                     processData: false,
                     success: function (data, textStatus, request) {
-
-                        $('#analysisChartDiv').html('<img src="' + data.chart + '" />');
+                        $('#analysisChartPanel').fadeIn("slow", function () {
+                            $(this).show();
+                        });
+                        $('#analysisChartDiv').html('<img src="' + data.chart + '" id="histogram" />');
                     },
                     error: function (xhr, ajaxOptions, thrownError) {
                         console.log(xhr.status);
