@@ -10,6 +10,7 @@ import com.amazonaws.auth.profile.ProfileCredentialsProvider;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.GetObjectRequest;
+import static com.numerouno.studentanalytics.controller.CSVFileProcessor.readFromS3;
 import java.io.IOException;
 import java.io.File;
 import java.util.logging.Level;
@@ -27,9 +28,11 @@ import org.jfree.data.general.DefaultPieDataset;
 import com.numerouno.studentanalytics.controller.CSVParser;
 import com.numerouno.studentanalytics.model.Student.*;
 import com.numerouno.studentanalytics.model.Student;
+import com.numerouno.studentanalytics.model.StudentList;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -48,6 +51,7 @@ import org.ujmp.core.collections.list.ArrayIndexList;
 public class PieChartServlet extends HttpServlet {
 
     Logger log = Logger.getLogger(PieChartServlet.class.getName());
+    ArrayList<Student> studentList = null;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -135,18 +139,20 @@ public class PieChartServlet extends HttpServlet {
     private JFreeChart getChart(HttpServletRequest request) throws FileNotFoundException {
         String preset = request.getParameter("preset");
         String datasource = request.getParameter("datasource");
-        ArrayList<Student> studentList = new ArrayIndexList<>();
+        
+        studentList = getStudentListFromDataSource(datasource);
+        //ArrayList<Student> studentList = new ArrayIndexList<>();
 
-        try {
-
-            FileInputStream fis = new FileInputStream(getServletContext().getRealPath("STUDENT.dat"));
-            ObjectInputStream in = new ObjectInputStream(fis);
-            studentList = (ArrayList<Student>) in.readObject();
-        } catch (IOException ex) {
-            Logger.getLogger(PieChartServlet.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(PieChartServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        try {
+//
+//            FileInputStream fis = new FileInputStream(getServletContext().getRealPath("STUDENT.dat"));
+//            ObjectInputStream in = new ObjectInputStream(fis);
+//            studentList = (ArrayList<Student>) in.readObject();
+//        } catch (IOException ex) {
+//            Logger.getLogger(PieChartServlet.class.getName()).log(Level.SEVERE, null, ex);
+//        } catch (ClassNotFoundException ex) {
+//            Logger.getLogger(PieChartServlet.class.getName()).log(Level.SEVERE, null, ex);
+//        }
 
         DefaultPieDataset dataset = new DefaultPieDataset();
 
@@ -166,7 +172,7 @@ public class PieChartServlet extends HttpServlet {
             String kvpMap = key + ": " + val;
 
             dataset.setValue(key.toString(), (Integer) val);
-            //log.info(kvpMap);
+            log.info(kvpMap);
         }
         JFreeChart chart = ChartFactory.createPieChart3D(
                 "Pie Charts", // chart title                   
@@ -212,18 +218,19 @@ public class PieChartServlet extends HttpServlet {
         Set argumentThreeSet = new HashSet<>();
         Set argumentFourSet = new HashSet<>();
         String datasource = request.getParameter("datasource");
-        ArrayList<Student> studentList = new ArrayIndexList<>();
+        //ArrayList<Student> studentList = new ArrayIndexList<>();
 
-        switch (datasource) {
-            case "OriginalData":
-
-                studentList = getDataSource("/STUDENT.dat");
-                break;
-            case "UploadedData":
-                break;
-            case "MergedData":
-                break;
-        }
+        studentList = getStudentListFromDataSource(datasource);
+//        switch (datasource) {
+//            case "OriginalData":
+//
+//                studentList = getDataSource("/STUDENT.dat");
+//                break;
+//            case "UploadedData":
+//                break;
+//            case "MergedData":
+//                break;
+//        }
 
         DefaultPieDataset dataset = new DefaultPieDataset();
 
@@ -234,13 +241,14 @@ public class PieChartServlet extends HttpServlet {
 
         Object valOne = mapOne.get(1);
         dataset.setValue(argumentOne, (Integer) valOne);
+        log.info(argumentOne);
         Object valTwo = mapTwo.get(1);
         dataset.setValue(argumentTwo, (Integer) valTwo);
         Object valThree = mapThree.get(1);
         dataset.setValue(argumentThree, (Integer) valThree);
         Object valFour = mapFour.get(1);
         dataset.setValue(argumentFour, (Integer) valFour);
-
+        //logger.
         JFreeChart chart = ChartFactory.createPieChart3D(
                 "Pie Charts", // chart title                   
                 dataset, // data 
@@ -328,6 +336,37 @@ public class PieChartServlet extends HttpServlet {
                 return o.toString();
             }
 
+        }
+    }
+    
+    private ArrayList<Student> getStudentListFromDataSource(String datasource) {
+        studentList = new ArrayIndexList<>();
+        switch (datasource) {
+            case "OriginalData":
+                readFromS3("student-alpha", "STUDENT.dat", getServletContext().getRealPath("/Temp") + "/" + "original.dat");
+                studentList = getDataSource("/Temp/original.dat");
+                break;
+            case "UploadedData":
+                studentList = StudentList.getList();
+                break;
+            case "MergedData":
+                parseMergedFile();
+                break;
+        }
+        return studentList;
+    }
+
+    private void parseMergedFile() {
+        readFromS3("student-gamma", "student-merged.csv", getServletContext().getRealPath("/Temp") + "/" + "merged.csv");
+        File mergedFile = new File(getServletContext().getRealPath("/Temp") + "/" + "merged.csv");
+
+        try (InputStream stream = new FileInputStream(mergedFile);) {
+
+            CSVParser.parseIntoPOJO(stream,"merged");
+            studentList = StudentList.getMergedList();
+
+        } catch (Exception ex) {
+            Logger.getLogger(BarChartServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
