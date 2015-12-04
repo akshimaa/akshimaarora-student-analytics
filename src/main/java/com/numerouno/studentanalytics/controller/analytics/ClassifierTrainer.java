@@ -13,11 +13,17 @@ import weka.core.Instances;
 import weka.classifiers.functions.MultilayerPerceptron;
 
 /**
- *
- * @author Dell
+ *ClassifierTrainer trains the model that is used in data mining
+ * @author Teck Jan Low
  */
 public class ClassifierTrainer {
-
+/**
+ * 
+ * @param data data on which machine learning process can be applied
+ * @param key is used to identify the model
+ * @return returns the data that is modified according to the machine learning process
+ * @throws Exception while working on the data mining process which might cause exceptions.
+ */
     public static Classifier trainClassifier(Instances data, int key) throws Exception {
 
         Classifier classifier;
