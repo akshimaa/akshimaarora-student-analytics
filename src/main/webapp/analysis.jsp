@@ -13,7 +13,7 @@
 <div class="row">
     <div class="col-lg-12">
         <h1 class="page-header">Predictive Analysis</h1>
-        <p>This is the predictive analytics tool to predict prospective student GPA values.
+        <p>This is the predictive analytics tool to predict prospective student GPA values.</p>
         <p>Please select a .csv file and a type of predictive algorithm then press the submit button to continue.</p>
     </div>
     <!-- /.col-lg-12 -->

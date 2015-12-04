@@ -13,22 +13,23 @@
 <div class="row">
     <div class="col-lg-12">
         <h1 class="page-header">Bar Chart</h1>
-
+        <p>This is the predictive analytics tool to predict prospective student GPA values.
+        <p>Please select a .csv file and a type of predictive algorithm then press the submit button to continue.</p>
     </div>
     <!-- /.col-lg-12 -->
 </div>
 
 <div class="row">
     <div class="col-lg-12">
-                <div class="alert alert-danger" id="errorMessageOuterDiv" style="display:none;">
-                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                    <div id="errorStatusDiv"></div>
-                </div>
-                <div class="alert alert-success" id="successMessageOuterDiv" style="display:none">
-                    <a href="#" class="close"  data-dismiss="alert" aria-label="close">&times;</a>
-                    <div id="successStatusDiv"></div>
+        <div class="alert alert-danger" id="errorMessageOuterDiv" style="display:none;">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <div id="errorStatusDiv"></div>
+        </div>
+        <div class="alert alert-success" id="successMessageOuterDiv" style="display:none">
+            <a href="#" class="close"  data-dismiss="alert" aria-label="close">&times;</a>
+            <div id="successStatusDiv"></div>
 
-                </div>
+        </div>
 
     </div>
     <!-- /.col-lg-12 -->
@@ -144,14 +145,14 @@
     function addToReport()
     {
         console.log('add to report');
-         datasource = $('#datasourceDropdown').val();
+        datasource = $('#datasourceDropdown').val();
         preset = $('#presetDropdown').val();
-         var filePath = document.getElementById('barChart').getAttribute('src');
-         console.log("File Path ="+ filePath);
+        var filePath = document.getElementById('barChart').getAttribute('src');
+        console.log("File Path =" + filePath);
         $.ajax({
             type: "POST",
             url: "PDFReportCreator",
-             data: {filePath:filePath},
+            data: {filePath: filePath},
             cache: false,
             datatype: "application/json",
             success: function (data, textStatus, request) {
