@@ -13,22 +13,23 @@
 <div class="row">
     <div class="col-lg-12">
         <h1 class="page-header">Bar Chart</h1>
-
+        <p>This is the bar chart generation tool to generate summary bar charts based on selected data.</p>
+        <p>Please select a data source and the desired variable combination then press the submit button to continue.</p>
     </div>
     <!-- /.col-lg-12 -->
 </div>
 
 <div class="row">
     <div class="col-lg-12">
-                <div class="alert alert-danger" id="errorMessageOuterDiv" style="display:none;">
-                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                    <div id="errorStatusDiv"></div>
-                </div>
-                <div class="alert alert-success" id="successMessageOuterDiv" style="display:none">
-                    <a href="#" class="close"  data-dismiss="alert" aria-label="close">&times;</a>
-                    <div id="successStatusDiv"></div>
+        <div class="alert alert-danger" id="errorMessageOuterDiv" style="display:none;">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <div id="errorStatusDiv"></div>
+        </div>
+        <div class="alert alert-success" id="successMessageOuterDiv" style="display:none">
+            <a href="#" class="close"  data-dismiss="alert" aria-label="close">&times;</a>
+            <div id="successStatusDiv"></div>
 
-                </div>
+        </div>
 
     </div>
     <!-- /.col-lg-12 -->
@@ -72,6 +73,15 @@
     </div>
 </div>
 
+<div class="row" id = "progressBarOverview">
+    <div class="col-md-6 col-md-offset-3" style="margin-top: 50px">
+        <div class="progress">
+            <div class="progress-bar progress-bar-striped active" role="progressbar"
+                 aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:100%">
+                Loading
+            </div>
+        </div>
+    </div></div>
 
 <div  id="chartPanel" class="row">
     <div class="col-lg-12">
@@ -106,12 +116,14 @@
 <script>
 
     $(document).ready(function () {
+        $('#progressBarOverview').hide();
         $('#chartPanel').hide();
         $('.selectpicker').selectpicker();
 
         $('#generateBar').click(function () {
             $('#chartPanel').hide();
             $('#chartDiv').html('');
+            $('#progressBarOverview').show();
             console.log("generate button clicked!");
             console.log($('#datasourceDropdown').val());
             console.log($('#presetDropdown').val());
@@ -125,12 +137,14 @@
                 cache: false,
                 datatype: "application/json",
                 success: function (data, textStatus, request) {
+                    $('#progressBarOverview').hide();
                     $('#chartPanel').fadeIn("slow", function () {
                         $(this).show();
                     });
                     $('#chartDiv').html('<img src="' + data.chart + '" id="barChart" />');
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
+                    $('#progressBarOverview').hide();
                     console.log(xhr.status);
                     console.log(thrownError);
                 }
@@ -144,25 +158,25 @@
     function addToReport()
     {
         console.log('add to report');
-         datasource = $('#datasourceDropdown').val();
+        datasource = $('#datasourceDropdown').val();
         preset = $('#presetDropdown').val();
-         var filePath = document.getElementById('barChart').getAttribute('src');
-         console.log("File Path ="+ filePath);
+        var filePath = document.getElementById('barChart').getAttribute('src');
+        console.log("File Path =" + filePath);
         $.ajax({
             type: "POST",
             url: "PDFReportCreator",
-             data: {filePath:filePath},
+            data: {filePath: filePath},
             cache: false,
             datatype: "application/json",
             success: function (data, textStatus, request) {
                 $('#successMessageOuterDiv').fadeIn("slow", function () {
-                    $('#successStatusDiv').html("<strong>SUCCESS!</strong>Sucessfully added the chart to report!");
+                    $('#successStatusDiv').html("<strong>SUCCESS!</strong> Added the chart to the preview report list!");
                     $(this).show();
                 });
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 $('#errorMessageOuterDiv').fadeIn("slow", function () {
-                    $('#errorStatusDiv').html("<strong>ERROR!</strong> Error adding the chart to report!");
+                    $('#errorStatusDiv').html("<strong>ERROR!</strong> Error adding the chart to the preview report list!");
                     $(this).show();
                 });
             }

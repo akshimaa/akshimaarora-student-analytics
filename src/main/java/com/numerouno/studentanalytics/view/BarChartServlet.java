@@ -197,40 +197,40 @@ public class BarChartServlet extends HttpServlet {
                 0.0f, 0.0f, Color.BLUE
         );
         final GradientPaint gp1 = new GradientPaint(
-                0.0f, 0.0f, Color.blue,
-                0.0f, 0.0f, Color.lightGray
+                0.0f, 0.0f, Color.red,
+                0.0f, 0.0f, Color.BLUE
         );
         final GradientPaint gp2 = new GradientPaint(
-                0.0f, 0.0f, Color.red,
-                0.0f, 0.0f, Color.lightGray
+                0.0f, 0.0f, Color.magenta,
+                0.0f, 0.0f, Color.BLUE
         );
         final GradientPaint gp3 = new GradientPaint(
                 0.0f, 0.0f, Color.yellow,
-                0.0f, 0.0f, Color.YELLOW
+                0.0f, 0.0f, Color.BLUE
         );
         final GradientPaint gp4 = new GradientPaint(
-                0.0f, 0.0f, Color.magenta,
-                0.0f, 0.0f, Color.MAGENTA
+                0.0f, 0.0f, Color.cyan,
+                0.0f, 0.0f, Color.BLUE
         );
         final GradientPaint gp5 = new GradientPaint(
-                0.0f, 0.0f, Color.cyan,
-                0.0f, 0.0f, Color.CYAN
+                0.0f, 0.0f, Color.orange,
+                0.0f, 0.0f, Color.BLUE
         );
         final GradientPaint gp6 = new GradientPaint(
-                0.0f, 0.0f, Color.orange,
-                0.0f, 0.0f, Color.ORANGE
+                0.0f, 0.0f, Color.black,
+                0.0f, 0.0f, Color.BLUE
         );
         final GradientPaint gp7 = new GradientPaint(
                 0.0f, 0.0f, Color.darkGray,
-                0.0f, 0.0f, Color.DARK_GRAY
+                0.0f, 0.0f, Color.BLUE
         );
         final GradientPaint gp8 = new GradientPaint(
                 0.0f, 0.0f, Color.pink,
-                0.0f, 0.0f, Color.PINK
+                0.0f, 0.0f, Color.BLUE
         );
         final GradientPaint gp9 = new GradientPaint(
                 0.0f, 0.0f, Color.black,
-                0.0f, 0.0f, Color.BLACK
+                0.0f, 0.0f, Color.BLUE
         );
 
         renderer.setSeriesPaint(0, gp0);
@@ -299,6 +299,7 @@ public class BarChartServlet extends HttpServlet {
                 count = 0;
             }
         }
+        
 
         final JFreeChart chart = ChartFactory.createBarChart(
                 Student.getLegend(preset), // chart title
@@ -331,44 +332,44 @@ public class BarChartServlet extends HttpServlet {
 
         // set up gradient paints for series...
         final GradientPaint gp0 = new GradientPaint(
-                0.0f, 0.0f, Color.red,
+                0.0f, 0.0f, Color.orange,
                 0.0f, 0.0f, Color.RED
         );
         final GradientPaint gp1 = new GradientPaint(
                 0.0f, 0.0f, Color.green,
-                0.0f, 0.0f, Color.GREEN
-        );
-        final GradientPaint gp2 = new GradientPaint(
-                0.0f, 0.0f, Color.blue,
                 0.0f, 0.0f, Color.BLUE
         );
+        final GradientPaint gp2 = new GradientPaint(
+                0.0f, 0.0f, Color.pink,
+                0.0f, 0.0f, Color.MAGENTA
+        );
         final GradientPaint gp3 = new GradientPaint(
-                0.0f, 0.0f, Color.yellow,
-                0.0f, 0.0f, Color.YELLOW
+                0.0f, 0.0f, Color.darkGray,
+                0.0f, 0.0f, Color.BLUE
         );
         final GradientPaint gp4 = new GradientPaint(
                 0.0f, 0.0f, Color.magenta,
-                0.0f, 0.0f, Color.MAGENTA
+                0.0f, 0.0f, Color.BLUE
         );
         final GradientPaint gp5 = new GradientPaint(
                 0.0f, 0.0f, Color.cyan,
-                0.0f, 0.0f, Color.CYAN
+                0.0f, 0.0f, Color.BLUE
         );
         final GradientPaint gp6 = new GradientPaint(
                 0.0f, 0.0f, Color.orange,
-                0.0f, 0.0f, Color.ORANGE
+                0.0f, 0.0f, Color.BLUE
         );
         final GradientPaint gp7 = new GradientPaint(
                 0.0f, 0.0f, Color.darkGray,
-                0.0f, 0.0f, Color.DARK_GRAY
+                0.0f, 0.0f, Color.BLUE
         );
         final GradientPaint gp8 = new GradientPaint(
                 0.0f, 0.0f, Color.pink,
-                0.0f, 0.0f, Color.PINK
+                0.0f, 0.0f, Color.BLUE
         );
         final GradientPaint gp9 = new GradientPaint(
                 0.0f, 0.0f, Color.black,
-                0.0f, 0.0f, Color.BLACK
+                0.0f, 0.0f, Color.BLUE
         );
 
         renderer.setSeriesPaint(0, gp0);
@@ -383,15 +384,18 @@ public class BarChartServlet extends HttpServlet {
         renderer.setSeriesPaint(9, gp9);
 
         if (argumentTwoSet.size() < 10) {
-            renderer.setSeriesItemLabelGenerator(0, new StandardCategoryItemLabelGenerator("{2}", NumberFormat.getInstance()));
-            renderer.setSeriesItemLabelsVisible(0, true);
+            for (int x = 0; x < 5; x++) {
+                renderer.setSeriesItemLabelGenerator(x, new StandardCategoryItemLabelGenerator("{2}", NumberFormat.getInstance()));
+                renderer.setSeriesItemLabelsVisible(x, true);
+            }
         }
+
         final CategoryAxis domainAxis = plot.getDomainAxis();
         domainAxis.setCategoryLabelPositions(
                 CategoryLabelPositions.createUpRotationLabelPositions(Math.PI / 4.0)
         );
-        // OPTIONAL CUSTOMISATION COMPLETED.
 
+        // OPTIONAL CUSTOMISATION COMPLETED.
         return chart;
 
     }
