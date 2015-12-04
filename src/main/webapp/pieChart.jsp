@@ -12,7 +12,8 @@
     <div class="row">
     <div class="col-lg-12">
         <h1 class="page-header">Pie Chart</h1>
-
+        <p>This is the pie chart generation tool to generate summary pie charts based on selected data.</p>
+        <p>Please select a data source and the desired variable combination then press the submit button to continue.</p>
     </div>
   
 </div>

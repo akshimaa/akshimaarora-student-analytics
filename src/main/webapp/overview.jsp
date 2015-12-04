@@ -12,6 +12,17 @@
 <div class="row">
     <div class="col-lg-12">
         <h1 class="page-header">Dashboard</h1>
+        <p>Welcome to the Carnegie Mellon University College Student Index!</p>
+
+        <p>This is a visualization and analytics tool for the examination of current and prospective student data.</p>
+        <p>The following features are currently implemented in this system:</p>
+        <ul><li>Data upload to AWS S3 bucket</li>
+            <li>Pie chart generation</li>
+            <li>Bar chart generation</li>
+            <li>Predictive analytics (prediction of prospective student GPA)</li>
+            <li>Summary .pdf report generation</li></ul>
+
+        <p>In order to upload a .csv file to the database, please use the file upload widget on the sidebar. If uploaded data is to be merged with existing data in AWS S3, please check the 'Merge into database' checkbox.</p>
     </div>
 </div>
 <div class="row" id = "progressBarOverview">
@@ -23,6 +34,7 @@
             </div>
         </div>
     </div></div>
+
 <div class="row"><div class="col-lg-12">
         <div  id="chartPanel">
             <div class="col-lg-6">
@@ -145,7 +157,7 @@
 
     function generateOveriewBar(value)
     {
-        
+
         $('#chartDiv').fadeTo("fast", 0.0);
         console.log(value);
         $.ajax({
@@ -155,7 +167,7 @@
             cache: false,
             datatype: "application/json",
             success: function (data, textStatus, request) {
-               
+
                 $('#chartDiv').fadeTo("slow", 1.0);
                 $('#chartDiv').html('<img src="' + data.chart + '" height="300" width="400" id="barChart"/>');
             },
@@ -169,7 +181,7 @@
 
     function generateOveriewPie(value)
     {
-       
+
         $('#pieChartDiv').fadeTo("fast", 0.0);
         console.log(value);
         $.ajax({
@@ -179,7 +191,7 @@
             cache: false,
             datatype: "application/json",
             success: function (data, textStatus, request) {
-               
+
                 $('#pieChartDiv').fadeTo("slow", 1.0);
                 $('#pieChartDiv').html('<img src="' + data.chart + '" height="300" width="400" id="pieChart" />');
             },
@@ -195,13 +207,13 @@
     {
         console.log('add to report');
         console.log(value);
-      var filePath= document.getElementById(value).getAttribute('src');
-         console.log("File Path ="+ filePath);
-        
+        var filePath = document.getElementById(value).getAttribute('src');
+        console.log("File Path =" + filePath);
+
         $.ajax({
             type: "POST",
             url: "PDFReportCreator",
-            data: {filePath:filePath},
+            data: {filePath: filePath},
             cache: false,
             datatype: "application/json",
             success: function (data, textStatus, request) {
