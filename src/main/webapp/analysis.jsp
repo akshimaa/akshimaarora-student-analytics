@@ -41,7 +41,7 @@
 
 
                     <div class="btn-group bootstrap-select cmu-dropdown">
-                        <button id="analyseData"  class="btn btn-default" style="float: left;margin-left: 14px"><span><img src="images/glyphicons-42-charts.png" height="15px" width="15px" style="margin-right: 6px;"></span>  Analyze Data!</button>
+                        <button type="button" id="analyseData"  class="btn btn-default" style="float: left;margin-left: 14px"><span><img src="images/glyphicons-42-charts.png" height="15px" width="15px" style="margin-right: 6px;"></span>  Analyze Data!</button>
                     </div>
                 </form>
             </div>
@@ -55,7 +55,7 @@
     <div class="col-lg-12">
         <div class="panel panel-default">
             <div class="panel-heading">
-                Generated Bar Chart
+                Distribution of analyzed data:
                 <div class="pull-right">
                     <div class="btn-group">
                         <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
