@@ -69,7 +69,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="index"><img src="images/cmulogo.jpg"  width="30%"/></a>
+                    <a class="navbar-brand" href="index"><img src="images/WebAppHeader.png"  width="30%"/></a>
                 </div>
                 <!-- /.navbar-header -->
 
