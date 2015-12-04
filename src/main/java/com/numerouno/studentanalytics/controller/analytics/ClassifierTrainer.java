@@ -5,9 +5,7 @@
  */
 package com.numerouno.studentanalytics.controller.analytics;
 
-import com.numerouno.studentanalytics.controller.CSVParser;
 import weka.classifiers.Classifier;
-import weka.classifiers.Evaluation;
 import weka.classifiers.functions.LinearRegression;
 import weka.core.Instances;
 import weka.classifiers.functions.MultilayerPerceptron;
