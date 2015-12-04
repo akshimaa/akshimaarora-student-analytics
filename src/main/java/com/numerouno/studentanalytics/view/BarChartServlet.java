@@ -37,21 +37,17 @@ import com.numerouno.studentanalytics.model.StudentList;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.lang.Integer;
 import java.text.NumberFormat;
 import java.util.HashSet;
-import java.util.Locale;
 import java.util.Set;
-import org.apache.commons.io.IOUtils;
 import org.jfree.chart.labels.StandardCategoryItemLabelGenerator;
 import org.json.JSONObject;
 
 /**
  * BarChartServlet
  *
- * @author madan
+ * @author Madan Parameswaran and Melissa Burns
  */
 public class BarChartServlet extends HttpServlet {
 
@@ -99,7 +95,8 @@ public class BarChartServlet extends HttpServlet {
     /**
      * Handles the HTTP <code>GET</code> method.
      *
-     * @param request servlet request requests for the data to generate the charts
+     * @param request servlet request requests for the data to generate the
+     * charts
      * @param response servlet response responds by processing the request
      * @throws ServletException is thrown if a servlet-specific error occurs
      * @throws IOException is thrown if an I/O error occurs
@@ -135,7 +132,8 @@ public class BarChartServlet extends HttpServlet {
     }// </editor-fold>
 
     /**
-     * gets the jfree chart generated from the data source 
+     * gets the jfree chart generated from the data source
+     *
      * @param request requests for the data source
      * @return returns the generated chart
      * @throws FileNotFoundException is thrown if the code is executed
@@ -299,7 +297,6 @@ public class BarChartServlet extends HttpServlet {
                 count = 0;
             }
         }
-        
 
         final JFreeChart chart = ChartFactory.createBarChart(
                 Student.getLegend(preset), // chart title

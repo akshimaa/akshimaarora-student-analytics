@@ -15,33 +15,17 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.ServletOutputStream;
-import java.awt.Color;
-import java.awt.Font;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
-import java.util.Random;
 import java.util.logging.Level;
-import javax.servlet.RequestDispatcher;
 
 import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartPanel;
 import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.plot.IntervalMarker;
 import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.chart.plot.XYPlot;
 import org.jfree.data.statistics.HistogramDataset;
 import org.jfree.data.statistics.HistogramType;
-import org.jfree.data.xy.IntervalXYDataset;
-import org.jfree.data.xy.XYSeries;
-import org.jfree.data.xy.XYSeriesCollection;
-import org.jfree.ui.ApplicationFrame;
-import org.jfree.ui.Layer;
-import org.jfree.ui.RectangleAnchor;
-import org.jfree.ui.RefineryUtilities;
-import org.jfree.ui.TextAnchor;
 import weka.classifiers.Classifier;
 import weka.core.Instances;
 import java.util.logging.Logger;
@@ -71,7 +55,6 @@ public class HistogramServlet extends HttpServlet {
             throws ServletException, IOException {
 
         Logger log = Logger.getLogger(HistogramServlet.class.getName());
-        //response.setContentType("image/png");
         request.setAttribute("content", "analytics");
         request.setAttribute("status", getServletContext().getRealPath("/models"));
         String imageFileName = request.getParameter("classifier").concat("_analysisChart.png");
