@@ -1,7 +1,7 @@
 <%-- 
     Document   : pieChart
     Created on : Nov 24, 2015, 8:44:41 PM
-    Author     : Melissa, Akshima
+    Author     : Melissa Burns, Akshima Arora
 --%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -182,8 +182,6 @@
             }
         });
     }
-
-
 </script>
 <!-- /.row -->
 

@@ -1,5 +1,3 @@
-
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -28,6 +26,7 @@ import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.edit.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.graphics.xobject.PDJpeg;
+import org.apache.pdfbox.pdmodel.graphics.xobject.PDPixelMap;
 import org.apache.pdfbox.pdmodel.graphics.xobject.PDXObjectImage;
 
 /**
@@ -53,18 +52,33 @@ public class ReportGeneratorServlet extends HttpServlet {
         response.setContentType("application/pdf");
 
         PDDocument document = new PDDocument();
-        File imageFile = new File(getServletContext().getRealPath("/Temp/grumpy_cat.jpg"));
-        InputStream in = new FileInputStream(imageFile);
-        BufferedImage bimg = ImageIO.read(in);
-        float width = bimg.getWidth();
-        float height = bimg.getHeight();
-        PDPage page = new PDPage(new PDRectangle(width, height));
-        document.addPage(page);
-        PDXObjectImage img = new PDJpeg(document, new FileInputStream(imageFile));
-        PDPageContentStream contentStream = new PDPageContentStream(document, page);
-        contentStream.drawImage(img, 0, 0);
-        contentStream.close();
-        in.close();
+        String[] listOfImagePaths = request.getParameter("selectedList").split(",");
+        Logger.getLogger(ReportGeneratorServlet.class.getName()).log(Level.INFO, request.getParameter("selectedList"));
+
+        for (String listOfImagePath : listOfImagePaths) {
+            String imageName = listOfImagePath.split("/")[3];
+            Logger.getLogger(ReportGeneratorServlet.class.getName()).log(Level.INFO, imageName);
+
+            File imageFile = new File(getServletContext().getRealPath("/images") + "/" + imageName);
+            try (InputStream in = new FileInputStream(imageFile)) {
+                BufferedImage bimg = ImageIO.read(in);
+                float width = bimg.getWidth();
+                float height = bimg.getHeight();
+                PDPage page = new PDPage(new PDRectangle(width, height));
+                document.addPage(page);
+                PDXObjectImage img = new PDPixelMap(document, bimg);
+                try (PDPageContentStream contentStream = new PDPageContentStream(document, page)) {
+                    
+                    contentStream.drawImage(img, 0, 0);
+                    contentStream.close();
+                    in.close();
+                }
+            } catch (Exception ex) {
+                Logger.getLogger(ReportGeneratorServlet.class.getName()).log(Level.SEVERE, null, ex);
+
+            }
+        }
+
         File saveFile = null;
         try {
             saveFile = new File(getServletContext().getRealPath("/Temp") + "/test.pdf");
@@ -74,10 +88,6 @@ public class ReportGeneratorServlet extends HttpServlet {
         } catch (COSVisitorException ex) {
             Logger.getLogger(ReportGeneratorServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        String pdfFileName = getServletContext().getRealPath("/Temp/test.pdf");
-        String contextPath = getServletContext().getRealPath(File.separator);
-        //File pdfFile = new File(contextPath + pdfFileName);
 
         response.setContentType("application/pdf");
         //response.addHeader("Content-Disposition", "attachment; filename=" + "report.pdf");
@@ -134,6 +144,3 @@ public class ReportGeneratorServlet extends HttpServlet {
     }
 
 }
-
-
-   
