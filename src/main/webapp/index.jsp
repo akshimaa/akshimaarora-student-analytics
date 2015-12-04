@@ -141,14 +141,9 @@
                         </div>
                         <!-- /.navbar-static-side -->
                 </nav>
-            <c:set var="status" scope="request" value="${requestScope.status}" />           
-            <div id="page-wrapper" style="margin:0 0 0 300px">
-
-                <div id="bootstrapMessageHolder">
-
-                </div>
-
-                <div class="alert alert-danger" id="errorMessageBanner" style="display:none">
+            <c:set var="status" scope="request" value="${requestScope.status}" />     
+            
+            <div class="alert alert-danger" id="errorMessageBanner" style="display:none;margin-left: 300px">
                     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                     <strong>ERROR!</strong> No file was selected in the file upload box.
                 </div>
@@ -157,6 +152,8 @@
                     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                     <strong>Success!</strong> Indicates a successful or positive action.
                 </div>
+            
+            <div id="page-wrapper" style="margin:0 0 0 300px">
 
                 <choose:when test="${status == null}">
                     <choose:otherwise>
