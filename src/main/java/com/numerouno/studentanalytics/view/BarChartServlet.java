@@ -49,6 +49,7 @@ import org.jfree.chart.labels.StandardCategoryItemLabelGenerator;
 import org.json.JSONObject;
 
 /**
+ * BarChartServlet
  *
  * @author madan
  */
@@ -98,10 +99,10 @@ public class BarChartServlet extends HttpServlet {
     /**
      * Handles the HTTP <code>GET</code> method.
      *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @param request servlet request requests for the data to generate the charts
+     * @param response servlet response responds by processing the request
+     * @throws ServletException is thrown if a servlet-specific error occurs
+     * @throws IOException is thrown if an I/O error occurs
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -133,6 +134,12 @@ public class BarChartServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
+    /**
+     * gets the jfree chart generated from the data source 
+     * @param request requests for the data source
+     * @return returns the generated chart
+     * @throws FileNotFoundException is thrown if the code is executed
+     */
     private JFreeChart getChart(HttpServletRequest request) throws FileNotFoundException {
         String preset = request.getParameter("preset");
         String datasource = request.getParameter("datasource");
@@ -251,6 +258,13 @@ public class BarChartServlet extends HttpServlet {
 
     }
 
+    /**
+     * To create complex jfree chart
+     *
+     * @param request requests for the data source to generate data
+     * @return returns the generated complex chart
+     * @throws FileNotFoundException is thrown while execution of the code
+     */
     private JFreeChart getComplexChart(HttpServletRequest request) throws FileNotFoundException {
         String preset = request.getParameter("preset");
         String[] presetArguments = preset.split("_");
@@ -382,6 +396,12 @@ public class BarChartServlet extends HttpServlet {
 
     }
 
+    /**
+     * creates array list of students with the data source
+     *
+     * @param source is the parameter that specifies the location of the file
+     * @return does not return.
+     */
     private ArrayList<Student> getDataSource(String source) {
         try {
 
@@ -397,6 +417,12 @@ public class BarChartServlet extends HttpServlet {
         return null;
     }
 
+    /**
+     * This method os used ot get the string value
+     *
+     * @param o is the instance of the object
+     * @return returns the object as the sting representation
+     */
     private static String getStringValue(Object o) {
         if (o instanceof Enum) {
 
@@ -406,6 +432,13 @@ public class BarChartServlet extends HttpServlet {
         }
     }
 
+    /**
+     * Contains the list of students from the DataSource
+     *
+     * @param datasource data source specifies the type of data to generate the
+     * charts
+     * @return returns the student list
+     */
     private ArrayList<Student> getStudentListFromDataSource(String datasource) {
         studentList = new ArrayIndexList<>();
         switch (datasource) {
@@ -423,13 +456,16 @@ public class BarChartServlet extends HttpServlet {
         return studentList;
     }
 
+    /**
+     * Parses the merged file to produce the corresponding charts
+     */
     private void parseMergedFile() {
         readFromS3("student-gamma", "student-merged.csv", getServletContext().getRealPath("/Temp") + "/" + "merged.csv");
         File mergedFile = new File(getServletContext().getRealPath("/Temp") + "/" + "merged.csv");
 
         try (InputStream stream = new FileInputStream(mergedFile);) {
 
-            CSVParser.parseIntoPOJO(stream,"merged");
+            CSVParser.parseIntoPOJO(stream, "merged");
             studentList = StudentList.getMergedList();
 
         } catch (Exception ex) {
