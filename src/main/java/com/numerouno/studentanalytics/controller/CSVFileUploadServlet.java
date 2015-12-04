@@ -19,17 +19,26 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.io.FileUtils;
 
 /**
- *
+ *CSVFileUploadservlet allows the user to upload files to generate charts and perform prediction
  * @author madan
  */
 @MultipartConfig
 public class CSVFileUploadServlet extends HttpServlet {
-
+/**
+ * This method is used to start or initialize the program
+ * @throws ServletException which can be caused on the execution of the code
+ */
     @Override
     public void init() throws ServletException {
 
     }
-
+/**
+ * 
+ * @param req is the request for the data for the upload of the csv file
+ * @param resp response is the uploading of the csv file
+ * @throws ServletException is thrown during the execution of the code
+ * @throws IOException which is thrown on the execution of the code
+ */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
