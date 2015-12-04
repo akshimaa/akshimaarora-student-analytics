@@ -16,6 +16,7 @@ public class StudentList {
  * 
  */
     private static ArrayList<Student> list;
+    private static ArrayList<Student> mergedList;
 /**
  * 
  * @return 
@@ -29,6 +30,14 @@ public class StudentList {
  */
     public static void setList(ArrayList<Student> list) {
         StudentList.list = list;
+    }
+
+    public static ArrayList<Student> getMergedList() {
+        return mergedList;
+    }
+
+    public static void setMergedList(ArrayList<Student> mergedList) {
+        StudentList.mergedList = mergedList;
     }
 
 }
