@@ -19,7 +19,7 @@
     <!-- /.col-lg-12 -->
 </div>
 <div class="input-group custom-search-form">
-    <form id="analysisInput" action="Histogram" method="post" enctype="multipart/form-data">
+    <form id="analysisInput" action="" method="post" enctype="multipart/form-data">
     <input id="upload-input" class="form-control" value="file" type="file" name="file" accept=".csv" style="width: 250px"/>
     <input type="hidden" name="classifier" id="classifier" />
     <select style="width: 180px;" name=""  value="1" id="dropmenu">
@@ -27,7 +27,7 @@
         <option value="2"><a href="#">LinearRegression</a></option>
     </select>
     <span class="input-group-btn">
-        <button class="btn btn-default" id="buttonPress" value="upload">
+        <button class="btn btn-default" id="analyseData" value="analyze">
             <i class="fa fa-upload"></i>
         </button>
     </span>
@@ -36,7 +36,7 @@
 
 <p></p>
 
-<div class="row">
+<div id="chartDiv" class="row">
     <c:set var="chart" scope="request" value="${requestScope.chart}" /> 
     <c:set var="contextPath" scope="request" value="${requestScope.contextPath}"/>
     <c:choose>
@@ -49,52 +49,34 @@
 
 
 <script>
-    $('#buttonPress').click(function () {
-        alert("BUTTON PRESSED");
-        $('#classifier').attr('value', $('#dropmenu').val());
-        $('#analysisInput').submit();
-//        var myForm = document.querySelector('analysisInput');
-//        var formData = new FormData(myForm);
-//          var formData = new FormData();
-//          formData.append('file', 'test');
-//          formData.append('classifier', '2');
-////      var formData = $('#analysisInput');
-//
-//        $.ajax({
-//            url: 'http://localhost:8080/StudentAnalytics/Histogram',
-//            type: 'POST',
-//            data: {"classifier":"2"},
-//            async: false,
-//            cache: false,
-//            contentType: 'multipart/form-data',
-//            processData: false,
-//            error: function () {
-//                alert("error");
-//                return true;
-//            },
-//            success: function (msg) {
-//                alert("success");
-//            }
-//
-//        });
-    });
+$( document ).ready(function() {
+    $('#analyseData').click(function(){
+        $('#chartDiv').html('');
+        console.log("analyze button clicked!");
+        
+        classifier = $('#dropmenu').val();
+        $('#classifier').val(classifier);
+        console.log(classifier);
+        var form = $('#analysisInput')[0]; 
+        var formData = new FormData(form);
+        $.ajax({
+  type: "POST",
+  url: "/StudentAnalytics/Histogram",
+  data: formData,
+  cache: false,
+  contentType: false,
+  processData: false,
+  success: function(data, textStatus, request){
+      
+      $('#chartDiv').html('<img src="'+data.chart+'" />');},
+  error: function (xhr, ajaxOptions, thrownError) {
+        console.log(xhr.status);
+        console.log(thrownError);
+      }
+});
+         
+    }); 
+     
+  }); 
 </script>
-<!--<SCRIPT LANGUAGE="JavaScript">
-function getParm(string,parm) {
-    // returns value of parm from string
-    var startPos = string.indexOf(parm + "=");
-    if (startPos > -1) {
-        startPos = startPos + parm.length + 1;
-        var endPos = string.indexOf("&",startPos);
-        if (endPos == -1)
-            endPos = string.length;
-        return unescape(string.substring(startPos,endPos));
-    }
-    return '';
-}
 
-var passed = location.search.substring(1);
-
-document.analysisInput.file.value = getParm(passed,'file');
-document.analysisInput.classifier.value = getParm(passed,'classifier');
-//</SCRIPT>-->
