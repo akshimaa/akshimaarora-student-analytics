@@ -6,6 +6,8 @@
 package com.numerouno.studentanalytics.model;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 
 /**
@@ -13,19 +15,19 @@ import java.util.ArrayList;
  * @author Akshima
  */
 public class PDFReportItemList {
-    private static ArrayList<String> itemList = new ArrayList<>();
+    private static Set<String> itemList = new HashSet<>();
 /**
  * gets the item list to generate as pdf
  * @return returns the list of items as pdf
  */
-    public static ArrayList<String> getItemList() {
+    public static Set<String> getItemList() {
         return itemList;
     }
 /**
  * sets the item list to generate pdf
  * @param itemList sets the item list to generate pdf
  */
-    public static void setItemList(ArrayList<String> itemList) {
+    public static void setItemList(Set<String> itemList) {
         PDFReportItemList.itemList = itemList;
     }
 

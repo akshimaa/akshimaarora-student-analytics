@@ -20,16 +20,29 @@
             </div>
         </div>
     </div></div>
+<div class="row" >
+    <div class="col-md-6 col-md-offset-3" style="margin-top: 50px">
+        
+            <div id = "reportList">
+               
+            </div>
+       
+    </div></div>
 <script>
  $(document).ready(function () {
 
             $.ajax({
                 type: "POST",
                 url: "/StudentAnalytics/ReportList",
-                data: "",
-                dataType:'application/json',
-                success: function (data) {
-                  console.log("This is the response "+data);
+                
+                dataType:'json',
+                success: function (data, textStatus, request) {
+                  console.log("This is the response "+data['pdfChartList']);
+                  $.each(data['pdfChartList'],function(index, value){
+                      imageElem = '<div class="row"><input type="checkbox" id="listCheckBox'+index+'"><img src="'+value+'" id="listImage'+index+'" height="40%" width="40%"></div>';
+                      $('#reportList').append(imageElem);
+                      
+                  });
                   $('#progressBarOverview').hide();
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
