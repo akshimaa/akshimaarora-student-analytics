@@ -15,11 +15,15 @@ import weka.filters.unsupervised.attribute.NumericToNominal;
 import weka.filters.unsupervised.attribute.Remove;
 
 /**
- *
- * @author Dell
+ *DataCleaner is used for processing and formatting the data on which data mining can be performed
+ * @author Teck Jan Low
  */
 public class DataCleaner {
-    
+   /**
+    * Filters the data according to the options
+    * @param data is the data that has to be filtered
+    * @return returns the filtered data
+    */ 
     public static Instances filterData(Instances data) {
 
         // Set options to remove irrelevant columns of data
@@ -48,7 +52,7 @@ public class DataCleaner {
             filteredData = Filter.useFilter(interimData, numToNom);
 
         } catch (Exception e) {
-            // Insert Exception handling here, logger thingy
+            System.out.println("exception occurred"+e.getMessage());
         }
 
         return filteredData;
