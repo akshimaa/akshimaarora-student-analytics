@@ -134,7 +134,7 @@ public class PieChartServlet extends HttpServlet {
 
         try {
 
-            FileInputStream fis = new FileInputStream(getServletContext().getRealPath("STUDENT.DAT"));
+            FileInputStream fis = new FileInputStream(getServletContext().getRealPath("STUDENT.dat"));
             ObjectInputStream in = new ObjectInputStream(fis);
             studentList = (ArrayList<Student>) in.readObject();
         } catch (IOException ex) {
@@ -207,7 +207,7 @@ public class PieChartServlet extends HttpServlet {
         switch (datasource) {
             case "OriginalData":
 
-                studentList = getDataSource("/STUDENT.DAT");
+                studentList = getDataSource("/STUDENT.dat");
                 break;
             case "UploadedData":
                 break;

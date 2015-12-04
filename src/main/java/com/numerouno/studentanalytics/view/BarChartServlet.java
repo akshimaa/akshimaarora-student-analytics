@@ -34,6 +34,7 @@ import org.ujmp.core.collections.list.ArrayIndexList;
 import com.numerouno.studentanalytics.model.Student;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.lang.Integer;
 import java.text.NumberFormat;
@@ -138,7 +139,7 @@ public class BarChartServlet extends HttpServlet {
       
      try {
           
-      FileInputStream fis = new FileInputStream(getServletContext().getRealPath("/STUDENT.DAT"));
+      FileInputStream fis = new FileInputStream(getServletContext().getRealPath("/STUDENT.dat"));
       ObjectInputStream in = new ObjectInputStream(fis);
          studentList= (ArrayList<Student> )in.readObject();
      } catch (IOException ex) {
@@ -285,10 +286,11 @@ public class BarChartServlet extends HttpServlet {
          ArrayList<Student> studentList=new ArrayIndexList<>();
         switch(datasource){
             case "OriginalData":
-                readFromS3("student-alpha", "STUDENT.dat", request.getContextPath() + "/remote.dat");
-                studentList = getDataSource("/STUDENT.dat");
+                readFromS3("student-alpha", "STUDENT.dat", request.getServletContext() + "/remote.dat");
+                studentList = getDataSource("/remote.dat");
                 break;
             case "UploadedData":
+                
                 break;
             case "MergedData":
                 break;
