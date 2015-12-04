@@ -212,7 +212,7 @@ public class PieChartServlet extends HttpServlet {
         dataset.setValue(argumentFour, (Integer) valFour);
         
         JFreeChart chart = ChartFactory.createPieChart3D(
-                "Equity Data", // chart title                   
+                Student.getLegend(preset), // chart title                   
                 dataset, // data 
                 true, // include legend                   
                 true,

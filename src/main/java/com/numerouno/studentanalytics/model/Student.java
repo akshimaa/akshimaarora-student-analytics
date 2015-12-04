@@ -1265,7 +1265,7 @@ public class Student implements Serializable {
                 return "Women in non-traditional role";
             case "lowIncome":
                 return "Low Income";
-            case "higestEducationLevel":
+            case "highestEducationLevel":
                 return "Highest Education Level";
             case "courseCompletionYear":
                 return "Course Completion Year";
@@ -1275,6 +1275,12 @@ public class Student implements Serializable {
                 return "Gender";
             case "country":
                 return "Country";
+            case "degreeLevel_gender":
+                return "Degree by Gender";
+            case "modeOfAttendance_attendanceType":
+                return "Mode of Attendance by Attendance Type";
+            case "disability_regionalRemote_womenNonTraditionalRole_lowIncome":
+                return "Equity Data";
 
             default:
                 return null;
