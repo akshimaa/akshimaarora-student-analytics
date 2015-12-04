@@ -102,8 +102,6 @@
                             <li class="sidebar-search">
                                 <div class="input-group custom-search-form">
 
-
-
                                 </div>
                                 <!-- /input-group -->
                             </li>
