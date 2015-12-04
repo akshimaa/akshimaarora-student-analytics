@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.numerouno.studentanalytics.model.PDFReportItemList;
+import org.json.JSONObject;
 /**
  *
  * @author madan
@@ -31,8 +32,15 @@ public class ReportListServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String imagePath = request.getParameter("imagePath");
-        PDFReportItemList.getItemList().add(imagePath);
+        
+        
+        
+        JSONObject json = new JSONObject();
+        json.put("pdfChartList", PDFReportItemList.getItemList().toArray());
+        PrintWriter out = response.getWriter();
+        response.setContentType("application/json");
+        response.setCharacterEncoding("utf-8");
+        out.println(json);
 
     }
 

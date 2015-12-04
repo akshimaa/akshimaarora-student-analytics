@@ -40,7 +40,7 @@
                                     <li id="barChoiceTwo" value="degreeLevel_gender"><a href="javascript:;" onclick = "generateOveriewBar('degreeLevel_gender');">Degree by Gender</a></li>
 
                                     <li class="divider"></li>
-                                    <li><a href="javascript:;" onclick="addToReport();">Add to Report</a>
+                                    <li><a href="javascript:;" onclick="addToReport('barChart');">Add to Report</a>
                                     </li>
 
                                 </ul>
@@ -73,7 +73,7 @@
 
                                     <li class="divider"></li>
 
-                                    <li><a href="javascript:;" onclick="addToReport();">Add to Report</a>
+                                    <li><a href="javascript:;" onclick="addToReport('pieChart');">Add to Report</a>
                                     </li>
 
                                 </ul>
@@ -88,7 +88,8 @@
 
             </div>
         </div>
-    </div></div>        
+    </div></div>    
+
 <script>
 
     $(document).ready(function () {
@@ -112,7 +113,7 @@
                 $('#chartPanel').fadeIn("fast", function () {
                     $(this).show();
                 });
-                $('#chartDiv').html('<img src="' + data.chart + '" height="300" width="400" />');
+                $('#chartDiv').html('<img src="' + data.chart + '" height="300" width="400" id="barChart" />');
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 console.log(xhr.status);
@@ -131,7 +132,7 @@
                 $('#pieChartPanel').fadeIn("fast", function () {
                     $(this).show();
                 });
-                $('#pieChartDiv').html('<img src="' + data.chart + '" height="300" width="400" />');
+                $('#pieChartDiv').html('<img src="' + data.chart + '" height="300" width="400" id="pieChart" />');
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 console.log(xhr.status);
@@ -156,7 +157,7 @@
             success: function (data, textStatus, request) {
                
                 $('#chartDiv').fadeTo("slow", 1.0);
-                $('#chartDiv').html('<img src="' + data.chart + '" height="300" width="400" />');
+                $('#chartDiv').html('<img src="' + data.chart + '" height="300" width="400" id="barChart"/>');
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 console.log(xhr.status);
@@ -180,7 +181,7 @@
             success: function (data, textStatus, request) {
                
                 $('#pieChartDiv').fadeTo("slow", 1.0);
-                $('#pieChartDiv').html('<img src="' + data.chart + '" height="300" width="400" />');
+                $('#pieChartDiv').html('<img src="' + data.chart + '" height="300" width="400" id="pieChart" />');
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 console.log(xhr.status);
@@ -190,15 +191,17 @@
         });
     }
 
-    function addToReport()
+    function addToReport(value)
     {
         console.log('add to report');
-        datasource = $('#datasourceDropdown').val();
-        preset = $('#presetDropdown').val();
+        console.log(value);
+      var filePath= document.getElementById(value).getAttribute('src');
+         console.log("File Path ="+ filePath);
+        
         $.ajax({
             type: "POST",
             url: "PDFReportCreator",
-            data: {datasource: datasource, preset: preset},
+            data: {filePath:filePath},
             cache: false,
             datatype: "application/json",
             success: function (data, textStatus, request) {

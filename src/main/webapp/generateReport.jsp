@@ -24,16 +24,14 @@
 </div>
 <script>
  $(document).ready(function () {
-       
-          
+
             console.log("showChart button clicked!");
-           
-           
+
             showChart = "showChart";
             $.ajax({
                 type: "POST",
-                url: "/StudentAnalytics/PDFReportCreator",
-                data: {showChart: showChart},
+                url: "/StudentAnalytics/ReportListServlet",
+                data: {},
                 dataType:'json',
                 cache: false,
                 datatype: "application/json",

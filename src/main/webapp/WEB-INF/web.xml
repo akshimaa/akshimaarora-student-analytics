@@ -82,4 +82,5 @@
         <servlet-name>ReportListServlet</servlet-name>
         <servlet-class>com.numerouno.studentanalytics.controller.ReportListServlet</servlet-class>
     </servlet>
+
 </web-app>
