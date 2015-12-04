@@ -6,20 +6,24 @@
 package com.numerouno.studentanalytics.model;
 
 import java.util.ArrayList;
+import org.ujmp.core.collections.list.ArrayIndexList;
 
 /**
  *
  * @author Akshima
  */
 public class PDFReportItemList {
-    private static ArrayList<Student> itemList;
+    private static ArrayList<String> itemList = new ArrayIndexList<>();
 
-    public static ArrayList<Student> getItemList() {
+    public static ArrayList<String> getItemList() {
         return itemList;
     }
 
-    public static void setItemList(ArrayList<Student> itemList) {
+    public static void setItemList(ArrayList<String> itemList) {
         PDFReportItemList.itemList = itemList;
     }
+
+   
+
     
 }
